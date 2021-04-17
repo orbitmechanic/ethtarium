@@ -1,101 +1,70 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
+import logo from './logo.svg';
 import './App.css';
 // Local DB until we've got a solution
 import {nodes, links} from './helpers/localDB';
+
 // Graphing dependencies
 import ForceGraph3D from '3d-force-graph';
-import PermanentDrawerLeft from './components/left_drawer';
-import { Button } from '@material-ui/core';
+
+
 
 function App() {
-  const [filter, setFilter] = useState([0,1, 2, 3]);
+  const [filter, setFilter] = useState([0,1,2,3]);
   const [nodeSelected, setNodeSelected] = useState(null);
-  const [geckoData, setGeckoData] = useState(null);
 
-  type Node = {
-    id:string;
-    group: number;
-    label: string;
-    level: number;
-    imgOnline:string;
-    url:string;
-  }
-  type Link = {
-    target: string,
-    source: string ,
-    strength: number ,
+  function getNeighbors(nodeId) {
+    let neighbors = [];
+    let node = nodes.find(x => x.id === nodeId);
+    return links.reduce((neighbors, link) => {
+      if (link.target.id === node.id) {
+        neighbors.push(link.source.id)
+      } else if (link.source.id === node.id) {
+        neighbors.push(link.target.id)
+      }    return neighbors
+    }, [node])
   }
 
-  useEffect(()=>{
-      create3dGraph() //this reloads the graph every node selected.. improve it
-  })
-
-  async function fetchGeckoData(nodeId:string){
-      let url = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids='.concat(nodeId);
-      const data:any|null = await Promise.all([
-        fetch(url)
-        .then(data => data.json())
-      ])
-      if(!data){
-        return "Could find the data on coingecko's API"
-      }
-      setGeckoData(data);
-  }
-
-  // handle graphics
-  function getNeighbors(nodeId:string) {
-      let neighbors = [];
-      let node:any = nodes.find(x => x.id === nodeId);
-      return links.reduce((neighbors, link:any) => {
-        if (link.target.id === node.id) {
-          neighbors.push(link.source.id)
-        } else if (link.source.id === node.id) {
-          neighbors.push(link.target.id)
-        }    return neighbors
-      }, [node])
-    };
 
   async function create3dGraph(){
     const filteredNodes = nodes.filter(x=>filter.includes(x.group));
     const filteredNodesIds = filteredNodes.map(x=>x.id);
     // console.log('nodesIds',filteredNodesIds)
-    const filteredLinks:Array<Link> = [];
-    const acum:Array<Link> = []; //once type of link is defined, it enters here
+    const filteredLinks = [];
+    // type acum = Array<number>;
+    const acum = [];
     // console.log(links)
-    links.reduce((filteredLinks, link:any) => {
-          if ((filteredNodesIds.includes(link.target)||filteredNodesIds.includes(link.target.id))
-            && (filteredNodesIds.includes(link.source)||filteredNodesIds.includes(link.source.id))) {
+    links.reduce((filteredLinks, link) => {
+          if (filteredNodesIds.includes(link.target.id) && filteredNodesIds.includes(link.source.id)) {
             acum.push(link)
           }
           return acum;
         },{})
-    console.log('acum',acum);
-    console.log('FL',filteredLinks);
+
     const gData = {
       nodes: filteredNodes,
-      links: acum
+      links: links
     };
 
     //handle selections and effects on particular nodes
     const highlightNodes = new Set();
     const highlightLinks = new Set();
-    let hoverNode:string | null = null;
+    let hoverNode = null;
     let selectedNodes = new Set();
 
-    const spaceHolder: HTMLElement | null = document.getElementById('3d-graph')!;
     const graph2 =  ForceGraph3D()
-        (spaceHolder)
+      (document.getElementById('3d-graph'))
       .nodeLabel('id') // show label on hover
       .nodeAutoColorBy('group') // Color by group attr
       // .nodeColor(node => selectedNodes.has(node)? 'green' : null) // Color to selected (but not handle others)
       // Effects and text on hover
-      .onNodeClick((node:any, event) => {
+      .onNodeClick((node, event) => {
         if (event.ctrlKey || event.shiftKey || event.altKey) { // multi-selection
           selectedNodes.has(node) ? selectedNodes.delete(node) : selectedNodes.add(node);
         } else { // single-selection
-          // console.log('node selected: ', node.id)
+          console.log('node selected: ', node.id)
           setNodeSelected(node.id)
-          fetchGeckoData(node.id)
+          // then fetch data
           const untoggle = selectedNodes.has(node) && selectedNodes.size === 1;
           selectedNodes.clear();
           !untoggle && selectedNodes.add(node);
@@ -105,18 +74,18 @@ function App() {
       .linkWidth(link => highlightLinks.has(link) ? 5 : 1)
       .linkDirectionalParticles(link => highlightLinks.has(link) ? 4 : 0)
       .linkDirectionalParticleWidth(3)
-      .onNodeHover((node:any) => {
+      .onNodeHover(node => {
         // no state change
         if ((!node && !highlightNodes.size) || (node && hoverNode === node)) return;
         highlightNodes.clear();
         highlightLinks.clear();
         // console.log('hover: ',node.id)
         let neighbors = getNeighbors(node.id)
-        let neighborsF = neighbors.slice(1,neighbors.length) //first element is the node object - take the others
+        let neighborsF = neighbors.slice(1,neighbors.length)
         // console.log('neighbors: ',neighborsF)
-        // let neighborsLinks = [];
-        let otros:Array<any> = [];
-        gData.links.reduce((neighborsLinks, link:any) => {
+        let neighborsLinks = [];
+        let otros = []
+        gData.links.reduce((neighborsLinks, link) => {
               if (node.id == link.target.id || node.id == link.source.id)  {
                 otros.push(link)
               }
@@ -170,25 +139,25 @@ function App() {
       }
   }
 
-  function handleFilter(filters:any){
-    setFilter(filters);
-  }
 
-  // <Button variant="contained" color="primary" onClick={()=>create3dGraph()}>Create 3d Graph</Button>
   return (
     <div className="App">
       <header className="App-header">
-
+        <h1>Etharium</h1>
+        {/* Filters
+          <form>
+        <p>
+          <label>
+            <input type="checkbox" class="filled-in" checked="checked" />
+            <span>Filled in</span>
+          </label>
+        </p>
+        </form>
+      */}
+        <button onClick={()=>create3dGraph()}>Create 3d Graph</button>
+        <div id="3d-graph"></div>
 
       </header>
-      <body className='App-body'>
-      <PermanentDrawerLeft
-        nodeSelected={nodeSelected}
-        geckoData={geckoData}
-        onFilters = {handleFilter}
-      />
-      <div style={{width:'80%'}} id="3d-graph" className='column'></div>
-      </body>
     </div>
   );
 }
