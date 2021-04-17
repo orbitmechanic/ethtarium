@@ -5,7 +5,6 @@ import {nodes, links} from './helpers/localDB';
 // Graphing dependencies
 import ForceGraph3D from '3d-force-graph';
 import PermanentDrawerLeft from './components/left_drawer';
-import { Button } from '@material-ui/core';
 
 function App() {
   const [filter, setFilter] = useState([0,1, 2, 3]);
