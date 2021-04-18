@@ -180,7 +180,7 @@ function App() {
         // let neighborsLinks = [];
         let otros: Array<any> = [];
         gData.links.reduce((neighborsLinks, link: any) => {
-          if (node.id == link.target.id || node.id == link.source.id) {
+          if (node.id === link.target.id || node.id === link.source.id) {
             otros.push(link);
           }
           return otros;
