@@ -171,6 +171,7 @@ function App() {
   }
 
   function handleFilter(filters:any){
+    console.log('returned',filters)
     setFilter(filters);
   }
 
@@ -183,6 +184,7 @@ function App() {
       </header>
       <body className='App-body'>
       <PermanentDrawerLeft
+        nodes={nodes}
         nodeSelected={nodeSelected}
         geckoData={geckoData}
         onFilters = {handleFilter}
