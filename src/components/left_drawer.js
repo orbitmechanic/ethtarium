@@ -50,6 +50,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PermanentDrawerLeft(props) {
   const classes = useStyles();
+  const [filter, setFilter] = useState([0,1,2,3]);
+
   const options = [
   { label: 'Networks', value: 0 , icon:<BlurCircularIcon />},
   { label: 'Bridges', value: 1 , icon:<AutorenewIcon />},
@@ -57,21 +59,29 @@ export default function PermanentDrawerLeft(props) {
   { label: 'Lend&Borrow', value: 3, icon: <AccountBalanceIcon />},
   { label: 'Manage', value: 4, icon: <AccessibleForwardIcon />},
   { label: 'DAO', value: 5, icon: < InboxIcon /> },
-];
+  ];
 
-  let filter=[0,1,2,3]; // needs to change after
-
-  function handleFilter(key){
-    if(filter.includes(key)){
-      var filtered = filter.filter(function(value){
-          return value != key;
-      });
-      filter = filtered;
-    }else{
-      filter.push(key);
-    }
-    props.onFilters(filter)
+  let nodeSelectedData;
+  if(props.nodeSelected){
+    nodeSelectedData = props.nodes.find(x=> x.id === props.nodeSelected)
   }
+  const handleChange = (value) => {
+    let newFilter = [...filter];
+    if(filter.includes(value)){
+      let index = filter.indexOf(value);
+      newFilter.splice(index, 1)
+    }else{
+      newFilter.push(value)
+    }
+
+    console.log('filterIn: ',filter)
+     setFilter(newFilter);
+     props.onFilters(newFilter)
+   };
+
+   function isChecked(value){
+     return filter.includes(value);
+   }
 
   return (
     <div className={classes.root}>
@@ -95,10 +105,17 @@ export default function PermanentDrawerLeft(props) {
 {/*        <div className={classes.toolbar} />*/}
         <Divider />
         <List>
-          {options.map((opt, index) => (
-            <ListItem button key={opt.value} onClick={()=>{handleFilter(opt.value)}}>
-              <ListItemIcon>{opt.icon}</ListItemIcon>
-              <ListItemText primary={opt.label} />
+          {options.map((opt) => (
+            <ListItem>
+{/*              <ListItemIcon>{opt.icon}</ListItemIcon>  Would we like icons for this? */}
+              <FormControlLabel
+                        value={opt.value}
+                        id = {opt.value}
+                        control={<Checkbox color="primary" checked={isChecked(opt.value)} onChange={()=>{handleChange(opt.value)}} />}
+                        label={opt.label}
+                        labelPlacement="end"
+                      />
+                      {/**/}
             </ListItem>
           ))}
         </List>
@@ -108,6 +125,9 @@ export default function PermanentDrawerLeft(props) {
         </h2>
         {props.geckoData?
           <div>
+            <p>URL:
+            <a href={nodeSelectedData.url} rel="noref noopener" target="_blank">{nodeSelectedData.url}</a>
+            </p>
             <p>Current price:
               U$s {props.geckoData[0][0]?props.geckoData[0][0].current_price:'no data'}
             </p>
