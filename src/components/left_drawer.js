@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -48,17 +48,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 export default function PermanentDrawerLeft(props) {
+
   const classes = useStyles();
+
   const [filter, setFilter] = useState([0,1,2,3]);
+  const [networkFilterOpen,setNetworkFilterOpen] = useState(false);
+  const [networkFilter, setNetworkFilter] = useState(props.networkFilter);
+
+  // useEffect(()=>{
+  //   setNetworkFilter(networksNames)
+  // }, networksNames);
 
   const options = [
-  { label: 'Networks', value: 0 , icon:<BlurCircularIcon />},
-  { label: 'Bridges', value: 1 , icon:<AutorenewIcon />},
-  { label: 'Swap', value: 2, icon: <AccountBalanceWalletIcon />},
-  { label: 'Lend&Borrow', value: 3, icon: <AccountBalanceIcon />},
-  { label: 'Manage', value: 4, icon: <AccessibleForwardIcon />},
-  { label: 'DAO', value: 5, icon: < InboxIcon /> },
+  // { label: 'Networks', value: 0 , },
+  { label: 'Bridges', value: 1 , },
+  { label: 'Swap', value: 2,},
+  { label: 'Lend&Borrow', value: 3,},
+  { label: 'Manage', value: 4, },
+  { label: 'Oracle', value: 5, },
+  { label: 'DAO', value: 6, },
+  { label: 'Tokens', value: 7,  },
   ];
 
   let nodeSelectedData;
@@ -73,8 +84,7 @@ export default function PermanentDrawerLeft(props) {
     }else{
       newFilter.push(value)
     }
-
-    console.log('filterIn: ',filter)
+    // console.log('filterIn: ',newFilter)
      setFilter(newFilter);
      props.onFilters(newFilter)
    };
@@ -82,6 +92,23 @@ export default function PermanentDrawerLeft(props) {
    function isChecked(value){
      return filter.includes(value);
    }
+
+   function isNetworkChecked(name){
+     return networkFilter.includes(name);
+   }
+   const handleNetworkChange = (value) => {
+     let newFilter = [...networkFilter];
+     if(networkFilter.includes(value)){
+       let index = networkFilter.indexOf(value);
+       newFilter.splice(index, 1)
+     }else{
+       newFilter.push(value)
+     }
+     // console.log('filterIn: ',filter)
+      setNetworkFilter(newFilter);
+      props.onNetworkFilter(newFilter);
+    };
+
 
   return (
     <div className={classes.root}>
@@ -104,6 +131,24 @@ export default function PermanentDrawerLeft(props) {
       >
 {/*        <div className={classes.toolbar} />*/}
         <Divider />
+        <Button onClick={()=>setNetworkFilterOpen(!networkFilterOpen)}>Networks</Button>
+        {networkFilterOpen?
+          <div>
+            <List>
+            {props.networks.map((network)=>(
+              <ListItem>
+                <FormControlLabel
+                  value={network}
+                  id = {network}
+                  control={<Checkbox color="primary" checked={isNetworkChecked(network)} onChange={()=>{handleNetworkChange(network)}} />}
+                  label={network}
+                  labelPlacement="end"
+                  />
+              </ListItem>
+            ))}
+            </List>
+          </div>
+        :null}
         <List>
           {options.map((opt) => (
             <ListItem>
@@ -111,7 +156,7 @@ export default function PermanentDrawerLeft(props) {
               <FormControlLabel
                         value={opt.value}
                         id = {opt.value}
-                        control={<Checkbox color="primary" checked={isChecked(opt.value)} onChange={()=>{handleChange(opt.value)}} />}
+                        control={<Checkbox color="secondary" checked={isChecked(opt.value)} onChange={()=>{handleChange(opt.value)}} />}
                         label={opt.label}
                         labelPlacement="end"
                       />

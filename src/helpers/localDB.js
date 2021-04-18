@@ -6,7 +6,7 @@
 // 3 : lend&borrow
 // 4 : manage
 // 5 : oracle
-// 6 : wallets
+// 6 : DAO
 // 7 : token (stables?)
 // 8 :
 
@@ -18,7 +18,7 @@
 //   query:'' , search:'' },
 
 
-export const nodes = [
+export const nodes:Node = [
 // NETWORKS
   { id: "ethereum", group: 0, label: "Ethereum", level: 1,
     imgOnline:'https://assets.coingecko.com/coins/images/279/thumb/ethereum.png?1595348880',
@@ -108,6 +108,12 @@ export const nodes = [
     contract:'0x71850b7e9ee3f13ab46d67167341e4bdc905eef9', //xdai!
     graphUrl:'' ,
     query:'' , search:''},
+  { id: "chainlink", group: 5, label: "Chainlink", level: 2,
+    imgOnline:'https://assets.coingecko.com/coins/images/877/small/chainlink-new-logo.png?1547034700',
+    url:'https://chain.link',
+    contract:'0x514910771af9ca656af840dff83e8264ecf986ca',
+    graphUrl:'' ,
+    query:'' , search:'' },
   { id: "agave-token", group: 3, label: "Agave"   , level: 2,
     imgOnline:'https://assets.coingecko.com/coins/images/14146/thumb/agve.png?1614659384' ,
     url:'no ui yet',
@@ -126,12 +132,6 @@ export const nodes = [
     contract:'',
     graphUrl:'' ,
     query:'' , search:''},
-  { id: "chainlink", group: 5, label: "Chainlink", level: 2,
-    imgOnline:'https://assets.coingecko.com/coins/images/877/small/chainlink-new-logo.png?1547034700',
-    url:'https://chain.link',
-    contract:'0x514910771af9ca656af840dff83e8264ecf986ca',
-    graphUrl:'' ,
-    query:'' , search:'' },
   { id: "binance-usd", group: 7, label: " Binance USD", level: 2,
     imgOnline:'https://assets.coingecko.com/coins/images/9576/small/BUSD.png?1568947766',
     url:'https://paxos.com',
@@ -150,7 +150,7 @@ export const nodes = [
     contract:'0x6b175474e89094c44da98b954eedeac495271d0f',
     graphUrl:'',
     query:'' , search:'' },
-  { id: "maker", group: 7, label: "Maker", level: 2,
+  { id: "maker", group: 6, label: "Maker", level: 2,
     imgOnline:'https://assets.coingecko.com/coins/images/1364/small/Mark_Maker.png?1585191826',
     url:'https://makerdao.com',
     contract:'0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2',
@@ -177,7 +177,6 @@ export const nodes = [
   { id: "omnibridge_BSC", group: 1, label: "Omnibridge BSC-xDai", level: 2,
     imgOnline:'https://gblobscdn.gitbook.com/spaces%2F-LqBAx7LVGL5AF3NuAYj%2Favatar.png?alt=media',
     url:'https://bsc-to-xdai-omnibridge.web.app/  ',
-    contract:'0x162E898bD0aacB578C8D5F8d6ca588c13d2A383F', //xdai - bsc:0x05185872898b6f94AA600177EF41B9334B1FA48B
     graphUrl:'' ,
     query:'' , search:'' },
         // { id: "", group: 0, label: "", level: 2,
@@ -199,8 +198,10 @@ export const nodes = [
 // search: schema retrieved (for filter)
 // query : query to thegraph (make particular queries for any need or total for user interaction)
 
-export const links = [
-  { target: "ethereum", source: "omnibridge" , strength: 0.7 },
+
+
+export const links:Link = [
+  { target: "ethereum", source: "omnibridge" , strength: 0.7, contract:'0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016'},
   { target: "ethereum", source: "aave" , strength: 0.4 },
   { target: "ethereum", source: "uniswap" , strength: 0.4 },
   { target: "ethereum", source: "pos-bridge" , strength: 0.7 },
@@ -219,10 +220,10 @@ export const links = [
   { target: "bitcoin", source: "wrapped-bitcoin" , strength: 0.4 },
   { target: "xdai", source: "honey" , strength: 0.7 },
   { target: "xdai", source: "agave-token" , strength: 0.4 },
-  { target: "xdai", source: "omnibridge" , strength: 0.4 },
+  { target: "xdai", source: "omnibridge" , strength: 0.4, contract:'0x7301CFA0e1756B71869E93d4e4Dca5c7d0eb0AA6' },
   { target: "xdai"  , source: "connext", strength: 0.7 },
   { target: "xdai", source: "chainlink" , strength: 0.4 },
-  { target: "xdai", source: "omnibridge_BSC" , strength: 0.4 },
+  { target: "xdai", source: "omnibridge_BSC" , strength: 0.4 , contract:'0x162E898bD0aacB578C8D5F8d6ca588c13d2A383F'},
   { target: "polygon"  , source: "aave-Matic", strength: 0.4 },
   { target: "polygon"  , source: "quickswap", strength: 0.4 },
   { target: "polygon"  , source: "pos-bridge", strength: 0.7 },
@@ -234,6 +235,6 @@ export const links = [
   { target: "binance-coin", source: "zapper" , strength: 0.4 },
   { target: "binance-coin", source: "chainlink" , strength: 0.4 },
   { target: "binance-coin", source: "zeroswap" , strength: 0.4 },
-  { target: "binance-coin", source: "omnibridge_BSC" , strength: 0.4 },
+  { target: "binance-coin", source: "omnibridge_BSC" , strength: 0.4 , contract:'0x05185872898b6f94AA600177EF41B9334B1FA48B'},
 
 ];
