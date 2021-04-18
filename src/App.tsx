@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from 'react';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./App.css";
 // Local DB until we've got a solution
-import {nodes, links} from './helpers/localDB';
+import { nodes, links } from "./helpers/localDB";
 // Graphing dependencies
-import ForceGraph3D from '3d-force-graph';
-import PermanentDrawerLeft from './components/left_drawer';
-import { Button } from '@material-ui/core';
+import ForceGraph3D from "3d-force-graph";
+import PermanentDrawerLeft from "./components/left_drawer";
+import { Button } from "@material-ui/core";
 
 function App() {
   let networks = nodes.filter(x => x.group === 0);
@@ -17,13 +17,13 @@ function App() {
   const [networkFilter, setNetworkFilter] = useState(networksNames)
 
   type Node = {
-    id:string;
+    id: string;
     group: number;
     label: string;
     level: number;
-    imgOnline:string;
-    url:string;
-  }
+    imgOnline: string;
+    url: string;
+  };
   type Link = {
     target: string,
     source: string ,
@@ -138,7 +138,7 @@ function App() {
     //handle selections and effects on particular nodes
     const highlightNodes = new Set();
     const highlightLinks = new Set();
-    let hoverNode:string | null = null;
+    let hoverNode: string | null = null;
     let selectedNodes = new Set();
 
     const spaceHolder: HTMLElement | null = document.getElementById('3d-graph')!;
@@ -148,84 +148,89 @@ function App() {
       .nodeAutoColorBy('group') // Color by group attr
       // .nodeColor(node => selectedNodes.has(node)? 'green' : null) // Color to selected (but not handle others)
       // Effects and text on hover
-      .onNodeClick((node:any, event) => {
-        if (event.ctrlKey || event.shiftKey || event.altKey) { // multi-selection
-          selectedNodes.has(node) ? selectedNodes.delete(node) : selectedNodes.add(node);
-        } else { // single-selection
+      .onNodeClick((node: any, event) => {
+        if (event.ctrlKey || event.shiftKey || event.altKey) {
+          // multi-selection
+          selectedNodes.has(node)
+            ? selectedNodes.delete(node)
+            : selectedNodes.add(node);
+        } else {
+          // single-selection
           // console.log('node selected: ', node.id)
-          setNodeSelected(node.id)
-          fetchGeckoData(node.id)
+          setNodeSelected(node.id);
+          fetchGeckoData(node.id);
           const untoggle = selectedNodes.has(node) && selectedNodes.size === 1;
           selectedNodes.clear();
           !untoggle && selectedNodes.add(node);
         }
         updateHighlight();
       })
-      .linkWidth(link => highlightLinks.has(link) ? 5 : 1)
-      .linkDirectionalParticles(link => highlightLinks.has(link) ? 4 : 0)
+      .linkWidth((link) => (highlightLinks.has(link) ? 5 : 1))
+      .linkDirectionalParticles((link) => (highlightLinks.has(link) ? 4 : 0))
       .linkDirectionalParticleWidth(3)
-      .onNodeHover((node:any) => {
+      .onNodeHover((node: any) => {
         // no state change
-        if ((!node && !highlightNodes.size) || (node && hoverNode === node)) return;
+        if ((!node && !highlightNodes.size) || (node && hoverNode === node))
+          return;
         highlightNodes.clear();
         highlightLinks.clear();
         // console.log('hover: ',node.id)
         let neighbors = getNeighbors(node.id)
         // console.log('neighbors: ',neighborsF)
         // let neighborsLinks = [];
-        let otros:Array<any> = [];
-        gData.links.reduce((neighborsLinks, link:any) => {
-              if (node.id == link.target.id || node.id == link.source.id)  {
-                otros.push(link)
-              }
-              return otros;
-            },{})
+        let otros: Array<any> = [];
+        gData.links.reduce((neighborsLinks, link: any) => {
+          if (node.id == link.target.id || node.id == link.source.id) {
+            otros.push(link);
+          }
+          return otros;
+        }, {});
         // console.log('otros: ',otros)
-        otros.forEach(link => highlightLinks.add(link));
+        otros.forEach((link) => highlightLinks.add(link));
         hoverNode = node || null;
         updateHighlight();
       })
       // Images as sprites  NOT WORKINg
-// {/*
-//         .nodeThreeObject(({ img }) => { //images not rendering :(
-//         const imgTexture = new THREE.TextureLoader().load('helpers/images/ethereum.jpg');//${img}
-//         const material = new THREE.SpriteMaterial({ map: imgTexture , color: 0xffffff});
-//         const sprite = new THREE.Sprite(material);
-//         sprite.scale.set(32, 32, 1);
-//         return sprite;
-//       })
-// */}
-//       // text as sprites // Kills the nodes visualization
-// {/*
-//         .nodeThreeObject(node => {
-//          const sprite = new SpriteText(node.id);
-//          sprite.material.depthWrite = false; // make sprite background transparent
-//          sprite.color = node.color;
-//          sprite.textHeight = 8;
-//          return sprite;
-//        })
-// */}
-// Graph it
+      // {/*
+      //         .nodeThreeObject(({ img }) => { //images not rendering :(
+      //         const imgTexture = new THREE.TextureLoader().load('helpers/images/ethereum.jpg');//${img}
+      //         const material = new THREE.SpriteMaterial({ map: imgTexture , color: 0xffffff});
+      //         const sprite = new THREE.Sprite(material);
+      //         sprite.scale.set(32, 32, 1);
+      //         return sprite;
+      //       })
+      // */}
+      //       // text as sprites // Kills the nodes visualization
+      // {/*
+      //         .nodeThreeObject(node => {
+      //          const sprite = new SpriteText(node.id);
+      //          sprite.material.depthWrite = false; // make sprite background transparent
+      //          sprite.color = node.color;
+      //          sprite.textHeight = 8;
+      //          return sprite;
+      //        })
+      // */}
+      // Graph it
       .graphData(gData);
 
-        // fit to canvas when engine stops
-      graph2.onEngineStop(() => graph2.zoomToFit(500));
+    // fit to canvas when engine stops
+    graph2.onEngineStop(() => graph2.zoomToFit(500));
 
-      //Post processing
-      //   const bloomPass = new UnrealBloomPass();
-      // bloomPass.strength = 3;
-      // bloomPass.radius = 1;
-      // bloomPass.threshold = 0.1;
-      // graph2.postProcessingComposer().addPass(bloomPass);
+    //Post processing
+    //   const bloomPass = new UnrealBloomPass();
+    // bloomPass.strength = 3;
+    // bloomPass.radius = 1;
+    // bloomPass.threshold = 0.1;
+    // graph2.postProcessingComposer().addPass(bloomPass);
 
-      function updateHighlight() {
-        // trigger update of highlighted objects in scene
-        graph2
+    function updateHighlight() {
+      // trigger update of highlighted objects in scene
+      graph2
         .nodeColor(graph2.nodeColor())
         // .nodeRelSize(graph2.nodeRelSize())
         .linkWidth(graph2.linkWidth())
         .linkDirectionalParticles(graph2.linkDirectionalParticles());
-      }
+    }
   }
 
   function handleFilter(filters:any){
