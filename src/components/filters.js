@@ -171,7 +171,7 @@ export default function PermanentDrawerLeft(props) {
           >
           <MenuIcon />
           </IconButton>
-          <Typography>Etharium</Typography>
+          <Typography>PLANETHARIUM</Typography>
         </Toolbar>
       </AppBar>
 

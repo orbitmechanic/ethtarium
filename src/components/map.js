@@ -187,4 +187,4 @@ function Map(props) {
   </div>
   )
 }
-export default Map;
+export default React.memo(Map);

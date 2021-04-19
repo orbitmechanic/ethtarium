@@ -85,7 +85,13 @@ export default function TemporaryDrawer(props) {
       <Divider />
       Contracts
       <Divider />
+      Links (interact directly with contracts!) where to go from here
+      for ex:
+      network -> bridges -> other networks
+      network -> swap tokens
+      <Divider />
       The Graph endpoints
+      Add router to graph data fetched from TheGraph 
     </div>
   );
 
