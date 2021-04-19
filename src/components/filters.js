@@ -1,5 +1,6 @@
-import React, {useState, useEffect} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, {useState} from 'react';
+import clsx from 'clsx';
+import { makeStyles, useTheme  } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -8,17 +9,12 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import AccessibleForwardIcon from '@material-ui/icons/AccessibleForward';
-import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
-import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
-import AutorenewIcon from '@material-ui/icons/Autorenew';
-import BlurCircularIcon from '@material-ui/icons/BlurCircular';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
-import { Button, FormLabel, FormControl, Checkbox, FormGroup, FormControlLabel, } from '@material-ui/core';
+import { Button, Checkbox, FormControlLabel, } from '@material-ui/core';
 
 const drawerWidth = 260;
 
@@ -27,9 +23,24 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   appBar: {
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+  },
+  appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
-    backgroundColor:'#282c34',
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  hide: {
+    display: 'none',
   },
   drawer: {
     width: drawerWidth,
@@ -39,27 +50,59 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     width: drawerWidth,
   },
-  // necessary for content to be below app bar
-  toolbar: theme.mixins.toolbar,
+  drawerHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-end',
+  },
   content: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
     padding: theme.spacing(3),
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: -drawerWidth,
   },
+  contentShift: {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: 0,
+  },
+  // // necessary for content to be below app bar
+  // toolbar: theme.mixins.toolbar,
+  // content: {
+  //   flexGrow: 1,
+  //   backgroundColor: theme.palette.background.default,
+  //   padding: theme.spacing(3),
+  // },
 }));
 
 
 export default function PermanentDrawerLeft(props) {
 
   const classes = useStyles();
-
+  const theme = useTheme();
+  const [open, setOpen] = useState(false);
   const [filter, setFilter] = useState([0,1,2,3]);
   const [networkFilterOpen,setNetworkFilterOpen] = useState(false);
   const [networkFilter, setNetworkFilter] = useState(props.networkFilter);
 
-  // useEffect(()=>{
-  //   setNetworkFilter(networksNames)
-  // }, networksNames);
+  const handleDrawerOpen = () => {
+    console.log('hey')
+
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    console.log('ho')
+    setOpen(false);
+  };
 
   const options = [
   // { label: 'Networks', value: 0 , },
@@ -72,10 +115,7 @@ export default function PermanentDrawerLeft(props) {
   { label: 'Tokens', value: 7,  },
   ];
 
-  let nodeSelectedData;
-  if(props.nodeSelected){
-    nodeSelectedData = props.nodes.find(x=> x.id === props.nodeSelected)
-  }
+
   const handleChange = (value) => {
     let newFilter = [...filter];
     if(filter.includes(value)){
@@ -113,23 +153,42 @@ export default function PermanentDrawerLeft(props) {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <Typography variant="h3" noWrap>
-            Etharium
-          </Typography>
+      <AppBar
+        position="fixed"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: open,
+        })}>
+        <Toolbar
+          id='toolbar'
+          >
+          <IconButton
+            id='filtersButton'
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            className={clsx(classes.menuButton, open && classes.hide)}
+          >
+          <MenuIcon />
+          </IconButton>
+          <Typography>Etharium</Typography>
         </Toolbar>
       </AppBar>
 
       <Drawer
         className={classes.drawer}
-        variant="permanent"
+        variant="persistent"
+        anchor="left"
+        open={open}
         classes={{
           paper: classes.drawerPaper,
         }}
-        anchor="left"
       >
-{/*        <div className={classes.toolbar} />*/}
+      <div className={classes.drawerHeader}>
+        <IconButton onClick={handleDrawerClose}>
+          {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+        </IconButton>
+      </div>
         <Divider />
         <Button onClick={()=>setNetworkFilterOpen(!networkFilterOpen)}>Networks</Button>
         {networkFilterOpen?
@@ -156,7 +215,7 @@ export default function PermanentDrawerLeft(props) {
               <FormControlLabel
                         value={opt.value}
                         id = {opt.value}
-                        control={<Checkbox color="secondary" checked={isChecked(opt.value)} onChange={()=>{handleChange(opt.value)}} />}
+                        control={<Checkbox color="default" checked={isChecked(opt.value)} onChange={()=>{handleChange(opt.value)}} />}
                         label={opt.label}
                         labelPlacement="end"
                       />
@@ -165,27 +224,10 @@ export default function PermanentDrawerLeft(props) {
           ))}
         </List>
         <Divider />
-        <h2>
-        {props.nodeSelected? props.nodeSelected :'Select a node' }
-        </h2>
-        {props.geckoData?
-          <div>
-            <p>URL:
-            <a href={nodeSelectedData.url} rel="noref noopener" target="_blank">{nodeSelectedData.url}</a>
-            </p>
-            <p>Current price:
-              U$s {props.geckoData[0][0]?props.geckoData[0][0].current_price:'no data'}
-            </p>
-            <p>Market Cap:
-              U$s {props.geckoData[0][0]?props.geckoData[0][0].market_cap:'no data'}
-            </p>
-            <p>24hs price change:
-            {props.geckoData[0][0]?props.geckoData[0][0].price_change_percentage_24h:'no data'} %
-            </p>
-          </div>
-          :null}
       </Drawer>
-      <main className={classes.content}>
+      <main className={clsx(classes.content, {
+                [classes.contentShift]: open,
+              })}>
 
       </main>
     </div>
