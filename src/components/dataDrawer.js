@@ -40,14 +40,17 @@ export default function TemporaryDrawer(props) {
       setNodeSelected(props.nodeSelected)
       setNodeSelectedData(getNode(props.nodeSelected))
       fetchGeckoData(props.nodeSelected).then((gecko)=>{setGeckoData(gecko);})
-      // const element = (
-      //     <Button onClick={toggleDrawer('top', true)} style={{color:'white', fontWeight:'bold',marginLeft: "auto" }}>{props.nodeSelected}</Button>
-      //   );
-      // ReactDOM.render(element, document.getElementById('toolbar'));
-
-
-
   }}
+
+  function getImage(nodeSelectedData){
+    let image;
+     if(nodeSelectedData && nodeSelectedData.img){
+       image = require(`../images/mini_${nodeSelectedData.img}`)
+     }else{
+       image = require('../images/mini_default.png');
+     }
+     return image.default
+  }
 
   const list = (anchor) => (
     <div
@@ -61,7 +64,10 @@ export default function TemporaryDrawer(props) {
       <div>
       {nodeSelectedData?
         <div>
-          <h3>{nodeSelectedData.label}</h3>
+          <span>
+          <span>{nodeSelectedData.label}</span>
+          <img src={getImage(nodeSelectedData)} style={{marginLeft: "auto"}} alt='' width="50" height="50"></img>
+          </span>
           <p>URL:
           <a href={nodeSelectedData.url} rel="noreferrer" target="_blank">{nodeSelectedData.url}</a>
           </p>
@@ -87,11 +93,11 @@ export default function TemporaryDrawer(props) {
       <Divider />
       Links (interact directly with contracts!) where to go from here
       for ex:
-      network -> bridges -> other networks
+      network -> bridges -> other networks ||
       network -> swap tokens
       <Divider />
       The Graph endpoints
-      Add router to graph data fetched from TheGraph 
+      Add router to graph data fetched from TheGraph
     </div>
   );
 
@@ -102,7 +108,9 @@ export default function TemporaryDrawer(props) {
     {props.nodeSelected?
       <div>
       {ReactDOM.createPortal(
-        <Button onClick={toggleDrawer('top', true)} style={{color:'white', fontWeight:'bold',marginLeft: "auto" }}>{props.nodeSelected}</Button>,
+        <div style={{marginLeft: "auto" }}>
+          <Button onClick={toggleDrawer('top', true)} style={{color:'white', fontWeight:'bold'}} >{props.nodeSelected}</Button>
+        </div>,
         document.getElementById('toolbar'))}
       </div>
     :null}
