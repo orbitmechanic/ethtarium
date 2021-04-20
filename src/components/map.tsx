@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { nodes, links } from "../helpers/localDB";
-import ForceGraph3D from "3d-force-graph";
+import ForceGraph3D, { ForceGraph3DInstance } from "3d-force-graph";
 import PermanentDrawerLeft from "./filters";
 import * as THREE from 'three';
 // import SpriteText from 'three-spritetext';
@@ -8,9 +8,9 @@ import * as THREE from 'three';
 import { getNodesFiltered, getNodesNetworks } from '../helpers/mapHelpers';
 // getNode
 
-function Map(props) {
-  let networks = nodes.filter(x => x.group === 0);
-  let networksNames = networks.map(x => x.id);
+function Map(props: { onNodeSelected: (arg0: string) => void; }) {
+  let networks = nodes.filter((x: { group: number; }) => x.group === 0);
+  let networksNames = networks.map((x: { id: any; }) => x.id);
   const [filter, setFilter] = useState([0,1,]);
   const [networkFilter, setNetworkFilter] = useState(networksNames)
 
@@ -44,7 +44,7 @@ function Map(props) {
   //   // how do i simulate a click inside graph2?
   // }
 
-function focusNode(graph,node){
+function focusNode(graph: ForceGraph3DInstance,node: { id?: string; group?: number; label?: string; level?: number; imgOnline?: string; url?: string; x?: any; y?: any; z?: any; }){
   // Focus on node
     const distance = 100;
     const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
@@ -73,9 +73,9 @@ function focusNode(graph,node){
   function filterNodes(){
     let unique = getNodesNetworks(networkFilter);
     let filteredNodes = getNodesFiltered(unique, filter);
-    const finalNodesIds = filteredNodes.map(x=>x.id)
+    const finalNodesIds = filteredNodes.map((x: { id: any; })=>x.id)
 
-    let filteredLinks = links.reduce((filteredLinks, link:Link[]) => {
+    let filteredLinks = links.reduce((filteredLinks: { target: string; source: string; strength: number; contract?: string | undefined; }[][], link:Link[]) => {
           if ((finalNodesIds.includes(link.target.id?link.target.id:link.target))
             && (finalNodesIds.includes(link.source.id?link.source.id:link.source)))
              {
@@ -153,7 +153,7 @@ function focusNode(graph,node){
         highlightLinks.clear();
         // console.log('hover: ',node.id)
         let otros: Array<any> = [];
-        gData.links.reduce((neighborsLinks, link: any) => {
+        gData.links.reduce((neighborsLinks: any, link: any) => {
           if (node.id === link.target.id || node.id === link.source.id) {
             otros.push(link);
           }

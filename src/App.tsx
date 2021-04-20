@@ -12,7 +12,7 @@ function App() {
   const [nodeSelectedData, setNodeSelectedData] = useState(null);
   const [endpoint, setEndpoint] = useState(null);
 
-  const selectGraphEndpoint = (endpoint)=>{
+  const selectGraphEndpoint = (endpoint: React.SetStateAction<null>)=>{
     console.log(endpoint)
     setEndpoint(endpoint)
   } ;

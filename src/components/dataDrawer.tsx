@@ -10,14 +10,14 @@ import LinkIcon from '@material-ui/icons/Link';
 
 import {fetchGeckoData, getExplorer} from '../helpers/mapHelpers';
 
-export default function TemporaryDrawer(props) {
+export default function TemporaryDrawer(props: { nodeSelected: {} | null | undefined; nodeSelectedData: { img: any; contract: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; label: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; url: {} | null | undefined; group: number; graphUrl: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; }; selectGraphEndpoint: (arg0: any) => void; }) {
   const [state, setState] = React.useState({
     top: false,
   });
   const [nodeSelected, setNodeSelected] = useState(null);
   const [geckoData, setGeckoData] = useState(null);
 
-  const toggleDrawer = (anchor, open) => (event) => {
+  const toggleDrawer = (anchor: string, open: boolean) => (event: { type: string; key: string; }) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
@@ -48,7 +48,7 @@ export default function TemporaryDrawer(props) {
     return addressContract
   }
 
-  const list = (anchor) => (
+  const list = (anchor: string) => (
     <div
       className='App-header'
       role="presentation"
