@@ -1,4 +1,3 @@
-
 // Groups:
 // 0 : networks
 // 1 : bridges
@@ -10,34 +9,57 @@
 // 7 : token (stables?)
 // 8 :
 
-
-// { id: "", group: 0, label: "", level: 1,
-//   imgOnline:'',
-//   url:'https://',
-//   graphUrl:'' ,
-//   query:'' , search:'' },
-
 // widget to interact directly?? (see connext)
+
+// what to do with multiple thegraph endpoints? create array with a name?
+// graphurl : theGraph endpoint
+// search: schema retrieved (for filter)
+// query : query to thegraph (make particular queries for any need or total for user interaction)
+
+// Networks dont have contracts, have explorers
+// Nodes have contracts (inner protocols)
+// Links have contracts of interactions (mostly bridges)
+
+// Links should be asked as :
+// if target is network
+// target: network > Parent of node
+// source: node
+
+
+// if target and source are linked dapps
+// target: Bigger case (protocol owner, )
+// source: node
+// examples ??
+//Link between Gnosis and Omen
+// target: Gnosis
+// source: Omen
+// protocols:[ConditionalTokens, ConditionalTokensMarket]
+
+//Link between Uniswap and Honeyswap/Pancakeswap
+// target: Uniswap
+// source: Honeyswap
+// protocols:[name of contracts, ...]
+
 
 export const nodes:Node = [
 // NETWORKS
   { id: "ethereum", group: 0, label: "Ethereum", level: 1,
     img:'ethereum.png',
     url:'https://www.ethereum.org',
-    explorer:'https://blockchair.com/bitcoin/',
+    explorer:'https://etherscan.org/',
     graphUrl:'' ,
     query:'' , search:'', widget:'' },
   { id: "bitcoin", group: 0, label: "Bitcoin", level: 1,
     img:'bitcoin.png',
     url:'https://bitcoin.org',
-    explorer:'https://etherscan.org',
+    explorer:'https://blockchair.com/bitcoin/',
     graphUrl:'' ,
     query:'' , search:'', widget:'' },
   { id: "xdai", group: 0, label: "xDai", level: 1,
     img:'xdai.png' ,
     url:'https://www.xdaichain.com',
-    explorer:'https://blockscout.com',
-    graphUrl:'' ,
+    explorer:'https://blockscout.com/',
+    graphUrl:'https://api.thegraph.com/subgraphs/name/maxaleks/xdai-stakers' , //careful here!
     query:'' , search:'', widget:''},
   { id: "polygon"  , group: 0, label: "Polygon"   , level: 1,
     img:'polygon.png' ,
@@ -75,27 +97,32 @@ export const nodes:Node = [
     img:'wrapped-bitcoin.png',
     url:'https://wbtc.network',
     contract:'0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
-    graphUrl:'' ,
+    graphUrl:'https://api.thegraph.com/subgraphs/name/ryabina-io/weth' ,
     query:'' , search:'', widget:'' },
+  { id: "omnibridge_BSC", group: 1, label: "Omnibridge BSC-xDai", level: 2,
+      img:'',
+      url:'https://bsc-to-xdai-omnibridge.web.app/  ',
+      graphUrl:'https://api.thegraph.com/subgraphs/name/maxaleks/xdai-to-bsc-omnibridge' ,
+      query:'' , search:'', widget:'' },
 
 // DAPPS
   { id: "aave"   , group: 3, label: "Aave" , level: 2,
     img:'aave.png' ,
     url:'https://aave.com',
     contract:'0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9',
-    graphUrl:'' ,
+    graphUrl:'https://api.thegraph.com/subgraphs/name/aave/protocol' ,
     query:'' , search:'', widget:''},
   { id: "uniswap"   , group: 2, label: "Uniswap"   , level: 2,
     img:'uniswap.png' ,
     url:'https://app.uniswap.org',
-    contract:'',
+    contract:'0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
     graphUrl:'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2' ,
     query:'' , search:'', widget:''},
   { id: "tether", group: 7, label: "Tether", level: 2,
     img:'tether.png',
     url:'https://tether.to',
-    contract:'',
-    graphUrl:'' ,
+    contract:'0xdac17f958d2ee523a2206206994597c13d831ec7',
+    graphUrl:'https://api.thegraph.com/subgraphs/name/alexklos/tether' ,
     query:'' , search:'', widget:'' },
   { id: "usd-coin", group: 7, label: "USDC", level: 2,
     img:'usd-coin.png',
@@ -107,55 +134,55 @@ export const nodes:Node = [
     img:'honey.png' ,
     url:'https://app.honeyswap.org',
     contract:'0x71850b7e9ee3f13ab46d67167341e4bdc905eef9', //xdai!
-    graphUrl:'' ,
+    graphUrl:'https://api.thegraph.com/subgraphs/name/1hive/honeyswap-v2' ,
     query:'' , search:'', widget:''},
   { id: "chainlink", group: 5, label: "Chainlink", level: 2,
     img:'chainlink.png',
     url:'https://chain.link',
     contract:'0x514910771af9ca656af840dff83e8264ecf986ca',
-    graphUrl:'' ,
+    graphUrl:'https://api.thegraph.com/subgraphs/name/tomafrench/chainlink' , //careful here!
     query:'' , search:'', widget:'' },
   { id: "agave-token", group: 3, label: "Agave"   , level: 2,
     img:'agave.png' ,
     url:'no ui yet',
     contract:'0x3a97704a1b25f08aa230ae53b352e2e72ef52843',//xdai!
-    graphUrl:'' ,
+    graphUrl:'https://api.thegraph.com/subgraphs/name/1hive/agave-rinkeby' , //rinkeby!! but for now..
     query:'' , search:'', widget:''},
   { id: "quickswap"  , group: 2, label: "Quickswap"  , level: 2,
     img:'quickswap.png' ,
     url:'https://quickswap.exchange/#/swap',
-    contract:'',
-    graphUrl:'' ,
+    contract:'0x6c28aef8977c9b773996d0e8376d2ee379446f2f',
+    graphUrl:'https://api.thegraph.com/subgraphs/name/developerfred/quick-swap' ,
     query:'' , search:'', widget:''},
   { id: "binance-usd", group: 7, label: " Binance USD", level: 2,
     img:'binance-usd.png',
     url:'https://paxos.com',
     contract:'0x4fabb145d64652a948d72533023f6e7a623c7c53',
-    graphUrl:'' ,
+    graphUrl:'' , // no binance shit in TheGraph!
     query:'' , search:'', widget:'' },
   { id: "pancakeswap", group: 2, label: "Pancake Swap", level: 2,
     img:'pancakeswap.png',
     url:'https://pancakeswap.finance',
     contract:'0 x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82', //BSC!!
-    graphUrl:'' ,
+    graphUrl:'https://api.thegraph.com/subgraphs/name/developerfred/pancake-exchange' , // careful here!
     query:'' , search:'', widget:'' },
   { id: "dai", group: 7, label: "Dai", level: 2,
     img:'dai.png',
     url:'https://makerdao.com',
     contract:'0x6b175474e89094c44da98b954eedeac495271d0f',
-    graphUrl:'',
+    graphUrl:'https://api.thegraph.com/subgraphs/name/raisehq/dai-mainnet',
     query:'' , search:'', widget:'' },
   { id: "maker", group: 6, label: "Maker", level: 2,
     img:'maker.png',
     url:'https://makerdao.com',
     contract:'0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2',
-    graphUrl:'' ,
+    graphUrl:'https://api.thegraph.com/subgraphs/name/protofire/maker-protocol' ,
     query:'' , search:'', widget:'' },
   { id: "sushi", group: 2, label: "Sushi swap", level: 2,
     img:'sushiswap.png',
     url:'https://sushiswap.org',
     contract:'0x6b3595068778dd592e39a122f4f5a5cf09c90fe2',
-    graphUrl:'' ,
+    graphUrl:'https://api.thegraph.com/subgraphs/name/croco-finance/sushiswap' ,
     query:'' , search:'', widget:'' },
   { id: "zapper", group: 4, label: "Zapper", level: 2,
     img:'zapper.png',
@@ -175,11 +202,6 @@ export const nodes:Node = [
     contract:'0x2edf094db69d6dcd487f1b3db9febe2eec0dd4c5',
     graphUrl:'' ,
     query:'' , search:'', widget:'' },
-  { id: "omnibridge_BSC", group: 1, label: "Omnibridge BSC-xDai", level: 2,
-    img:'',
-    url:'https://bsc-to-xdai-omnibridge.web.app/  ',
-    graphUrl:'' ,
-    query:'' , search:'', widget:'' },
         // { id: "", group: 0, label: "", level: 2,
         //   img:'',
         //   url:'https://',
@@ -195,11 +217,6 @@ export const nodes:Node = [
 
 
 ];
-// graphurl : theGraph endpoint
-// search: schema retrieved (for filter)
-// query : query to thegraph (make particular queries for any need or total for user interaction)
-
-
 
 export const links:Link = [
   { target: "ethereum", source: "omnibridge" , strength: 0.7, contract:'0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016'},
@@ -218,7 +235,6 @@ export const links:Link = [
   { target: "ethereum", source: "zeroswap" , strength: 0.4 },
   { target: "ethereum", source: "connext" , strength: 0.4 },
   { target: "ethereum", source: "zerion" , strength: 0.4 },
-  { target: "maker", source: "dai" , strength: 0.4 },
   { target: "bitcoin", source: "wrapped-bitcoin" , strength: 0.4 },
   { target: "xdai", source: "honey" , strength: 0.7 },
   { target: "xdai", source: "agave-token" , strength: 0.4 },
@@ -239,5 +255,10 @@ export const links:Link = [
   { target: "binance-coin", source: "zeroswap" , strength: 0.4 },
   { target: "binance-coin", source: "zerion" , strength: 0.4 },
   { target: "binance-coin", source: "omnibridge_BSC" , strength: 0.4 , contract:'0x05185872898b6f94AA600177EF41B9334B1FA48B'},
-
+  { target: "maker", source: "dai" , strength: 0.4 },
+  { target: "uniswap", source: "honey" , strength: 0.2 },
+  { target: "uniswap", source: "pancakeswap" , strength: 0.2 },
+  { target: "uniswap", source: "sushi" , strength: 0.2 },
+  { target: "aave", source: "agave-token" , strength: 0.2 },
+  // { target: "", source: "" , strength:  },
 ];

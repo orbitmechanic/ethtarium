@@ -67,12 +67,23 @@ export function getNodesNetworks(networkFilter){
     return unique;
   }
 
+export function getExplorer(nodeId:String){
+  let networks = getNetwork(nodeId);
+  let net = networks.filter(x=>x.target.group===0)
+  if(net[0] && net[0].target && net[0].target.explorer){
+    // console.log(net[0].target.explorer)
+    let explorer = net[0].target.explorer;
+    return explorer;
+  }
+  return false;
+}
 
-  // function getNetwork(nodeId:String){
-  //     let nodeLinks:Link[]|null = links.filter(x=>x.source===nodeId)
-  //     let nodeLinksNames:String[]|null = nodeLinks.map(x=>x.target)
-  //     return nodeLinksNames;
-  //   }
+function getNetwork(nodeId:String){
+      let nodeLinks:Link[]|null = links.filter(x=>x.source.id===nodeId)
+      // let nodeLinksNames:String[]|null = nodeLinks.map(x=>x.target.id)
+      console.log('Links for: ',nodeId,' are: ', nodeLinks) //nope!
+      return nodeLinks;
+    }
 
   // function isChild(nodeId:String, networkId:String){
   //   let node:Node|null = getNode(nodeId);

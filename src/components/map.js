@@ -3,14 +3,14 @@ import { nodes, links } from "../helpers/localDB";
 import ForceGraph3D from "3d-force-graph";
 import PermanentDrawerLeft from "./filters";
 import * as THREE from 'three';
-import SpriteText from 'three-spritetext';
+// import SpriteText from 'three-spritetext';
 
-import { getNodesFiltered, getNodesNetworks} from '../helpers/mapHelpers';
+import { getNodesFiltered, getNodesNetworks } from '../helpers/mapHelpers';
+// getNode
 
 function Map(props) {
   let networks = nodes.filter(x => x.group === 0);
   let networksNames = networks.map(x => x.id);
-
   const [filter, setFilter] = useState([0,1,]);
   const [networkFilter, setNetworkFilter] = useState(networksNames)
 
@@ -37,28 +37,40 @@ function Map(props) {
     setNetworkFilter(filters);
   }
 
-  function selectNode(id){
-    props.onNodeSelected(id);
-  }
+  // function selectNode(id){
+  //   props.onNodeSelected(id);
+  //   // let node = getNode(id)
+  //   // focusNode() // cannot get graph2 outside its env
+  //   // how do i simulate a click inside graph2?
+  // }
+
+function focusNode(graph,node){
+  // Focus on node
+    const distance = 100;
+    const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
+    graph.cameraPosition(
+        { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
+          node, // lookAt ({ x, y, z })
+          2000  // ms transition duration
+          );
+        };
 
   useEffect(()=>{
       create3dGraph();
   })
 
-  function graphInSpace(graph, whatTo, where){
-    graph
-      .nodeThreeObject(where => {
-        const sprite = new SpriteText(whatTo);
-        sprite.material.depthWrite = false; // make sprite background transparent
-        sprite.color = 'white';
-        sprite.textHeight = 8;
-        return sprite;
-      })
+  // function graphInSpace(graph, whatTo, where){
+  //   graph
+  //     .nodeThreeObject(where => {
+  //       const sprite = new SpriteText(whatTo);
+  //       sprite.material.depthWrite = false; // make sprite background transparent
+  //       sprite.color = 'white';
+  //       sprite.textHeight = 8;
+  //       return sprite;
+  //     })
+  // }
 
-  }
-
-
-  async function create3dGraph(){
+  function filterNodes(){
     let unique = getNodesNetworks(networkFilter);
     let filteredNodes = getNodesFiltered(unique, filter);
     const finalNodesIds = filteredNodes.map(x=>x.id)
@@ -71,7 +83,12 @@ function Map(props) {
           }
           return filteredLinks;
         },[])
+    return [filteredNodes, filteredLinks];
+  }
 
+
+  async function create3dGraph(){
+    const [filteredNodes, filteredLinks] = filterNodes()
     const gData = {
       nodes: filteredNodes,
       links: filteredLinks
@@ -120,19 +137,12 @@ function Map(props) {
             : selectedNodes.add(node);
         } else {
           // single-selection
-          selectNode(node.id);
+          props.onNodeSelected(node.id);
           const untoggle = selectedNodes.has(node) && selectedNodes.size === 1;
           selectedNodes.clear();
           !untoggle && selectedNodes.add(node);
         }
-        // Focus on node
-          const distance = 100;
-          const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
-          graph2.cameraPosition(
-              { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
-                node, // lookAt ({ x, y, z })
-                2000  // ms transition duration
-                );
+        focusNode(graph2, node)
           // graphInSpace(graph2, 'whatTo', node)
         // updateHighlight(); //not sure if useful here
       })
@@ -171,6 +181,7 @@ function Map(props) {
   // Play with forces
     // graph2.d3Force('charge').strength(-300);
 
+
 //Post processing
     //   const bloomPass = new UnrealBloomPass();
     // bloomPass.strength = 3;
@@ -194,9 +205,9 @@ function Map(props) {
         networkFilter = {networkFilter}
         onFilters = {handleFilter}
         onNetworkFilter = {handleNetworkChange}
-        selectNode = {selectNode}
+        selectNode = {props.onNodeSelected}
       />
-      <div flex id="3d-graph"></div>
+      <div id="3d-graph"></div>
 
   </div>
   )

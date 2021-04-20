@@ -5,10 +5,10 @@ import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import InputBase from '@material-ui/core/InputBase';
+import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -135,7 +135,6 @@ export default function PermanentDrawerLeft(props) {
   };
 
   const handleSearch = (search) => {
-    // console.log(search.target.value)
     if(search.target.value.length>=3){
       let nodeIds = props.nodes.map(x=>x.id)
       let results = nodeIds.filter((node) => node.startsWith(search.target.value))
@@ -250,27 +249,25 @@ export default function PermanentDrawerLeft(props) {
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
       </div>
-{/*
             {searchResults?
             <div>
               <List>
-                {searchResults.map((result)=>{
-                  <ListItem>
-                    <Button >test{result}</Button>
-                    <p>{result}</p>
+                {searchResults.forEach(
+                (result)=>{
+                  <ListItem id={result}>
+                    <Button id={result}>{result}</Button>
                   </ListItem>
                   })}
               </List>
             </div>
           :null}
-*/}
         <Divider />
         <Button onClick={()=>setNetworkFilterOpen(!networkFilterOpen)}>Networks</Button>
         {networkFilterOpen?
           <div>
             <List>
             {props.networks.map((network)=>(
-              <ListItem>
+              <ListItem id={network}>
                 <FormControlLabel
                   value={network}
                   id = {network}
@@ -286,7 +283,7 @@ export default function PermanentDrawerLeft(props) {
         <Divider />
         <List>
           {options.map((opt) => (
-            <ListItem>
+            <ListItem id={opt.value}>
               <FormControlLabel
                         value={opt.value}
                         id = {opt.value}
