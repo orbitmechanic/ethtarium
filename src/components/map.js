@@ -111,21 +111,25 @@ function focusNode(graph,node){
 
     const graph2 =  ForceGraph3D()
         (spaceHolder)
-      // .nodeRelSize(5)
+      // .nodeRelSize(node => node.group===0? 100 : 4) // not working!!
       .nodeLabel('label') // show label on hover
       .nodeAutoColorBy('group') // Color by group attr
       // Images as sprites
       .nodeThreeObject((node:Node) => {
-        let test;
+        let imageUrl;
         if(node && node.img){
-          test =require(`../images/mini_${node.img}`)
+          imageUrl =require(`../images/mini_${node.img}`)
         }else{
-          test =require('../images/mini_default.png')
+          imageUrl =require('../images/mini_default.png')
         }
-        const imgTexture = new THREE.TextureLoader().load(test.default);//${img}
+        const imgTexture = new THREE.TextureLoader().load(imageUrl.default);//${img}
         const material = new THREE.SpriteMaterial({ map: imgTexture , color: 0xffffff});
         const sprite = new THREE.Sprite(material);
-        sprite.scale.set(32, 32, 1);
+        if(node.group === 0 ){
+          sprite.scale.set(32,32,1)
+        }else{
+          sprite.scale.set(20,20,1)
+        }
         return sprite;
         })
       // Effects and text on hover
