@@ -24,8 +24,6 @@ export default function TemporaryDrawer(props) {
     setState({ ...state, [anchor]: open });
   };
 
-
-
   if(props.nodeSelected){
     if(nodeSelected !== props.nodeSelected){
       setNodeSelected(props.nodeSelected)
@@ -45,6 +43,7 @@ export default function TemporaryDrawer(props) {
   function getAddress(){
     let explorer = getExplorer(props.nodeSelected)
     let addressContract=explorer+`address/${props.nodeSelectedData.contract}`
+    // console.log(addressContract)
     return addressContract
   }
 
@@ -122,8 +121,6 @@ export default function TemporaryDrawer(props) {
     </div>
   );
 
-
-
   return(
     <div>
     {props.nodeSelected?
@@ -141,7 +138,6 @@ export default function TemporaryDrawer(props) {
             {list('top')}
           </Drawer>
       </React.Fragment>
-
     </div>
   );
 }
