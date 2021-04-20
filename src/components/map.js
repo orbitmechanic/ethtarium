@@ -3,14 +3,15 @@ import { nodes, links } from "../helpers/localDB";
 import ForceGraph3D from "3d-force-graph";
 import PermanentDrawerLeft from "./filters";
 import * as THREE from 'three';
+// import SpriteText from 'three-spritetext';
 
-import { getNodesFiltered, getNodesNetworks} from '../helpers/mapHelpers';
+import { getNodesFiltered, getNodesNetworks } from '../helpers/mapHelpers';
+// getNode
 
 function Map(props) {
   let networks = nodes.filter(x => x.group === 0);
   let networksNames = networks.map(x => x.id);
-
-  const [filter, setFilter] = useState([0,1, 2, 3]);
+  const [filter, setFilter] = useState([0,1,]);
   const [networkFilter, setNetworkFilter] = useState(networksNames)
 
   type Node = {
@@ -36,16 +37,40 @@ function Map(props) {
     setNetworkFilter(filters);
   }
 
-  function selectNode(id){
-    props.onNodeSelected(id);
-  }
+  // function selectNode(id){
+  //   props.onNodeSelected(id);
+  //   // let node = getNode(id)
+  //   // focusNode() // cannot get graph2 outside its env
+  //   // how do i simulate a click inside graph2?
+  // }
+
+function focusNode(graph,node){
+  // Focus on node
+    const distance = 100;
+    const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
+    graph.cameraPosition(
+        { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
+          node, // lookAt ({ x, y, z })
+          2000  // ms transition duration
+          );
+        };
 
   useEffect(()=>{
       create3dGraph();
   })
 
+  // function graphInSpace(graph, whatTo, where){
+  //   graph
+  //     .nodeThreeObject(where => {
+  //       const sprite = new SpriteText(whatTo);
+  //       sprite.material.depthWrite = false; // make sprite background transparent
+  //       sprite.color = 'white';
+  //       sprite.textHeight = 8;
+  //       return sprite;
+  //     })
+  // }
 
-  async function create3dGraph(){
+  function filterNodes(){
     let unique = getNodesNetworks(networkFilter);
     let filteredNodes = getNodesFiltered(unique, filter);
     const finalNodesIds = filteredNodes.map(x=>x.id)
@@ -58,7 +83,12 @@ function Map(props) {
           }
           return filteredLinks;
         },[])
+    return [filteredNodes, filteredLinks];
+  }
 
+
+  async function create3dGraph(){
+    const [filteredNodes, filteredLinks] = filterNodes()
     const gData = {
       nodes: filteredNodes,
       links: filteredLinks
@@ -107,20 +137,14 @@ function Map(props) {
             : selectedNodes.add(node);
         } else {
           // single-selection
-          selectNode(node.id);
+          props.onNodeSelected(node.id);
           const untoggle = selectedNodes.has(node) && selectedNodes.size === 1;
           selectedNodes.clear();
           !untoggle && selectedNodes.add(node);
         }
-        // Focus on node
-          const distance = 100;
-          const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
-          graph2.cameraPosition(
-              { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
-                node, // lookAt ({ x, y, z })
-                2000  // ms transition duration
-                );
-        updateHighlight(); //not sure if useful here
+        focusNode(graph2, node)
+          // graphInSpace(graph2, 'whatTo', node)
+        // updateHighlight(); //not sure if useful here
       })
       .onNodeHover((node: any) => {
         if ((!node && !highlightNodes.size) || (node && hoverNode === node))
@@ -139,32 +163,26 @@ function Map(props) {
         hoverNode = node || null;
         updateHighlight();
       })
-      .linkWidth((link) => (highlightLinks.has(link) ? 1 : 2))
+      .linkWidth((link) => (highlightLinks.has(link) ? 0.3 : 1))
       .linkDirectionalParticles((link) => (highlightLinks.has(link) ? 3 : 0))
       .linkDirectionalParticleWidth(3)
-    
 
       // Graph it
       .graphData(gData);
 
-      //         .nodeThreeObject(node => {
-      //          const sprite = new SpriteText(node.id);
-      //          sprite.material.depthWrite = false; // make sprite background transparent
-      //          sprite.color = node.color;
-      //          sprite.textHeight = 8;
-      //          return sprite;
-      //        })
+// fit to canvas when engine stops
+    graph2.onEngineStop(() => graph2.zoomToFit(1000));
 
-    // fit to canvas when engine stops
-    graph2.onEngineStop(() => graph2.zoomToFit(500));
-
-// Distance between nodes
-    // const linkForce =
+//Distance between nodes
+  //Force distance
     graph2
       .d3Force('link')
       .distance(100);
+  // Play with forces
+    // graph2.d3Force('charge').strength(-300);
 
-    //Post processing
+
+//Post processing
     //   const bloomPass = new UnrealBloomPass();
     // bloomPass.strength = 3;
     // bloomPass.radius = 1;
@@ -174,9 +192,6 @@ function Map(props) {
     function updateHighlight() {
       // trigger update of highlighted objects in scene
       graph2
-        // .nodeColor(graph2.nodeColor())
-        // .nodeRelSize(graph2.nodeRelSize())
-        // .linkForce()
         .linkWidth(graph2.linkWidth())
         .linkDirectionalParticles(graph2.linkDirectionalParticles());
     }
@@ -190,8 +205,9 @@ function Map(props) {
         networkFilter = {networkFilter}
         onFilters = {handleFilter}
         onNetworkFilter = {handleNetworkChange}
+        selectNode = {props.onNodeSelected}
       />
-      <div flex id="3d-graph"></div>
+      <div id="3d-graph"></div>
 
   </div>
   )

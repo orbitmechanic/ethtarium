@@ -1,29 +1,20 @@
 import React,{useState} from 'react';
+import { Link } from "react-router-dom";
 import ReactDOM from 'react-dom'
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
+import LinkIcon from '@material-ui/icons/Link';
+// import List from '@material-ui/core/List';
+// import ListItem from '@material-ui/core/ListItem';
 
-import {getNode, fetchGeckoData} from '../helpers/mapHelpers';
-
-const useStyles = makeStyles({
-  list: {
-    width: 250,
-  },
-  fullList: {
-    width: 'auto',
-  },
-});
+import {fetchGeckoData, getExplorer} from '../helpers/mapHelpers';
 
 export default function TemporaryDrawer(props) {
-  const classes = useStyles();
   const [state, setState] = React.useState({
     top: false,
   });
   const [nodeSelected, setNodeSelected] = useState(null);
-  const [nodeSelectedData, setNodeSelectedData] = useState(null);
   const [geckoData, setGeckoData] = useState(null);
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -38,38 +29,42 @@ export default function TemporaryDrawer(props) {
   if(props.nodeSelected){
     if(nodeSelected !== props.nodeSelected){
       setNodeSelected(props.nodeSelected)
-      setNodeSelectedData(getNode(props.nodeSelected))
       fetchGeckoData(props.nodeSelected).then((gecko)=>{setGeckoData(gecko);})
   }}
 
-  function getImage(nodeSelectedData){
+  function getImage(){
     let image;
-     if(nodeSelectedData && nodeSelectedData.img){
-       image = require(`../images/mini_${nodeSelectedData.img}`)
+     if(props.nodeSelectedData && props.nodeSelectedData.img){
+       image = require(`../images/mini_${props.nodeSelectedData.img}`)
      }else{
        image = require('../images/mini_default.png');
      }
      return image.default
   }
 
+  function getAddress(){
+    let explorer = getExplorer(props.nodeSelected)
+    let addressContract=explorer+`address/${props.nodeSelectedData.contract}`
+    return addressContract
+  }
+
   const list = (anchor) => (
     <div
-      className={clsx(classes.list, {
-        [classes.fullList]: anchor === 'top' || anchor === 'bottom',
-      })}
+      className='App-header'
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <div>
-      {nodeSelectedData?
+      {props.nodeSelectedData?
         <div>
           <span>
-          <span>{nodeSelectedData.label}</span>
-          <img src={getImage(nodeSelectedData)} style={{marginLeft: "auto"}} alt='' width="50" height="50"></img>
+          <span>{props.nodeSelectedData.label}</span>
+          <img src={getImage(props.nodeSelectedData)} style={{marginLeft: "auto"}} alt='' width="50" height="50"></img>
           </span>
           <p>URL:
-          <a href={nodeSelectedData.url} rel="noreferrer" target="_blank">{nodeSelectedData.url}</a>
+          <a href={props.nodeSelectedData.url} style={{color:'white'}} rel="noreferrer" target="_blank">{props.nodeSelectedData.url}</a>
+          <LinkIcon />
           </p>
         </div>
         :null}
@@ -88,16 +83,42 @@ export default function TemporaryDrawer(props) {
         :null}
       </div>
 
+      <Divider  />
+      {props.nodeSelectedData && props.nodeSelectedData.group !== 0?
+        <div>
+        Contracts <br />
+          <a href={getAddress()} style={{color:'white'}}
+              rel="noreferrer" target="_blank" >{props.nodeSelectedData.contract}</a>
+              <LinkIcon />
+{/*
+          <List>
+          {props.nodeSelectedData.contract.forEach(
+            (contract)=>{
+                <ListItem id={contract}>
+                    <a href={''} rel="noreferrer" target="_blank" id={contract}>{contract}</a>
+                </ListItem> //need to get the explorer first (make a function!)
+                })}
+        </List>
+*/}
+        </div>
+        :null}
+
       <Divider />
-      Contracts
+      The Graph endpoints <br />
+      {props.nodeSelectedData && props.nodeSelectedData.graphUrl?
+        <div>
+        <Link to='/TheGraphData' >
+          <Button onClick={()=>props.selectGraphEndpoint(props.nodeSelectedData.graphUrl)} style={{color:'white'}}>{props.nodeSelectedData.graphUrl}</Button>
+          <LinkIcon style={{color:'white'}}/>
+        </Link>
+        </div>
+      :null}
+
       <Divider />
       Links (interact directly with contracts!) where to go from here
       for ex:
       network -> bridges -> other networks ||
       network -> swap tokens
-      <Divider />
-      The Graph endpoints
-      Add router to graph data fetched from TheGraph
     </div>
   );
 
