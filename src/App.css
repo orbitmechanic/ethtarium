@@ -3,11 +3,12 @@
 }
 
 .App-header {
-  display: flex;
+  text-align: center;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   color: white;
+  background-color: #282c34;
 }
 
 .App-body{
