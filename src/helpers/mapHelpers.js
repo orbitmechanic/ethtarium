@@ -46,7 +46,8 @@ export function getChilds(nodeId:String){
   }
 
 export function getNodesFiltered(list, filter){
-    let nodesFiltered = list.reduce((nodesFiltered, node:Node)=>{
+    let nodesFiltered = list.reduce((nodesFiltered, node)=>{
+        // console.log(node.id)
         if(filter.includes(node.group)){
           nodesFiltered.push(node);
         }
@@ -54,6 +55,18 @@ export function getNodesFiltered(list, filter){
       },[])
       return nodesFiltered;
   }
+
+export function getNodesNetworks(networkFilter){
+    let dapps = networkFilter.reduce((dapps, network)=>{
+      dapps.push(getNode(network))
+      dapps.push(getChilds(network))
+      return dapps;
+    },[])
+    let merged = [].concat.apply([], dapps);
+    let unique = [...new Set(merged)];
+    return unique;
+  }
+
 
   // function getNetwork(nodeId:String){
   //     let nodeLinks:Link[]|null = links.filter(x=>x.source===nodeId)

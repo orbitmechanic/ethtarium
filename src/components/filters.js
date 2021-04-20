@@ -94,13 +94,10 @@ export default function PermanentDrawerLeft(props) {
   const [networkFilter, setNetworkFilter] = useState(props.networkFilter);
 
   const handleDrawerOpen = () => {
-    console.log('hey')
-
     setOpen(true);
   };
 
   const handleDrawerClose = () => {
-    console.log('ho')
     setOpen(false);
   };
 
