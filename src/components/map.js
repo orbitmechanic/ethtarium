@@ -3,6 +3,7 @@ import { nodes, links } from "../helpers/localDB";
 import ForceGraph3D from "3d-force-graph";
 import PermanentDrawerLeft from "./filters";
 import * as THREE from 'three';
+import SpriteText from 'three-spritetext';
 
 import { getNodesFiltered, getNodesNetworks} from '../helpers/mapHelpers';
 
@@ -10,7 +11,7 @@ function Map(props) {
   let networks = nodes.filter(x => x.group === 0);
   let networksNames = networks.map(x => x.id);
 
-  const [filter, setFilter] = useState([0,1, 2, 3]);
+  const [filter, setFilter] = useState([0,1,]);
   const [networkFilter, setNetworkFilter] = useState(networksNames)
 
   type Node = {
@@ -43,6 +44,18 @@ function Map(props) {
   useEffect(()=>{
       create3dGraph();
   })
+
+  function graphInSpace(graph, whatTo, where){
+    graph
+      .nodeThreeObject(where => {
+        const sprite = new SpriteText(whatTo);
+        sprite.material.depthWrite = false; // make sprite background transparent
+        sprite.color = 'white';
+        sprite.textHeight = 8;
+        return sprite;
+      })
+
+  }
 
 
   async function create3dGraph(){
@@ -120,7 +133,8 @@ function Map(props) {
                 node, // lookAt ({ x, y, z })
                 2000  // ms transition duration
                 );
-        updateHighlight(); //not sure if useful here
+          // graphInSpace(graph2, 'whatTo', node)
+        // updateHighlight(); //not sure if useful here
       })
       .onNodeHover((node: any) => {
         if ((!node && !highlightNodes.size) || (node && hoverNode === node))
@@ -139,32 +153,25 @@ function Map(props) {
         hoverNode = node || null;
         updateHighlight();
       })
-      .linkWidth((link) => (highlightLinks.has(link) ? 1 : 2))
+      .linkWidth((link) => (highlightLinks.has(link) ? 0.3 : 1))
       .linkDirectionalParticles((link) => (highlightLinks.has(link) ? 3 : 0))
       .linkDirectionalParticleWidth(3)
-    
 
       // Graph it
       .graphData(gData);
 
-      //         .nodeThreeObject(node => {
-      //          const sprite = new SpriteText(node.id);
-      //          sprite.material.depthWrite = false; // make sprite background transparent
-      //          sprite.color = node.color;
-      //          sprite.textHeight = 8;
-      //          return sprite;
-      //        })
+// fit to canvas when engine stops
+    graph2.onEngineStop(() => graph2.zoomToFit(1000));
 
-    // fit to canvas when engine stops
-    graph2.onEngineStop(() => graph2.zoomToFit(500));
-
-// Distance between nodes
-    // const linkForce =
+//Distance between nodes
+  //Force distance
     graph2
       .d3Force('link')
       .distance(100);
+  // Play with forces
+    // graph2.d3Force('charge').strength(-300);
 
-    //Post processing
+//Post processing
     //   const bloomPass = new UnrealBloomPass();
     // bloomPass.strength = 3;
     // bloomPass.radius = 1;
@@ -174,9 +181,6 @@ function Map(props) {
     function updateHighlight() {
       // trigger update of highlighted objects in scene
       graph2
-        // .nodeColor(graph2.nodeColor())
-        // .nodeRelSize(graph2.nodeRelSize())
-        // .linkForce()
         .linkWidth(graph2.linkWidth())
         .linkDirectionalParticles(graph2.linkDirectionalParticles());
     }
@@ -190,6 +194,7 @@ function Map(props) {
         networkFilter = {networkFilter}
         onFilters = {handleFilter}
         onNetworkFilter = {handleNetworkChange}
+        selectNode = {selectNode}
       />
       <div flex id="3d-graph"></div>
 
