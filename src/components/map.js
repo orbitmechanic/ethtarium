@@ -179,7 +179,7 @@ function Map(props) {
       .graphData(gData);
 
     graph2
-      .onBackgroundClick(zoomOut) //not working!
+      .onBackgroundClick(zoomOut)
 
 //Distance between nodes
 //Force distance
