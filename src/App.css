@@ -19,3 +19,8 @@
   color:white;
   align-items: flex-start;
 }
+
+.GreyStuff{
+  background-color: grey;
+  color:white;
+}
