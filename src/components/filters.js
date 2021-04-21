@@ -18,6 +18,8 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { Button, Checkbox, FormControlLabel, } from '@material-ui/core';
 
 import {options} from '../helpers/localDB';
+const optionsWNetworks = [...options];
+optionsWNetworks.shift() // deletes networks from options
 
 const drawerWidth = 260;
 
@@ -150,7 +152,6 @@ export default function PermanentDrawerLeft(props) {
   }
 
 
-
   const handleChange = (value) => {
     let newFilter = [...filter];
     if(filter.includes(value)){
@@ -274,7 +275,7 @@ export default function PermanentDrawerLeft(props) {
         :null}
         <Divider />
         <List>
-          {options.map((opt) => (
+          {optionsWNetworks.map((opt) => (
             <ListItem id={opt.value}>
               <FormControlLabel
                         value={opt.value}

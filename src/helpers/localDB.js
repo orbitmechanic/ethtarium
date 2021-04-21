@@ -41,7 +41,7 @@
 // protocols:[name of contracts, ...]
 
 export const options = [
-  // { label: 'Networks', value: 0 , },
+  { label: 'Networks', value: 0 , },
   { label: 'Bridges', value: 1 , },
   { label: 'Markets', value: 2,},
   { label: 'Defi', value: 3,},

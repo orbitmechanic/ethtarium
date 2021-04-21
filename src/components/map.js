@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import { nodes, links } from "../helpers/localDB";
 import ForceGraph3D from "3d-force-graph";
 import PermanentDrawerLeft from "./filters";
@@ -40,13 +40,11 @@ function Map(props) {
     props.onNodeSelected(id);
     let nodeI = getNode(id);
 
-    //
-    // nodeI.then((nodeData)=>
-      graph.then((graph)=>{
-        // console.log('id',id,'graph',graph,' node: ',nodeI)
-        focusNode(graph, nodeI)
-      })
-    //  )
+    // console.log('id',id,'graph',graph.current,' node: ',nodeI)
+    graph.current.then((graph)=>{
+      focusNode(graph, nodeI)
+    }
+     )
   };
 
   function focusNode(graph,node){
@@ -61,9 +59,9 @@ function Map(props) {
           );
         };
 
-  let graph;
+  let graph=useRef(null);
   useEffect(()=>{
-        graph=create3dGraph(); //useRef()
+        graph.current=create3dGraph(); //useRef()
   })
 
   // function graphInSpace(graph, whatTo, where){
