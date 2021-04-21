@@ -30,7 +30,9 @@ export default function Landing(props) {
         <Link to={'/Map'}>
           <Button  style={{backgroundColor:'grey',color:'white',fontWeight:'bold'}}>Planethary</Button>
         </Link>
-        <Button disabled style={{background:'grey'}}>VR version</Button>
+        <Link to={'/MapVR'}>
+          <Button  style={{background:'grey',color:'white',fontWeight:'bold'}}>VR version</Button>
+        </Link>
         <br />
         <br />
         <div>

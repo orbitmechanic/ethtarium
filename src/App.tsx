@@ -4,6 +4,7 @@ import { BrowserRouter,Route } from "react-router-dom";
 
 //Components
 import Map from './components/map';
+import MapVR from './components/mapVR';
 import TemporaryDrawer from './components/dataDrawer';
 import TheGraphExplorer from './components/thegraphexplorer';
 import Landing from './components/landing';
@@ -58,6 +59,9 @@ function App() {
         </Route>
         <Route path='/Add'>
           <AddNode />
+        </Route>
+        <Route path='/mapVR'>
+          <MapVR />
         </Route>
       </BrowserRouter>
       </body>
