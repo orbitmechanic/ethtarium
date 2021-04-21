@@ -1,11 +1,19 @@
 import React, {useState, useCallback} from "react";
 import "./App.css";
 import { BrowserRouter,Route } from "react-router-dom";
+
+//Components
 import Map from './components/map';
 import TemporaryDrawer from './components/dataDrawer';
 import TheGraphExplorer from './components/thegraphexplorer';
+import Landing from './components/landing';
+import AddNode from './components/add';
+//UI
 
+//Functions
 import {getNode} from './helpers/mapHelpers';
+
+// others
 
 function App() {
   const [nodeSelected, setNodeSelected] = useState(null);
@@ -13,7 +21,7 @@ function App() {
   const [endpoint, setEndpoint] = useState(null);
 
   const selectGraphEndpoint = (endpoint)=>{
-    console.log(endpoint)
+    // console.log(endpoint)
     setEndpoint(endpoint)
   } ;
 
@@ -27,8 +35,13 @@ function App() {
       <body className='App-body'>
       <BrowserRouter>
         <Route exact path="/">
+          <Landing
+            selectGraphEndpoint = {selectGraphEndpoint}
+          />
+        </Route>
+        <Route path='/Map'>
           <Map
-          onNodeSelected={selectNode}
+            onNodeSelected={selectNode}
           />
           <TemporaryDrawer
             nodeSelected = {nodeSelected}
@@ -42,6 +55,9 @@ function App() {
             endpoint = {endpoint}
             selectNode = {selectNode}
            />
+        </Route>
+        <Route path='/Add'>
+          <AddNode />
         </Route>
       </BrowserRouter>
       </body>

@@ -37,6 +37,7 @@ export function getChilds(nodeId:String){
       let source = link.source.id?link.source.id:link.source;
       // console.log('target=',target )
       if(target === nodeId){ //
+
         childs.push(getNode(source))//
       } // it seems to automatically change the object (with id, or without)
       return childs
@@ -81,7 +82,7 @@ export function getExplorer(nodeId:String){
 function getNetwork(nodeId:String){
       let nodeLinks:Link[]|null = links.filter(x=>x.source.id===nodeId)
       // let nodeLinksNames:String[]|null = nodeLinks.map(x=>x.target.id)
-      console.log('Links for: ',nodeId,' are: ', nodeLinks) //nope!
+      // console.log('Links for: ',nodeId,' are: ', nodeLinks) //nope!
       return nodeLinks;
     }
 
