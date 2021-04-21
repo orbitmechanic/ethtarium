@@ -13,9 +13,11 @@ import ListItem from '@material-ui/core/ListItem';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import SearchIcon from '@material-ui/icons/Search';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { Button, Checkbox, FormControlLabel, } from '@material-ui/core';
+
+import {options} from '../helpers/localDB';
 
 const drawerWidth = 260;
 
@@ -140,23 +142,13 @@ export default function PermanentDrawerLeft(props) {
       let results = nodeIds.filter((node) => node.startsWith(search.target.value))
       setSearchResults(results);
       if(results.length === 1){
-        props.selectNode(results);
+        props.selectNode(results[0]);
       }
     }else{
       setSearchResults(null)
     }
   }
 
-  const options = [
-  // { label: 'Networks', value: 0 , },
-  { label: 'Bridges', value: 1 , },
-  { label: 'Swap', value: 2,},
-  { label: 'Lend&Borrow', value: 3,},
-  { label: 'Manage', value: 4, },
-  { label: 'Oracle', value: 5, },
-  { label: 'DAO', value: 6, },
-  { label: 'Tokens', value: 7,  },
-  ];
 
 
   const handleChange = (value) => {
@@ -243,7 +235,7 @@ export default function PermanentDrawerLeft(props) {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
-        />
+              />
         </div>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
