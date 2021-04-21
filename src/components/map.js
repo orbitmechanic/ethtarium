@@ -1,12 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import { nodes, links } from "../helpers/localDB";
 import ForceGraph3D from "3d-force-graph";
 import PermanentDrawerLeft from "./filters";
 import * as THREE from 'three';
 // import SpriteText from 'three-spritetext';
 
-import { getNodesFiltered, getNodesNetworks } from '../helpers/mapHelpers';
-// getNode
+import {getNode, getNodesFiltered, getNodesNetworks } from '../helpers/mapHelpers';
 
 function Map(props) {
   let networks = nodes.filter(x => x.group === 0);
@@ -37,15 +36,20 @@ function Map(props) {
     setNetworkFilter(filters);
   }
 
-  // function selectNode(id){
-  //   props.onNodeSelected(id);
-  //   // let node = getNode(id)
-  //   // focusNode() // cannot get graph2 outside its env
-  //   // how do i simulate a click inside graph2?
-  // }
+  function selectNode(id){
+    props.onNodeSelected(id);
+    let nodeI = getNode(id);
 
-function focusNode(graph,node){
+    // console.log('id',id,'graph',graph.current,' node: ',nodeI)
+    graph.current.then((graph)=>{
+      focusNode(graph, nodeI)
+    }
+     )
+  };
+
+  function focusNode(graph,node){
   // Focus on node
+    // console.log('flying into ',node.id)
     const distance = 100;
     const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
     graph.cameraPosition(
@@ -55,8 +59,9 @@ function focusNode(graph,node){
           );
         };
 
+  let graph=useRef(null);
   useEffect(()=>{
-      create3dGraph();
+        graph.current=create3dGraph(); //useRef()
   })
 
   // function graphInSpace(graph, whatTo, where){
@@ -86,7 +91,6 @@ function focusNode(graph,node){
     return [filteredNodes, filteredLinks];
   }
 
-
   async function create3dGraph(){
     const [filteredNodes, filteredLinks] = filterNodes()
     const gData = {
@@ -111,21 +115,25 @@ function focusNode(graph,node){
 
     const graph2 =  ForceGraph3D()
         (spaceHolder)
-      // .nodeRelSize(5)
+      // .nodeRelSize(node => node.group===0? 100 : 4) // not working!!
       .nodeLabel('label') // show label on hover
       .nodeAutoColorBy('group') // Color by group attr
       // Images as sprites
       .nodeThreeObject((node:Node) => {
-        let test;
+        let imageUrl;
         if(node && node.img){
-          test =require(`../images/mini_${node.img}`)
+          imageUrl =require(`../images/mini_${node.img}`)
         }else{
-          test =require('../images/mini_default.png')
+          imageUrl =require('../images/mini_default.png')
         }
-        const imgTexture = new THREE.TextureLoader().load(test.default);//${img}
+        const imgTexture = new THREE.TextureLoader().load(imageUrl.default);
         const material = new THREE.SpriteMaterial({ map: imgTexture , color: 0xffffff});
-        const sprite = new THREE.Sprite(material);
-        sprite.scale.set(32, 32, 1);
+        const sprite = new THREE.Sprite(material); // fetch Gecko data and add here? at least test it!
+        if(node.group === 0 ){
+          sprite.scale.set(32,32,1)
+        }else{
+          sprite.scale.set(20,20,1)
+        }
         return sprite;
         })
       // Effects and text on hover
@@ -170,24 +178,30 @@ function focusNode(graph,node){
       // Graph it
       .graphData(gData);
 
-// fit to canvas when engine stops
-    graph2.onEngineStop(() => graph2.zoomToFit(1000));
+    graph2
+      .onBackgroundClick(zoomOut) //not working!
 
 //Distance between nodes
-  //Force distance
+//Force distance
     graph2
       .d3Force('link')
       .distance(100);
+        //'distance'); // distance from DB? hooooow?
   // Play with forces
     // graph2.d3Force('charge').strength(-300);
 
-
+    return graph2;
 //Post processing
     //   const bloomPass = new UnrealBloomPass();
     // bloomPass.strength = 3;
     // bloomPass.radius = 1;
     // bloomPass.threshold = 0.1;
     // graph2.postProcessingComposer().addPass(bloomPass);
+
+    function zoomOut(){
+      //graph2.onEngineStop(() => graph2.zoomToFit(100)); // Make this to Fit when mouse is out the map
+      graph2.zoomToFit(100);
+    }
 
     function updateHighlight() {
       // trigger update of highlighted objects in scene
@@ -205,7 +219,7 @@ function focusNode(graph,node){
         networkFilter = {networkFilter}
         onFilters = {handleFilter}
         onNetworkFilter = {handleNetworkChange}
-        selectNode = {props.onNodeSelected}
+        selectNode = {selectNode}
       />
       <div id="3d-graph"></div>
 
