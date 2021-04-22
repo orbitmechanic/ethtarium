@@ -1,8 +1,10 @@
-import React from "react";
+import styles from "../../styles/main.module.css";
+import MenuButton from "./MenuButton";
 
 const MapMenu = () => {
   return (
-    <div>
+    <div className={styles.menu}>
+      <MenuButton />
       <p>Networks</p>
       <ul>
         {/* Menu item - label and checkbox bool */}

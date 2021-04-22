@@ -9,10 +9,12 @@ import TheGraphExplorer from "./components/thegraphexplorer";
 import Landing from "./components/landing";
 import AddNode from "./components/add";
 //UI
+import Frontwip from "./components/pages/Frontwip";
+import Layout from "./components/Layout";
 
 //Functions
 import { getNode } from "./helpers/mapHelpers";
-import Frontwip from "./components/pages/Frontwip";
+
 // others
 
 function App() {
@@ -31,39 +33,37 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <div className="App-body">
-        <BrowserRouter>
-          <Route exact path="/">
-            <Landing selectGraphEndpoint={selectGraphEndpoint} />
-          </Route>
-          <Route path="/Map">
-            <Map onNodeSelected={selectNode} />
-            <TemporaryDrawer
-              nodeSelected={nodeSelected}
-              selectGraphEndpoint={selectGraphEndpoint}
-              nodeSelectedData={nodeSelectedData}
-            />
-          </Route>
-          <Route path="/TheGraphData">
-            <TheGraphExplorer
-              node={nodeSelected}
-              endpoint={endpoint}
-              selectNode={selectNode}
-            />
-          </Route>
-          <Route path="/Add">
-            <AddNode />
-          </Route>
-          <Route path="/Frontwip">
-            <Frontwip
-              onNodeSelected={selectNode}
-              selectGraphEndpoint={selectGraphEndpoint}
-            />
-          </Route>
-        </BrowserRouter>
-      </div>
-    </div>
+    <Layout>
+      <BrowserRouter>
+        <Route exact path="/">
+          <Landing selectGraphEndpoint={selectGraphEndpoint} />
+        </Route>
+        <Route path="/Map">
+          <Map onNodeSelected={selectNode} />
+          <TemporaryDrawer
+            nodeSelected={nodeSelected}
+            selectGraphEndpoint={selectGraphEndpoint}
+            nodeSelectedData={nodeSelectedData}
+          />
+        </Route>
+        <Route path="/TheGraphData">
+          <TheGraphExplorer
+            node={nodeSelected}
+            endpoint={endpoint}
+            selectNode={selectNode}
+          />
+        </Route>
+        <Route path="/Add">
+          <AddNode />
+        </Route>
+        <Route path="/Frontwip">
+          <Frontwip
+            onNodeSelected={selectNode}
+            selectGraphEndpoint={selectGraphEndpoint}
+          />
+        </Route>
+      </BrowserRouter>
+    </Layout>
   );
 }
 
