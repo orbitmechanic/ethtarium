@@ -5,6 +5,7 @@ const MapMenu = () => {
     <div>
       <p>Networks</p>
       <ul>
+        {/* Menu item - label and checkbox bool */}
         <li>Ethereum</li>
         //temp will work on props
         <li>Bitcoin</li>
