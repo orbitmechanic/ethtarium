@@ -1,15 +1,14 @@
 import React from "react";
 import MapMenu from "../mapmenu/MapMenu";
 import Mapwip from "../Mapwip";
+import styles from "../../styles/main.module.css";
 
 const Frontwip = (props) => {
   return (
-    <>
-      <div>
-        <MapMenu />
-        <Mapwip onNodeSelected={props.onNodeSelected} />
-      </div>
-    </>
+    <div classname={styles.content}>
+      <MapMenu />
+      <Mapwip onNodeSelected={props.onNodeSelected} />
+    </div>
   );
 };
 
