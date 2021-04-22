@@ -9,6 +9,7 @@ import {
   getNodesFiltered,
   getNodesNetworks,
 } from "../helpers/mapHelpers";
+import { StylesProvider } from "@material-ui/styles";
 
 function Mapwip(props) {
   let networks = nodes.filter((x) => x.group === 0);
@@ -209,10 +210,6 @@ function Mapwip(props) {
     }
   }
 
-  return (
-    <>
-      <div id="3d-graph"></div>
-    </>
-  );
+  return <div id="3d-graph"></div>;
 }
 export default Mapwip;

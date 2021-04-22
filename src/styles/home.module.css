@@ -1,14 +1,3 @@
-.layout {
-  /* display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    background: linear-gradient(#7a78dd, #090b29); */
-  /* width: 100%;
-    height: 100%; */
-  min-height: 50vh;
-  max-height: 50vh;
-  z-index: 0;
-}
 .layout,
 .main {
   display: flex;
@@ -34,21 +23,6 @@
   align-self: center;
   max-height: 50vh;
   z-index: 1;
-}
-
-.map {
-  border: solid 3px blue;
-  display: flex;
-  flex-direction: column;
-  align-self: center;
-  justify-content: center;
-  align-items: center;
-  min-width: 60vh;
-  min-height: 60vh;
-
-  z-index: 1;
-  color: #777;
-  background-color: black;
 }
 
 .layout header,
@@ -98,10 +72,10 @@
 /* ---------- */
 
 /**
-               * Flex things:
-               * — Mobile first
-               * — Responsive
-               */
+                 * Flex things:
+                 * — Mobile first
+                 * — Responsive
+                 */
 
 @media (min-width: 768px) {
   .sidebar1 {
