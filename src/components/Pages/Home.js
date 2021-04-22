@@ -30,9 +30,7 @@ export default function Landing(props) {
           Planethary
         </button>
       </Link>
-      <button disabled style={{ background: "grey" }}>
-        VR version
-      </button>
+      <button>VR version - coming soon</button>
       <br />
       <br />
       <div>

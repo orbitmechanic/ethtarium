@@ -1,6 +1,6 @@
 import React from "react";
-import MapMenu from "./MapMenu/MapMenu";
-import Mapwip from "./Mapwip";
+import MapMenu from "../mapmenu/MapMenu";
+import Mapwip from "../Mapwip";
 
 const Frontwip = (props) => {
   return (

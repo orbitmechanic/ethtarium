@@ -12,7 +12,7 @@ import AddNode from "./components/add";
 
 //Functions
 import { getNode } from "./helpers/mapHelpers";
-import Frontwip from "./components/Frontwip";
+import Frontwip from "./components/pages/Frontwip";
 // others
 
 function App() {
@@ -56,7 +56,10 @@ function App() {
             <AddNode />
           </Route>
           <Route path="/Frontwip">
-            <Frontwip onNodeSelected={selectNode} />
+            <Frontwip
+              onNodeSelected={selectNode}
+              selectGraphEndpoint={selectGraphEndpoint}
+            />
           </Route>
         </BrowserRouter>
       </div>
