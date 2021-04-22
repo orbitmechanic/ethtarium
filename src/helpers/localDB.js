@@ -49,6 +49,8 @@ export const options = [
   { label: 'Oracles', value: 5, },
   { label: 'DAOs', value: 6, },
   { label: 'Tokens', value: 7,  },
+  { label: 'Services', value: 8,  },
+
   ];
 
 
@@ -213,23 +215,37 @@ export const nodes:Node = [
     contract:'0x2edf094db69d6dcd487f1b3db9febe2eec0dd4c5',
     graphUrl:'' ,
     query:'' , search:'', widget:'' },
-        // { id: "", group: 0, label: "", level: 2,
-        //   img:'',
-        //   url:'https://',
-        //   contract:'',
-        //   graphUrl:'' ,
-        //   query:'' , search:'' },
-        //   { id: "", group: 0, label: "", level: 2,
-        //     imgOnline:'',
-        //     url:'https://',
-        //     contract:'',
-        //     graphUrl:'' ,
-        //     query:'' , search:'' },
+  {id:"1inch",group:2,label:"1inch",img:"1inch.png",url:"1inch.io",graphUrl:"",query:"",search:"",widget:"",level:2,contract:"0x111111111117dc0aa78b770fa6a738034120c302"},
+  {id:"celer-network",group:1,label:"Celer",img:"",url:"https://celer.network",graphUrl:"",query:"",search:"",widget:"",level:2,contract:""},
+  {id:"compound",group:3,label:"Compound",img:"compound.png",url:"https://compound.finance",graphUrl:"https://thegraph.com/explorer/subgraph/graphprotocol/compound-v2",query:"",search:"",widget:"",level:2,contract:"0xc00e94cb662c3520282e6f5717214004a7f26888"},
+  {id:"covalent",group:6,label:"Covalent",img:"",url:"https://www.covalenthq.com/",graphUrl:"",query:"",search:"",widget:"",level:2,contract:""},
+  {id:"depay",group:3,label:"DePay",img:"",url:"https://www.depay.fi",graphUrl:"",query:"",search:"",widget:"",level:2,contract:"0xa0bed124a09ac2bd941b10349d8d224fe3c955eb"},
+  {id:"deversifi",group:2,label:"DeVersiFi",img:"",url:"https://www.deversifi.com/",graphUrl:"",query:"",search:"",widget:"",level:2,contract:""},
+  {id:"ens",group:4,label:"ENS",img:"",url:"https://ens.domains/",graphUrl:"https://api.thegraph.com/subgraphs/name/ensdomains/ens",query:"",search:"",widget:"",level:2,contract:""},
+  {id:"loopring",group:2,label:"Loopring",img:"loopring.png",url:"https://loopring.org",graphUrl:"https://api.thegraph.com/subgraphs/name/protofire/loopring-3_1",query:"",search:"",widget:"",level:2,contract:"0xbbbbca6a901c926f240b89eacb641d8aec7aeafd"},
+  {id:"nucypher",group:8,label:"NuCypher",img:"nucypher.png",url:"https://nucypher.com",graphUrl:"https://api.thegraph.com/subgraphs/name/levash0v/nucypher",query:"",search:"",widget:"",level:2,contract:"0x4fe83213d56308330ec302a8bd641f1d0113a4cc"},
+  {id:"tellor",group:5,label:"Tellor",img:"tellor.png",url:"https://tellor.io",graphUrl:"https://api.thegraph.com/subgraphs/name/tellor-io/tellor-dispute",query:"",search:"",widget:"",level:2,contract:"0x88df592f8eb5d7bd38bfef7deb0fbc02cf3778a0"},
+  {id:"the-graph",group:8,label:"TheGraph",img:"the-graph.png",url:"https://thegraph.com",graphUrl:"",query:"",search:"",widget:"",level:2,contract:"0xc944e90c64b2c07662a292be6244bdf05cda44a7"},
+  {id:"rarible",group:2,label:"Rarible",img:"",url:"https://rarible.com/",graphUrl:"https://api.thegraph.com/subgraphs/name/nikolaymalmal/rarible",query:"",search:"",widget:"",level:2,contract:"0xfca59cd816ab1ead66534d82bc21e7515ce441cf"},
+  {id:"decentraland",group:7,label:"Decentraland",img:"decentraland.png",url:"https://decentraland.org",graphUrl:"https://api.thegraph.com/subgraphs/name/decentraland/marketplace",query:"","search":"",widget:"",level:2,contract:"0x0f5d2fb29fb7d3cfee444a200298f468908cc942"},
 
 
 ];
 
 export const links:Link = [
+  {target:"ethereum",source:"1inch",distance:40},
+  {target:"ethereum",source:"decentraland",distance:40},
+  {target:"ethereum",source:"celer-network",distance:100,contract1:"0x4f9254c83eb525f9fcf346490bbb3ed28a81c667"},
+  {target:"ethereum",source:"compound",distance:40},
+  {target:"ethereum",source:"covalent",distance:40},
+  {target:"ethereum",source:"depay",distance:40},
+  {target:"ethereum",source:"deversifi",distance:40},
+  {target:"ethereum",source:"ens",distance:40},
+  {target:"ethereum",source:"loopring",distance:40},
+  {target:"ethereum",source:"nucypher",distance:40},
+  {target:"ethereum",source:"tellor",distance:40},
+  {target:"ethereum",source:"the-graph",distance:40},
+  {target:"ethereum",source:"rarible",distance:40},
   { target: "ethereum", source: "omnibridge" , distance: 1000, contract:'0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016'},
   { target: "ethereum", source: "aave" , distance: 40 },
   { target: "ethereum", source: "uniswap" , distance: 40 },

@@ -3,16 +3,21 @@ import InputBase from '@material-ui/core/InputBase';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import Divider from '@material-ui/core/Divider';
-
 // import FormHelperText from '@material-ui/core/FormHelperText';
 // import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import {options} from '../helpers/localDB';
+import { networks } from '../helpers/mapHelpers';
 
 export default function AddNode(props) {
-  const [group, setGroup]=useState(null);
+  const [group, setGroup]=useState(0);
+  const [network, setNetwork]=useState('ethereum');
+
   function handleGroup(event){
     setGroup(event.target.value);
+  }
+  function handleNetwork(event){
+    setNetwork(event.target.value);
   }
   function generateJson(){
     // console.log(document.getElementById('nodeId').value)
@@ -20,14 +25,16 @@ export default function AddNode(props) {
     obj.id = document.getElementById('nodeId').value;
     obj.group = group;
     obj.label = document.getElementById('nodeLabel').value;
-    obj.image = document.getElementById('nodeLabel').value;
+    obj.img = ''//document.getElementById('nodeId').value.concat('.png');
     obj.url = document.getElementById('nodeUrl').value;
     obj.graphUrl = document.getElementById('nodeGraphUrl').value;
     obj.query = document.getElementById('nodeQuery').value;
     obj.search = document.getElementById('nodeSearch').value;
     obj.widget = document.getElementById('nodeWidget').value;
     if(group === 0){
+      if(group ===0){
       obj.level = 1;
+      }
       obj.explorer = document.getElementById('nodeExplorer').value;
     }else{
       obj.level = 2;
@@ -36,24 +43,26 @@ export default function AddNode(props) {
     var links = {};
     var links2 = {};
     if(group === 0){
-      links.warning = 'no links are necessary to add a new network'
+      links.target =  document.getElementById('nodeId').value
+      links.source = document.getElementById('nodeOther').value
+      links.distance = 40
     }else if(group ===1){
-      links.target = document.getElementById('nodeBridge1').value
-      links.source = document.getElementById('nodeLabel').value
+      links.target = document.getElementById('nodeBridge1').innerHTML.toLowerCase()
+      links.source = document.getElementById('nodeId').value
       links.distance = 100
       links.contract1 = document.getElementById('nodeContract1').value
 
-      links2.target = document.getElementById('nodeBridge2').value
-      links2.source = document.getElementById('nodeLabel').value
+      links2.target = document.getElementById('nodeBridge2').innerHTML.toLowerCase()
+      links2.source = document.getElementById('nodeId').value
       links2.distance = 100
       links2.contract2 = document.getElementById('nodeContract2').value
     }else{
-      links.target = document.getElementById('nodeNetwork').value
-      links.source = document.getElementById('nodeLabel').value
+      links.target = document.getElementById('nodeNetwork').innerHTML.toLowerCase()
+      links.source = document.getElementById('nodeId').value
       links.distance = 40
 
-      links2.target = document.getElementById('nodeLabel').value
-      links2.source = document.getElementById('nodeOther').value
+      links2.target = document.getElementById('nodeOther').value
+      links2.source = document.getElementById('nodeId').value
       links2.distance = 40
     }
 
@@ -103,13 +112,12 @@ export default function AddNode(props) {
     id='nodeExplorer'
     placeholder="Url of explorer"
     />
-    :
+    :null}<br />
     <InputBase
     style={{backgroundColor:'grey',color:'white'}}
     id='nodeContract'
     placeholder="Address of contract"
     />
-    }
       <br />
     <InputBase
       style={{backgroundColor:'grey',color:'white'}}
@@ -132,48 +140,87 @@ export default function AddNode(props) {
         placeholder="Widget of dApp / others"
         /><br />
     <Divider />
+
     <h2 style={{color:'white'}}>Links</h2>
-    {group === 1?
-      <div>
+
+    <div>
+    </div>
+    {group === 0?
       <InputBase
-          style={{backgroundColor:'grey',color:'white'}}
-          id='nodeBridge1'
-          placeholder="id of network 1"
-          /><br />
-      <InputBase
-          style={{backgroundColor:'grey',color:'white'}}
-          id='nodeContract1'
-          placeholder="address of contract network 1"
-          /><br />
-      <InputBase
-          style={{backgroundColor:'grey',color:'white'}}
-          id='nodeBridge2'
-          placeholder="id of network 2"
-          /><br />
-      <InputBase
-          style={{backgroundColor:'grey',color:'white'}}
-          id='nodeContract2'
-          placeholder="Address of contract network 2"
-          /><br />
-      </div>
+      style={{backgroundColor:'grey',color:'white'}}
+      id='nodeOther'
+      placeholder="id of other node connected"
+      />
       :
       <div>
         <InputBase
-            style={{backgroundColor:'grey',color:'white'}}
-            id='nodeNetwork'
-            placeholder="id of network"
-            /><br />
-        <InputBase
-            style={{backgroundColor:'grey',color:'white'}}
-            id='nodeOther'
-            placeholder="id of other node"
-            /><br />
+        style={{backgroundColor:'grey',color:'white'}}
+        id='nodeOther'
+        placeholder="id of other node connected"
+        /><br />
+        {group === 1?
+          <div>
+            Connects..
+            <Select
+              labelId="demo-simple-select-label"
+              id='nodeBridge1'
+              value={network}
+              onChange={handleNetwork}
+            >
+              {networks.map(element => {
+                // console.log(element)
+                return <MenuItem value={element.id}>{element.label}</MenuItem>
+              })}
+            </Select><br />
+            <InputBase
+                style={{backgroundColor:'grey',color:'white'}}
+                id='nodeContract1'
+                placeholder="address of contract network 1"
+                />
+                <br />
+                To:
+            <Select
+              labelId="demo-simple-select-label"
+              id='nodeBridge2'
+              value={network}
+              onChange={handleNetwork}>
+              {networks.map(element => {
+                // console.log(element)
+                return <MenuItem value={element.id}>{element.label}</MenuItem>
+              })}
+            </Select><br />
+            <InputBase
+                style={{backgroundColor:'grey',color:'white'}}
+                id='nodeContract2'
+                placeholder="Address of contract to"
+                /><br />
+            </div>
+            :
+            <div>
+              <div>
+              Network
+              <Select
+              labelId="demo-simple-select-label"
+              id="nodeNetwork"
+              value={network}
+              onChange={handleNetwork}
+              >
+              {networks.map(element => {
+                // console.log(element)
+                return <MenuItem value={element.id}>{element.label}</MenuItem>
+              })}
+              </Select>
+              </div>
+
+        }
       </div>
     }
+      </div>
+  }
 
     <p>Links needed to be added at will</p>
 
-    <Button onClick={()=>generateJson()}>Generate</Button>
+    <Button onClick={()=>generateJson()}>Generate</Button>*/}
     <p style={{color:'white'}}>Open your console!</p>
     <br />
     <br />

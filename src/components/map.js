@@ -77,6 +77,7 @@ function Map(props) {
 
   function filterNodes(){
     let unique = getNodesNetworks(networkFilter);
+    console.log('unique: ',unique)
     let filteredNodes = getNodesFiltered(unique, filter);
     const finalNodesIds = filteredNodes.map(x=>x.id)
 
@@ -126,6 +127,7 @@ function Map(props) {
         }else{
           imageUrl =require('../images/mini_default.png')
         }
+        
         const imgTexture = new THREE.TextureLoader().load(imageUrl.default);
         const material = new THREE.SpriteMaterial({ map: imgTexture , color: 0xffffff});
         const sprite = new THREE.Sprite(material); // fetch Gecko data and add here? at least test it!
