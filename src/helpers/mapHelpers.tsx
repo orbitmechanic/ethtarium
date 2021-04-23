@@ -5,6 +5,8 @@ export function getNode(nodeId:String){
   return node;
 }
 
+export const networks = nodes.filter(x=>x.group===0);
+
 export async function fetchGeckoData(nodeId:string){
     let url = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids='.concat(nodeId);
     const data:any|null = await Promise.all([
@@ -48,7 +50,6 @@ export function getChilds(nodeId:String){
 
 export function getNodesFiltered(list, filter){
     let nodesFiltered = list.reduce((nodesFiltered, node)=>{
-        // console.log(node.id)
         if(filter.includes(node.group)){
           nodesFiltered.push(node);
         }
