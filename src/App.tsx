@@ -9,7 +9,7 @@ import TheGraphExplorer from "./components/thegraphexplorer";
 import Landing from "./components/landing";
 import AddNode from "./components/add";
 //UI
-import Frontwip from "./components/pages/Frontwip";
+import Frontwip from "./components/Pages/Frontwip";
 import Layout from "./components/Layout";
 
 //Functions
