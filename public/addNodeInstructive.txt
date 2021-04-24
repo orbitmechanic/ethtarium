@@ -1,0 +1,77 @@
+How to add a node, or not..
+
+Research!.. Adding a node requires to look for things in it,
+Coingecko is always a good start, but seems like 'money beats utility' and we have +6600 Tokens
+and no mention of
+
+ID
+Go to coingecko, search the token and copy the end of the url. (usually after (..)coins/)
+if not in coingecko, decide on where is gonna be used.. (lowercase name should be alright)
+
+TYPE (SELECTOR)
+this is difficult.. really..
+what i think is we select veeery light, and shortly we add a new attribute for a second level, like:
+    MARKETS
+        PREDICTION MARKETS
+        DIGITAL ITEMS
+        TOKENS
+        ..
+    DEFI
+        LENDING
+        FARM
+        ..
+    SERVICES
+        PRIVACY
+        INSURANCE
+        ..
+..that's work for other night!
+coingecko description could help, also study it!
+
+NAME:
+Name to show, usually first capital but then..
+
+URL:
+This is important, but easy. Be aware of scams.. oh! and add https://   !!!
+
+CONTRACT:
+address of contract, directly copied from coingecko or etherscan
+if other network than ethereum mainnet, no problem (we solve that in links)
+if network can have a contract on mainnet so.. it counts
+
+GRAPH ENDPOINT
+https://thegraph.com/explorer/
+and going down there's an input for deep search.
+as endpoints start to rise, my idea would be to create an array like:
+['name_of_subgraph':'xxx', url:'yyy', schemas:[], ... ]
+so users could decide which 'db' to retrieve-see, and increase incentive to create subgraphs
+
+THE REST..
+I've conceived the idea of
+
+Second part,
+LINKS
+you will add:
+A node to all kinds of (connect with whatever)
+if network only this
+if bridge (whom to whom and its contracts)
+else, choose network
+
+print with the button and in web console
+remember to separate objects with a comma,
+copy also links (if needed), location is important (multiple network dapps will retrieve first in array)
+
+you'll copy your results directly in DB. Still work to do with strings not printing ok..
+we need to kill the "" to let the attribute as is.. HELP PLEASE! :D
+is much better to retrieve many nodes before playing with typekeys here,
+
+
+
+----LOGOS
+Logos are .png files, often from:
+https://cryptologos.cc/
+also this is useful: https://svgtopng.com/
+where the name is set to match the id of the node. (mostly lowercase the name)
+in public folder there's a little python script to reduce quality the files (and adjust the name (later to adjust?)) it requires Pillow
+some projects require web surfing to get it.. default gets kind of boring (maybe later adjust to 'groups')
+
+Once image is downloaded and modified, we need to enter the name in the DB, otherwise the require fails.

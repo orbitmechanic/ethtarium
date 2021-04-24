@@ -1,20 +1,25 @@
 import React, {useState} from 'react';
 import clsx from 'clsx';
-import { makeStyles, useTheme  } from '@material-ui/core/styles';
+import { fade,makeStyles, useTheme  } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+import InputBase from '@material-ui/core/InputBase';
+import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import SearchIcon from '@material-ui/icons/Search';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-
 import { Button, Checkbox, FormControlLabel, } from '@material-ui/core';
+
+import {options} from '../helpers/localDB';
+const optionsWNetworks = [...options];
+optionsWNetworks.shift() // deletes networks from options
 
 const drawerWidth = 260;
 
@@ -74,13 +79,42 @@ const useStyles = makeStyles((theme) => ({
     }),
     marginLeft: 0,
   },
-  // // necessary for content to be below app bar
-  // toolbar: theme.mixins.toolbar,
-  // content: {
-  //   flexGrow: 1,
-  //   backgroundColor: theme.palette.background.default,
-  //   padding: theme.spacing(3),
-  // },
+
+  search: {
+      position: 'relative',
+      borderRadius: theme.shape.borderRadius,
+      backgroundColor: fade(theme.palette.common.white, 0.15),
+      '&:hover': {
+        backgroundColor: fade(theme.palette.common.white, 0.25),
+      },
+      marginRight: theme.spacing(2),
+      marginLeft: 0,
+      width: '100%',
+      [theme.breakpoints.up('sm')]: {
+        marginLeft: theme.spacing(3),
+        width: 'auto',
+      },
+    },
+  searchIcon: {
+      padding: theme.spacing(0, 2),
+      height: '100%',
+      position: 'absolute',
+      pointerEvents: 'none',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+        // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+    width: '20ch',
+    },
+  },
 }));
 
 
@@ -89,31 +123,33 @@ export default function PermanentDrawerLeft(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const [filter, setFilter] = useState([0,1,2,3]);
+  const [filter, setFilter] = useState([0,1,]);
   const [networkFilterOpen,setNetworkFilterOpen] = useState(false);
   const [networkFilter, setNetworkFilter] = useState(props.networkFilter);
+  const [searchResults, setSearchResults] = useState(null);
 
   const handleDrawerOpen = () => {
-    console.log('hey')
-
     setOpen(true);
+    document.getElementById('search').value='';
   };
 
   const handleDrawerClose = () => {
-    console.log('ho')
     setOpen(false);
+    setSearchResults(null);
   };
 
-  const options = [
-  // { label: 'Networks', value: 0 , },
-  { label: 'Bridges', value: 1 , },
-  { label: 'Swap', value: 2,},
-  { label: 'Lend&Borrow', value: 3,},
-  { label: 'Manage', value: 4, },
-  { label: 'Oracle', value: 5, },
-  { label: 'DAO', value: 6, },
-  { label: 'Tokens', value: 7,  },
-  ];
+  const handleSearch = (search) => {
+    if(search.target.value.length>=3){
+      let nodeIds = props.nodes.map(x=>x.id)
+      let results = nodeIds.filter((node) => node.startsWith(search.target.value))
+      setSearchResults(results);
+      if(results.length === 1){
+        props.selectNode(results[0]);
+      }
+    }else{
+      setSearchResults(null)
+    }
+  }
 
 
   const handleChange = (value) => {
@@ -175,6 +211,8 @@ export default function PermanentDrawerLeft(props) {
         </Toolbar>
       </AppBar>
 
+
+
       <Drawer
         className={classes.drawer}
         variant="persistent"
@@ -185,17 +223,44 @@ export default function PermanentDrawerLeft(props) {
         }}
       >
       <div className={classes.drawerHeader}>
-        <IconButton onClick={handleDrawerClose}>
-          {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-        </IconButton>
+        <div className={classes.search}>
+          <div className={classes.searchIcon}>
+        <SearchIcon />
+          </div>
+            <InputBase
+              id='search'
+              placeholder="Search…"
+              onChange = {handleSearch}
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              inputProps={{ 'aria-label': 'search' }}
+              />
+        </div>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </IconButton>
       </div>
+            {searchResults?
+            <div>
+              <List>
+                {searchResults.forEach(
+                (result)=>{
+                  <ListItem id={result}>
+                    <Button id={result}>{result}</Button>
+                  </ListItem>
+                  })}
+              </List>
+            </div>
+          :null}
         <Divider />
         <Button onClick={()=>setNetworkFilterOpen(!networkFilterOpen)}>Networks</Button>
         {networkFilterOpen?
           <div>
             <List>
             {props.networks.map((network)=>(
-              <ListItem>
+              <ListItem id={network}>
                 <FormControlLabel
                   value={network}
                   id = {network}
@@ -208,10 +273,10 @@ export default function PermanentDrawerLeft(props) {
             </List>
           </div>
         :null}
+        <Divider />
         <List>
-          {options.map((opt) => (
-            <ListItem>
-{/*              <ListItemIcon>{opt.icon}</ListItemIcon>  Would we like icons for this? */}
+          {optionsWNetworks.map((opt) => (
+            <ListItem id={opt.value}>
               <FormControlLabel
                         value={opt.value}
                         id = {opt.value}
@@ -219,7 +284,6 @@ export default function PermanentDrawerLeft(props) {
                         label={opt.label}
                         labelPlacement="end"
                       />
-                      {/**/}
             </ListItem>
           ))}
         </List>

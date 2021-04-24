@@ -5,6 +5,8 @@ export function getNode(nodeId:String){
   return node;
 }
 
+export const networks = nodes.filter(x=>x.group===0);
+
 export async function fetchGeckoData(nodeId:string){
     let url = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids='.concat(nodeId);
     const data:any|null = await Promise.all([
@@ -37,6 +39,7 @@ export function getChilds(nodeId:String){
       let source = link.source.id?link.source.id:link.source;
       // console.log('target=',target )
       if(target === nodeId){ //
+
         childs.push(getNode(source))//
       } // it seems to automatically change the object (with id, or without)
       return childs
@@ -46,7 +49,7 @@ export function getChilds(nodeId:String){
   }
 
 export function getNodesFiltered(list, filter){
-    let nodesFiltered = list.reduce((nodesFiltered, node:Node)=>{
+    let nodesFiltered = list.reduce((nodesFiltered, node)=>{
         if(filter.includes(node.group)){
           nodesFiltered.push(node);
         }
@@ -55,11 +58,34 @@ export function getNodesFiltered(list, filter){
       return nodesFiltered;
   }
 
-  // function getNetwork(nodeId:String){
-  //     let nodeLinks:Link[]|null = links.filter(x=>x.source===nodeId)
-  //     let nodeLinksNames:String[]|null = nodeLinks.map(x=>x.target)
-  //     return nodeLinksNames;
-  //   }
+export function getNodesNetworks(networkFilter){
+    let dapps = networkFilter.reduce((dapps, network)=>{
+      dapps.push(getNode(network))
+      dapps.push(getChilds(network))
+      return dapps;
+    },[])
+    let merged = [].concat.apply([], dapps);
+    let unique = [...new Set(merged)];
+    return unique;
+  }
+
+export function getExplorer(nodeId:String){
+  let networks = getNetwork(nodeId);
+  let net = networks.filter(x=>x.target.group===0)
+  if(net[0] && net[0].target && net[0].target.explorer){
+    // console.log(net[0].target.explorer)
+    let explorer = net[0].target.explorer;
+    return explorer;
+  }
+  return false;
+}
+
+function getNetwork(nodeId:String){
+      let nodeLinks:Link[]|null = links.filter(x=>x.source.id===nodeId)
+      // let nodeLinksNames:String[]|null = nodeLinks.map(x=>x.target.id)
+      // console.log('Links for: ',nodeId,' are: ', nodeLinks) //nope!
+      return nodeLinks;
+    }
 
   // function isChild(nodeId:String, networkId:String){
   //   let node:Node|null = getNode(nodeId);

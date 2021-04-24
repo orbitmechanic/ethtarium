@@ -3,18 +3,19 @@
 }
 
 .App-header {
-  display: flex;
+  text-align: center;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   color: white;
-}
-
-.App-body{
   background-color: #282c34;
 }
 
-.Filters{
-  color:white;
+.App-body {
+  background-color: #282c34;
+}
+
+.Filters {
+  color: white;
   align-items: flex-start;
 }

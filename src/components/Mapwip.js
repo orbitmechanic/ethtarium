@@ -1,17 +1,20 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from "react";
 import { nodes, links } from "../helpers/localDB";
 import ForceGraph3D from "3d-force-graph";
-import PermanentDrawerLeft from "./filters";
-import * as THREE from 'three';
+import * as THREE from "three";
 // import SpriteText from 'three-spritetext';
 
-import {getNode, getNodesFiltered, getNodesNetworks } from '../helpers/mapHelpers';
+import {
+  getNode,
+  getNodesFiltered,
+  getNodesNetworks,
+} from "../helpers/mapHelpers";
 
-function Map(props) {
-  let networks = nodes.filter(x => x.group === 0);
-  let networksNames = networks.map(x => x.id);
-  const [filter, setFilter] = useState([0,1,]);
-  const [networkFilter, setNetworkFilter] = useState(networksNames)
+function Mapwip(props) {
+  let networks = nodes.filter((x) => x.group === 0);
+  let networksNames = networks.map((x) => x.id);
+  const [filter, setFilter] = useState([0, 1]);
+  const [networkFilter, setNetworkFilter] = useState(networksNames);
 
   type Node = {
     id: string,
@@ -23,46 +26,44 @@ function Map(props) {
   };
   type Link = {
     target: string,
-    source: string ,
-    strength: number ,
-    contract?: string ,
-  }
+    source: string,
+    strength: number,
+    contract?: string,
+  };
 
-
-  function handleFilter(filters:any){
+  function handleFilter(filters: any) {
     setFilter(filters);
   }
-  function handleNetworkChange(filters:any){
+  function handleNetworkChange(filters: any) {
     setNetworkFilter(filters);
   }
 
-  function selectNode(id){
+  function selectNode(id) {
     props.onNodeSelected(id);
     let nodeI = getNode(id);
 
     // console.log('id',id,'graph',graph.current,' node: ',nodeI)
-    graph.current.then((graph)=>{
-      focusNode(graph, nodeI)
-    }
-     )
-  };
+    graph.current.then((graph) => {
+      focusNode(graph, nodeI);
+    });
+  }
 
-  function focusNode(graph,node){
-  // Focus on node
+  function focusNode(graph, node) {
+    // Focus on node
     // console.log('flying into ',node.id)
     const distance = 100;
-    const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
+    const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
     graph.cameraPosition(
-        { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
-          node, // lookAt ({ x, y, z })
-          2000  // ms transition duration
-          );
-        };
+      { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
+      node, // lookAt ({ x, y, z })
+      2000 // ms transition duration
+    );
+  }
 
-  let graph=useRef(null);
-  useEffect(()=>{
-        graph.current=create3dGraph(); //useRef()
-  })
+  let graph = useRef(null);
+  useEffect(() => {
+    graph.current = create3dGraph(); //useRef()
+  });
 
   // function graphInSpace(graph, whatTo, where){
   //   graph
@@ -75,28 +76,28 @@ function Map(props) {
   //     })
   // }
 
-  function filterNodes(){
+  function filterNodes() {
     let unique = getNodesNetworks(networkFilter);
-    console.log('unique: ',unique)
     let filteredNodes = getNodesFiltered(unique, filter);
-    const finalNodesIds = filteredNodes.map(x=>x.id)
+    const finalNodesIds = filteredNodes.map((x) => x.id);
 
-    let filteredLinks = links.reduce((filteredLinks, link:Link[]) => {
-          if ((finalNodesIds.includes(link.target.id?link.target.id:link.target))
-            && (finalNodesIds.includes(link.source.id?link.source.id:link.source)))
-             {
-            filteredLinks.push(link)
-          }
-          return filteredLinks;
-        },[])
+    let filteredLinks = links.reduce((filteredLinks, link: Link[]) => {
+      if (
+        finalNodesIds.includes(link.target.id ? link.target.id : link.target) &&
+        finalNodesIds.includes(link.source.id ? link.source.id : link.source)
+      ) {
+        filteredLinks.push(link);
+      }
+      return filteredLinks;
+    }, []);
     return [filteredNodes, filteredLinks];
   }
 
-  async function create3dGraph(){
-    const [filteredNodes, filteredLinks] = filterNodes()
+  async function create3dGraph() {
+    const [filteredNodes, filteredLinks] = filterNodes();
     const gData = {
       nodes: filteredNodes,
-      links: filteredLinks
+      links: filteredLinks,
     };
     // console.log('gData',gData)
 
@@ -106,40 +107,38 @@ function Map(props) {
     let hoverNode: string | null = null;
     let selectedNodes = new Set();
 
-    const spaceHolder: HTMLElement | null = document.getElementById('3d-graph');
+    const spaceHolder: HTMLElement | null = document.getElementById("3d-graph");
 
-// VR (needs 3d-force-graph-vr package)
-// replace ForceGraph3D with ForceGraphVR()
+    // VR (needs 3d-force-graph-vr package)
+    // replace ForceGraph3D with ForceGraphVR()
 
-
-
-
-    const graph2 =  ForceGraph3D()
-        (spaceHolder)
+    const graph2 = ForceGraph3D()(spaceHolder)
       // .nodeRelSize(node => node.group===0? 100 : 4) // not working!!
-      .nodeLabel('label') // show label on hover
-      .nodeAutoColorBy('group') // Color by group attr
+      .nodeLabel("label") // show label on hover
+      .nodeAutoColorBy("group") // Color by group attr
       // Images as sprites
-      .nodeThreeObject((node:Node) => {
+      .nodeThreeObject((node: Node) => {
         let imageUrl;
-        if(node && node.img){
-          imageUrl =require(`../images/mini_${node.img}`)
-        }else{
-          imageUrl =require('../images/mini_default.png')
+        if (node && node.img) {
+          imageUrl = require(`../images/mini_${node.img}`);
+        } else {
+          imageUrl = require("../images/mini_default.png");
         }
-        
         const imgTexture = new THREE.TextureLoader().load(imageUrl.default);
-        const material = new THREE.SpriteMaterial({ map: imgTexture , color: 0xffffff});
+        const material = new THREE.SpriteMaterial({
+          map: imgTexture,
+          color: 0xffffff,
+        });
         const sprite = new THREE.Sprite(material); // fetch Gecko data and add here? at least test it!
-        if(node.group === 0 ){
-          sprite.scale.set(32,32,1)
-        }else{
-          sprite.scale.set(20,20,1)
+        if (node.group === 0) {
+          sprite.scale.set(32, 32, 1);
+        } else {
+          sprite.scale.set(20, 20, 1);
         }
         return sprite;
-        })
+      })
       // Effects and text on hover
-      .onNodeClick((node:Node, event) => {
+      .onNodeClick((node: Node, event) => {
         if (event.ctrlKey || event.shiftKey || event.altKey) {
           // multi-selection
           selectedNodes.has(node)
@@ -152,13 +151,13 @@ function Map(props) {
           selectedNodes.clear();
           !untoggle && selectedNodes.add(node);
         }
-        focusNode(graph2, node)
-          // graphInSpace(graph2, 'whatTo', node)
+        focusNode(graph2, node);
+        // graphInSpace(graph2, 'whatTo', node)
         // updateHighlight(); //not sure if useful here
       })
       .onNodeHover((node: any) => {
         if ((!node && !highlightNodes.size) || (node && hoverNode === node))
-        return;
+          return;
         highlightNodes.clear();
         highlightLinks.clear();
         // console.log('hover: ',node.id)
@@ -180,27 +179,24 @@ function Map(props) {
       // Graph it
       .graphData(gData);
 
-    graph2
-      .onBackgroundClick(zoomOut)
+    graph2.onBackgroundClick(zoomOut); //not working!
 
-//Distance between nodes
-//Force distance
-    graph2
-      .d3Force('link')
-      .distance(100);
-        //'distance'); // distance from DB? hooooow?
-  // Play with forces
+    //Distance between nodes
+    //Force distance
+    graph2.d3Force("link").distance(100);
+    //'distance'); // distance from DB? hooooow?
+    // Play with forces
     // graph2.d3Force('charge').strength(-300);
 
     return graph2;
-//Post processing
+    //Post processing
     //   const bloomPass = new UnrealBloomPass();
     // bloomPass.strength = 3;
     // bloomPass.radius = 1;
     // bloomPass.threshold = 0.1;
     // graph2.postProcessingComposer().addPass(bloomPass);
 
-    function zoomOut(){
+    function zoomOut() {
       //graph2.onEngineStop(() => graph2.zoomToFit(100)); // Make this to Fit when mouse is out the map
       graph2.zoomToFit(100);
     }
@@ -213,19 +209,6 @@ function Map(props) {
     }
   }
 
-  return (
-    <div className="App">
-      <PermanentDrawerLeft
-        networks = {networksNames}
-        nodes={nodes}
-        networkFilter = {networkFilter}
-        onFilters = {handleFilter}
-        onNetworkFilter = {handleNetworkChange}
-        selectNode = {selectNode}
-      />
-      <div id="3d-graph"></div>
-
-  </div>
-  )
+  return <div id="3d-graph"></div>;
 }
-export default React.memo(Map);
+export default Mapwip;

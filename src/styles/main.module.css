@@ -1,0 +1,19 @@
+/* ---------- */
+
+/**
+               * Flex things:
+               * — Mobile first
+               * — Responsive
+               */
+
+@media (min-width: 768px) {
+  .sidebar1 {
+    order: -1;
+  }
+  .main {
+    flex-direction: row;
+  }
+  .sidebar {
+    flex: 0 0 260px;
+  }
+}
