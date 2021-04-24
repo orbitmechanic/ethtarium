@@ -79,6 +79,55 @@ const Home = (props) => {
         <p>You can request to create subgraphs for specific contracts</p>
         <p>You can create and promote yours!</p>
       </Section>
+      <GridWrapper>
+        <GridCard>
+          <h3>As users</h3>
+          <ul>
+            <li>Explore the web3 multiverse</li>
+            <li>Research and find information</li>
+            <li>See, graph and export data of tx's with theGraph</li>
+            <li>Interact with smart contracts and dApps</li>
+            <li>See live tx's (Coming soon..?)</li>
+            <li>
+              Have an inmersion experience in web3 with VR (Coming veery soon!)
+            </li>
+          </ul>
+        </GridCard>
+        <GridCard>
+          <h3>As owners</h3>
+          <ul>
+            <li>Curate data and earn</li>
+            <li>Create theGraph endpoint to add data sources</li>
+            <li>Explore the web3 and add requests of inputs</li>
+            <li>Find errors and bugs</li>
+            <li>Educate about web3 and help people enter (the good way..)</li>
+            <li>Decide over the purpose and whereabouts of Planetharium!</li>
+          </ul>
+        </GridCard>
+        <GridCard>
+          <h3>As developers</h3>
+          <ul>
+            <li>Insert planetharium on your web!</li>
+            <li>
+              Explore and create new ways to interact with web3 with our (open
+              repo?) system
+            </li>
+            <li>Retrieve our curated dataset for your projects!</li>
+            <li>Generate content with our tools (make your videos amazing!)</li>
+          </ul>
+        </GridCard>
+      </GridWrapper>
+      <Section>
+        <Thanks>
+          <h1>Thanks to!</h1>
+          <p>TheGraph</p>
+          <p>Coingecko</p>
+          <p>ThreeJs</p>
+          <p>Lots and lots of sponsors</p>
+          <p>EthGlobal (this dApp was made for the scaling Hackaton!)</p>
+          <h2>Gitcoin and donate!</h2>
+        </Thanks>
+      </Section>
       <div>
         <h1>Planetharium</h1>
       </div>
@@ -121,43 +170,6 @@ const Home = (props) => {
           <button>Add a project</button>
         </Link>
       </div>
-      <h3>As users</h3>
-      <ul>
-        <li>Explore the web3 multiverse</li>
-        <li>Research and find information</li>
-        <li>See, graph and export data of tx's with theGraph</li>
-        <li>Interact with smart contracts and dApps</li>
-        <li>See live tx's (Coming soon..?)</li>
-        <li>
-          Have an inmersion experience in web3 with VR (Coming veery soon!)
-        </li>
-      </ul>
-      <h3>As owners</h3>
-      <ul>
-        <li>Curate data and earn</li>
-        <li>Create theGraph endpoint to add data sources</li>
-        <li>Explore the web3 and add requests of inputs</li>
-        <li>Find errors and bugs</li>
-        <li>Educate about web3 and help people enter (the good way..)</li>
-        <li>Decide over the purpose and whereabouts of Planetharium!</li>
-      </ul>
-      <h3>As developers</h3>
-      <ul>
-        <li>Insert planetharium on your web!</li>
-        <li>
-          Explore and create new ways to interact with web3 with our (open
-          repo?) system
-        </li>
-        <li>Retrieve our curated dataset for your projects!</li>
-        <li>Generate content with our tools (make your videos amazing!)</li>
-      </ul>
-      <h1>Thanks to!</h1>
-      <p>TheGraph</p>
-      <p>Coingecko</p>
-      <p>ThreeJs</p>
-      <p>Lots and lots of sponsors</p>
-      <p>EthGlobal (this dApp was made for the scaling Hackaton!)</p>
-      <h2>Gitcoin and donate!</h2>
     </Wrapper>
   );
 };
@@ -172,15 +184,21 @@ const Wrapper = styled.div`
 const Hero = styled.div`
   width: 90%;
   height: 85vh;
+  margin-top: 30px;
   margin-bottom: 50px;
   margin-left: 30px;
   margin-right: 30px;
+  font-family: "IBM Plex Mono";
 `;
 
 const HeroLeft = styled.div`
-  font-size: 5rem;
+  font-size: 4rem;
   width: 50%;
-  border: solid 1px white;
+  padding: 40px;
+  /* border: solid 1px white; */
+  border-radius: 5px;
+  box-shadow: 1px 1px 50px var(--shadow);
+  box-shadow: inset 1px 1px 10px 5px var(--shine);
 `;
 
 const HeroRight = styled.div`
@@ -190,7 +208,7 @@ const HeroRight = styled.div`
 
 const HeroText = styled.div`
   margin-top: 20px;
-  font-size: 2rem;
+  font-size: 1.7rem;
   text-shadow: 0px 0px 35px white;
 `;
 

@@ -36,8 +36,8 @@ function App() {
   }, []);
 
   return (
-    <Layout>
-      <BrowserRouter>
+    <BrowserRouter>
+      <Layout>
         <Route exact path="/">
           <Landing selectGraphEndpoint={selectGraphEndpoint} />
         </Route>
@@ -68,8 +68,8 @@ function App() {
         <Route path="/Home">
           <Home />
         </Route>
-      </BrowserRouter>
-    </Layout>
+      </Layout>
+    </BrowserRouter>
   );
 }
 

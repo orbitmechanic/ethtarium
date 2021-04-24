@@ -1,3 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@100;200;300;400;500;600;700&display=swap");
+:root {
+  --bg-color: #001c38;
+  --btn-color: #ffffff;
+  --text-color: #ffffff;
+  --pri-color: #ffffff;
+  --sec-color: #ffffff;
+  --shadow: #e874ff;
+  --shine: #413657;
+}
 *,
 *:before,
 *:after {
@@ -92,6 +102,7 @@ video {
   font: inherit;
   box-sizing: border-box;
   vertical-align: baseline;
+  text-decoration: none;
 }
 /* HTML5 display-role reset for older browsers */
 article,
@@ -129,7 +140,11 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-
+a:visited,
+a:link,
+a:any-link {
+  color: var(--text-color);
+}
 /* .......... */
 
 /* * {
@@ -151,9 +166,9 @@ img {
 }
 
 body {
-  font-family: "Open sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-    "Helvetica Neue", sans-serif;
+  font-family: "IBM Plex Mono", monospace, "Open sans", -apple-system,
+    BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

@@ -23,17 +23,14 @@ const Wrapper = styled.div`
   flex: 1 1 auto;
   flex-direction: column;
   z-index: 0;
-  background-color: #120e2f;
+  background-color: var(--bg-color);
   color: white;
   max-height: 100%;
 `;
 
 const Main = styled.div`
-  border: solid 1px blue;
   align-self: center;
   align-items: center;
-
-  background-color: 0a2b50;
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
