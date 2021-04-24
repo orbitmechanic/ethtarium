@@ -1,6 +1,12 @@
-import React, { useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import "./App.css";
 import { BrowserRouter, Route } from "react-router-dom";
+
+//Structure
+import Layout from "./components/Layout";
+//Pages
+import Home from "./components/Pages/Home";
+import Frontwip from "./components/Pages/Frontwip";
 
 //Components
 import Map from "./components/map";
@@ -8,9 +14,6 @@ import TemporaryDrawer from "./components/dataDrawer";
 import TheGraphExplorer from "./components/thegraphexplorer";
 import Landing from "./components/landing";
 import AddNode from "./components/add";
-//UI
-import Frontwip from "./components/Pages/Frontwip";
-import Layout from "./components/Layout";
 
 //Functions
 import { getNode } from "./helpers/mapHelpers";
@@ -33,8 +36,8 @@ function App() {
   }, []);
 
   return (
-    <Layout>
-      <BrowserRouter>
+    <BrowserRouter>
+      <Layout>
         <Route exact path="/">
           <Landing selectGraphEndpoint={selectGraphEndpoint} />
         </Route>
@@ -56,14 +59,17 @@ function App() {
         <Route path="/Add">
           <AddNode />
         </Route>
-        <Route path="/Frontwip">
+        <Route path="/Map">
           <Frontwip
             onNodeSelected={selectNode}
             selectGraphEndpoint={selectGraphEndpoint}
           />
         </Route>
-      </BrowserRouter>
-    </Layout>
+        <Route path="/Home">
+          <Home />
+        </Route>
+      </Layout>
+    </BrowserRouter>
   );
 }
 
