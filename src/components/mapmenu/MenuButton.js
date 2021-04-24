@@ -3,7 +3,7 @@ import React from "react";
 const MenuButton = () => {
   return (
     <>
-      <button>press me</button>
+      <button>not active</button>
     </>
   );
 };
