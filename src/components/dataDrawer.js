@@ -10,7 +10,7 @@ import LinkIcon from "@material-ui/icons/Link";
 
 import { fetchGeckoData, getExplorer } from "../helpers/mapHelpers";
 
-export default function TemporaryDrawer(props) {
+export default function NodeOptions(props) {
   const [state, setState] = React.useState({
     top: false,
   });
@@ -27,14 +27,11 @@ export default function TemporaryDrawer(props) {
     setState({ ...state, [anchor]: open });
   };
 
-  if (props.nodeSelected) {
-    if (nodeSelected !== props.nodeSelected) {
-      setNodeSelected(props.nodeSelected);
-      fetchGeckoData(props.nodeSelected).then((gecko) => {
-        setGeckoData(gecko);
-      });
-    }
-  }
+  if(props.nodeSelected){
+    if(nodeSelected !== props.nodeSelected){
+      setNodeSelected(props.nodeSelected)
+      fetchGeckoData('coin',props.nodeSelected).then((gecko)=>{setGeckoData(gecko);})//
+  }}
 
   function getImage() {
     let image;
@@ -62,51 +59,31 @@ export default function TemporaryDrawer(props) {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <div>
-        {props.nodeSelectedData ? (
+      {props.nodeSelectedData?
+        <div>
+          <span>
+          <span>{props.nodeSelectedData.label}</span>
+          <img src={getImage(props.nodeSelectedData)} style={{marginLeft: "auto"}} alt='' width="50" height="50"></img>
+          </span>
+          <p>URL:
+          <a href={props.nodeSelectedData.url} style={{color:'white'}} rel="noreferrer" target="_blank">{props.nodeSelectedData.url}</a>
+          <LinkIcon />
+          </p>
+        </div>
+        :null}
+        {geckoData?
           <div>
-            <span>
-              <span>{props.nodeSelectedData.label}</span>
-              <img
-                src={getImage(props.nodeSelectedData)}
-                style={{ marginLeft: "auto" }}
-                alt=""
-                width="50"
-                height="50"
-              ></img>
-            </span>
-            <p>
-              URL:
-              <a
-                href={props.nodeSelectedData.url}
-                style={{ color: "white" }}
-                rel="noreferrer"
-                target="_blank"
-              >
-                {props.nodeSelectedData.url}
-              </a>
-              <LinkIcon />
-            </p>
-          </div>
-        ) : null}
-        {geckoData && geckoData[0] && geckoData[0][0] ? (
-          <div>
-            <p>
-              Current price: U$s{" "}
-              {geckoData[0][0] ? geckoData[0][0].current_price : "no data"}
-            </p>
-            <p>
-              Market Cap: U$s{" "}
-              {geckoData[0][0] ? geckoData[0][0].market_cap : "no data"}
-            </p>
-            <p>
-              24hs price change:
-              {geckoData[0][0]
-                ? geckoData[0][0].price_change_percentage_24h
-                : "no data"}{" "}
-              %
-            </p>
-          </div>
-        ) : null}
+          <p>Current price:
+            U$s {geckoData?geckoData.current_price:'no data'}
+          </p>
+          <p>Market Cap:
+            U$s {geckoData?geckoData.market_cap:'no data'}
+          </p>
+          <p>24hs price change:
+          {geckoData?geckoData.price_change_percentage_24h:'no data'} %
+          </p>
+        </div>
+        :null}
       </div>
       <Divider />
       {props.nodeSelectedData && props.nodeSelectedData.group !== 0 ? (
