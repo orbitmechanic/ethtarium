@@ -9,7 +9,6 @@ import {
   getNodesFiltered,
   getNodesNetworks,
 } from "../helpers/mapHelpers";
-import { StylesProvider } from "@material-ui/styles";
 
 function Mapwip(props) {
   let networks = nodes.filter((x) => x.group === 0);

@@ -1,9 +1,51 @@
 import { Link } from "react-router-dom";
 import SearchIcon from "@material-ui/icons/Search";
 
-export default function Landing(props) {
+export default function Home(props) {
   return (
     <div>
+      {/* 
+        Header and logo
+        Nav buttons 
+          Nav hover states
+        -------------
+        Section left
+        Image of map
+        Section hover state
+        Launch button
+        + Hover
+
+        Section right
+        Section hover state
+          Text section
+
+          Input field
+          Button
+          Hover states
+        --------------
+        Section with text
+        Bonus - animation
+        --------------
+        Section with text
+        Bonus - animation
+        --------------
+        Triple grid
+
+        Three x cards
+
+        Bonus animation
+        -------------
+        Thanks section
+        Donate button and/or Link
+        Hover state button
+
+        Bonus animation
+
+        ---------------
+        Footer
+        Copyright?
+        
+        */}
       <div>
         <h1>Planetharium</h1>
       </div>

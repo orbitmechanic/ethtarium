@@ -1,9 +1,8 @@
-import React from "react";
-import styles from "../styles/main.module.css";
+import styled from "styled-components";
 
 const Footer = () => {
   return (
-    <footer className={styles.footer}>
+    <Wrapper>
       <p>Donate: Address</p>
       <nav>
         <ul>
@@ -15,8 +14,12 @@ const Footer = () => {
           </li>
         </ul>
       </nav>
-    </footer>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.footer`
+  bottom: 0px;
+`;
 
 export default Footer;
