@@ -50,34 +50,45 @@ const Home = (props) => {
         <HeroLeft>
           <h1>Experience a new way of interacting with Web 3.0</h1>
           <HeroText>
-            <p>You'll have access to all blockchains history</p>
+            <p>Access blockchain history</p>
             <br></br>
             <p>
-              You can explore, research and interact with dApps, Networks and
-              more from the universe within watching the live ecosystem grow
+              Explore, research and interact with dApps, Networks and more from
+              the universe within watching the live ecosystem grow
             </p>
             <br></br>
-            <p>in a deep dive into digital space</p>
             <p> Be a part of it!</p>
+            <p>in a deep dive into digital space</p>
           </HeroText>
           <HeroButton>Explore</HeroButton>
         </HeroLeft>
-        <HeroRight></HeroRight>
+        <HeroRight>
+          <p> Be a part of it!</p>
+          <p>in a deep dive into digital space</p>
+        </HeroRight>
       </Hero>
       <Section>
-        <h3>How do we curate and manage the data</h3>
-        <p>We will store our DB in a descentralized way like IPFS or Pinata</p>
-        <p>Data added and modified will be managed with a DAO</p>
-        <p>Users that contribute could earn for the service</p>
-        <p>Protocols, users and dApps could stake to pay for the service</p>
-        <p>You can request for the enter or modification of the data</p>
+        <p>How is the data managed?</p>
+        <SectionText>
+          <p>
+            We will store our data in a decentralized way like IPFS or Pinata
+          </p>
+          <p>Data added and modified will be managed with a DAO</p>
+          <p>Users that contribute could earn for the service</p>
+          <p>Protocols, users and dApps could stake to pay for the service</p>
+          <p>You can request for the enter or modification of the data</p>
+        </SectionText>
       </Section>
       <Section>
-        <h3>How is the information retrieved</h3>
-        <p>Using TheGraph we can analyze the whole history of blockchain txs</p>
-        <p>Data could be graphed, compared(?) exported or whatever!</p>
-        <p>You can request to create subgraphs for specific contracts</p>
-        <p>You can create and promote yours!</p>
+        <p>How is the information retrieved</p>
+        <SectionText>
+          <p>
+            Using TheGraph we can analyze the whole history of blockchain txs
+          </p>
+          <p>Data could be graphed, compared(?) exported or whatever!</p>
+          <p>You can request to create subgraphs for specific contracts</p>
+          <p>You can create and promote yours!</p>
+        </SectionText>
       </Section>
       <GridWrapper>
         <GridCard>
@@ -120,20 +131,16 @@ const Home = (props) => {
       <Section>
         <Thanks>
           <h1>Thanks to!</h1>
-          <p>TheGraph</p>
-          <p>Coingecko</p>
-          <p>ThreeJs</p>
-          <p>Lots and lots of sponsors</p>
-          <p>EthGlobal (this dApp was made for the scaling Hackaton!)</p>
-          <h2>Gitcoin and donate!</h2>
+          <SectionText>
+            <p>TheGraph</p>
+            <p>Coingecko</p>
+            <p>ThreeJs</p>
+            <p>Lots and lots of sponsors</p>
+            <p>EthGlobal (this dApp was made for the scaling Hackaton!)</p>
+            <h2>Gitcoin and donate!</h2>
+          </SectionText>
         </Thanks>
       </Section>
-      <div>
-        <h1>Planetharium</h1>
-      </div>
-      <h3>What is Planetarium?</h3>
-      <br />
-      <p>Planetharium is a new way to experience the Web3!</p>
       Enter the dApp:
       <br />
       <Link to={"/Map"}>
@@ -182,8 +189,9 @@ const Wrapper = styled.div`
 `;
 
 const Hero = styled.div`
+  display: flex;
+  justify-content: space-evenly;
   width: 90%;
-  height: 85vh;
   margin-top: 30px;
   margin-bottom: 50px;
   margin-left: 30px;
@@ -192,7 +200,7 @@ const Hero = styled.div`
 `;
 
 const HeroLeft = styled.div`
-  font-size: 4rem;
+  font-size: 2.5rem;
   width: 50%;
   padding: 40px;
   /* border: solid 1px white; */
@@ -203,42 +211,73 @@ const HeroLeft = styled.div`
 
 const HeroRight = styled.div`
   font-size: 2rem;
-  width: 50%;
+  width: 30%;
+  padding: 40px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 50px var(--shadow);
+  box-shadow: inset 1px 1px 10px 5px var(--shine);
 `;
 
 const HeroText = styled.div`
   margin-top: 20px;
-  font-size: 1.7rem;
+  font-size: 1.5rem;
   text-shadow: 0px 0px 35px white;
 `;
 
 const HeroButton = styled.div`
+  display: flex;
+  margin-top: 20px;
   font-size: 1rem;
   padding: 10px;
   border-radius: 5px;
   box-shadow: 5px white;
-  background-color: gray;
+  background-color: var(--pri-color);
   cursor: pointer;
   :hover {
-    background-color: green;
+    background-color: var(--shine);
   }
   max-width: fit-content;
 `;
 
 const Section = styled.div`
   padding: 20px;
-  max-width: 80%;
+  width: 80%;
   display: flex;
   flex-direction: column;
   flex-grow: 1 1 auto;
+  box-shadow: 1px 1px 50px var(--shadow);
+  box-shadow: inset 1px 1px 10px 5px var(--shine);
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  align-items: center;
+`;
+
+const SectionText = styled.div`
+  padding: 20px 0px 20px 0;
+  font-size: 1.2rem;
 `;
 
 const BigCard = styled.div`
   width: 60%;
 `;
 
-const GridWrapper = styled.div``;
-const GridCard = styled.div``;
+const GridWrapper = styled.div`
+  display: flex;
+  width: 80%;
+  padding: 40px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 50px var(--shadow);
+  box-shadow: inset 1px 1px 10px 5px var(--shine);
+  justify-content: space-evenly;
+`;
+const GridCard = styled.div`
+  width: 30%;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 50px var(--shadow);
+  box-shadow: inset 1px 1px 10px 5px var(--shine);
+`;
 const Thanks = styled.div``;
 
 export default Home;

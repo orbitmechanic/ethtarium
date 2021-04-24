@@ -9,7 +9,7 @@ const Header = () => {
       </SiteName>
       <TopNav>
         <NavButton title={"Home"} />
-        <NavButton title={"About"} />
+        <NavButton title={"Map"} />
         <NavButton title={"About"} />
         <NavButton title={"About"} />
       </TopNav>
@@ -24,6 +24,7 @@ const Wrapper = styled.header`
   padding-left: 30px;
   box-shadow: 0 1px 10px 0 var(--shadow);
   box-shadow: inset 0 2px 10px 0 var(--shine);
+  justify-content: space-between;
 
   padding-bottom: 20px;
 `;

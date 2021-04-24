@@ -59,7 +59,7 @@ function App() {
         <Route path="/Add">
           <AddNode />
         </Route>
-        <Route path="/Frontwip">
+        <Route path="/Map">
           <Frontwip
             onNodeSelected={selectNode}
             selectGraphEndpoint={selectGraphEndpoint}
