@@ -23,24 +23,23 @@ const Wrapper = styled.div`
   flex: 1 1 auto;
   flex-direction: column;
   z-index: 0;
-  max-height: 70vh;
-  min-height: 50vh;
-  max-height: 50vh;
+  background-color: black;
+  color: white;
+  max-height: 100%;
 `;
 
 const Main = styled.div`
-  border: solid 1px #0a2b50;
+  border: solid 1px blue;
   align-self: center;
   align-items: center;
-  justify-content: center;
+
   background-color: 0a2b50;
-  width: 100%;
-  max-height: 50%;
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
   z-index: 0;
-  max-height: 70vh;
+  width: 100%;
+  justify-content: center;
 `;
 
 export default Layout;

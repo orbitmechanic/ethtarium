@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 import SearchIcon from "@material-ui/icons/Search";
+import styled from "styled-components";
 
-export default function Home(props) {
+import React from "react";
+
+const Home = (props) => {
   return (
-    <div>
+    <Wrapper>
       {/* 
-        Header and logo
-        Nav buttons 
-          Nav hover states
-        -------------
+       
         Section left
         Image of map
         Section hover state
@@ -46,6 +46,22 @@ export default function Home(props) {
         Copyright?
         
         */}
+      <Hero>x</Hero>
+      <Section>
+        <h3>How do we curate and manage the data</h3>
+        <p>We will store our DB in a descentralized way like IPFS or Pinata</p>
+        <p>Data added and modified will be managed with a DAO</p>
+        <p>Users that contribute could earn for the service</p>
+        <p>Protocols, users and dApps could stake to pay for the service</p>
+        <p>You can request for the enter or modification of the data</p>
+      </Section>
+      <Section>
+        <h3>How is the information retrieved</h3>
+        <p>Using TheGraph we can analyze the whole history of blockchain txs</p>
+        <p>Data could be graphed, compared(?) exported or whatever!</p>
+        <p>You can request to create subgraphs for specific contracts</p>
+        <p>You can create and promote yours!</p>
+      </Section>
       <div>
         <h1>Planetharium</h1>
       </div>
@@ -95,17 +111,6 @@ export default function Home(props) {
           <button>Add a project</button>
         </Link>
       </div>
-      <h3>How do we curate and manage the data</h3>
-      <p>We will store our DB in a descentralized way like IPFS or Pinata</p>
-      <p>Data added and modified will be managed with a DAO</p>
-      <p>Users that contribute could earn for the service</p>
-      <p>Protocols, users and dApps could stake to pay for the service</p>
-      <p>You can request for the enter or modification of the data</p>
-      <h3>How is the information retrieved</h3>
-      <p>Using TheGraph we can analyze the whole history of blockchain txs</p>
-      <p>Data could be graphed, compared(?) exported or whatever!</p>
-      <p>You can request to create subgraphs for specific contracts</p>
-      <p>You can create and promote yours!</p>
       <h3>As users</h3>
       <ul>
         <li>Explore the web3 multiverse</li>
@@ -143,6 +148,34 @@ export default function Home(props) {
       <p>Lots and lots of sponsors</p>
       <p>EthGlobal (this dApp was made for the scaling Hackaton!)</p>
       <h2>Gitcoin and donate!</h2>
-    </div>
+    </Wrapper>
   );
-}
+};
+const Wrapper = styled.div`
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Hero = styled.div`
+  background-color: pink;
+`;
+const Section = styled.div`
+  padding: 20px;
+  max-width: 80%;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1 1 auto;
+`;
+
+const BigCard = styled.div`
+  width: 60%;
+`;
+
+const GridWrapper = styled.div``;
+const GridCard = styled.div``;
+const Thanks = styled.div``;
+
+export default Home;

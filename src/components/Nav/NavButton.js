@@ -9,6 +9,12 @@ const NavButton = ({ title }) => {
 // Styles
 const Wrapper = styled.button`
   padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  :hover {
+    background-color: white;
+    color: blue;
+  }
 `;
 
 export default NavButton;

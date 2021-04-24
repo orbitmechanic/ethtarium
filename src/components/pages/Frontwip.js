@@ -29,7 +29,6 @@ const Wrapper = styled.div`
   flex: 1 1 auto;
   flex-direction: column;
   align-self: center;
-  max-height: 50vh;
   z-index: 1;
 `;
 

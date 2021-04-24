@@ -20,6 +20,7 @@ const Footer = () => {
 
 const Wrapper = styled.footer`
   bottom: 0px;
+  border: solid 1px white;
 `;
 
 export default Footer;
