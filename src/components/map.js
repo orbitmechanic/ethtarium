@@ -113,8 +113,6 @@ function Map(props) {
     });
   }
 
-
-
   async function create3dGraph(){
     setLoading(true);
 
