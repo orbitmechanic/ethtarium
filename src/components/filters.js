@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import clsx from 'clsx';
 import { fade,makeStyles, useTheme  } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -16,6 +16,10 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import SearchIcon from '@material-ui/icons/Search';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { Button, Checkbox, FormControlLabel, } from '@material-ui/core';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import ListItemText from '@material-ui/core/ListItemText';
+import Collapse from '@material-ui/core/Collapse';
 
 import {options} from '../helpers/localDB';
 const optionsWNetworks = [...options];
@@ -117,16 +121,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+Storage.prototype.setObj = function(key, obj) {
+    return this.setItem(key, JSON.stringify(obj))
+}
+Storage.prototype.getObj = function(key) {
+    return JSON.parse(this.getItem(key))
+}
 
-export default function PermanentDrawerLeft(props) {
+export default function Filters(props) {
 
   const classes = useStyles();
   const theme = useTheme();
+  // global drawer management
   const [open, setOpen] = useState(false);
-  const [filter, setFilter] = useState([0,1,]);
-  const [networkFilterOpen,setNetworkFilterOpen] = useState(false);
-  const [networkFilter, setNetworkFilter] = useState(props.networkFilter);
+  const [groupFilter, setGroupFilter] = useState(null);
+  const [chainsOpen, setChainsOpen] = useState(false);
+  // filters setup
+  const [filter, setFilter] = useState(['chain']);
+  const [networkFilter, setNetworkFilter] = useState(props.blockchainFilter);
+
+
   const [searchResults, setSearchResults] = useState(null);
+
+  // useEffect(() => {
+  //   let newFilter=filter.concat(JSON.parse(localStorage.getObj('filter')))
+  //   setFilter(newFilter)
+  //
+  // }, [filter]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -151,8 +172,7 @@ export default function PermanentDrawerLeft(props) {
     }
   }
 
-
-  const handleChange = (value) => {
+  const handleChange = (value, group) => {
     let newFilter = [...filter];
     if(filter.includes(value)){
       let index = filter.indexOf(value);
@@ -160,18 +180,22 @@ export default function PermanentDrawerLeft(props) {
     }else{
       newFilter.push(value)
     }
-    // console.log('filterIn: ',newFilter)
      setFilter(newFilter);
      props.onFilters(newFilter)
    };
 
-   function isChecked(value){
-     return filter.includes(value);
+   function isChecked(value,group){
+      return filter.includes(value) || filter.includes(group+'_others');
    }
+
+   // function delayChangeState(){
+   //   // delay the setState to catch multiple inputs, otherwise re-renders too much
+   // }
 
    function isNetworkChecked(name){
      return networkFilter.includes(name);
    }
+
    const handleNetworkChange = (value) => {
      let newFilter = [...networkFilter];
      if(networkFilter.includes(value)){
@@ -182,9 +206,26 @@ export default function PermanentDrawerLeft(props) {
      }
      // console.log('filterIn: ',filter)
       setNetworkFilter(newFilter);
-      props.onNetworkFilter(newFilter);
+      props.onBlockchainFilter(newFilter);
     };
 
+  function handleFilter(id){
+      if(groupFilter === id){
+        setGroupFilter(null)
+      }else{
+        setGroupFilter(id)
+      }
+    }
+
+  function cleanName(name, group){
+    let cleanname;
+    if(name.startsWith(group)){
+      cleanname = name.replace(group+'_','')
+    }else{
+      cleanname = name
+    }
+    return cleanname;
+  }
 
   return (
     <div className={classes.root}>
@@ -255,39 +296,67 @@ export default function PermanentDrawerLeft(props) {
             </div>
           :null}
         <Divider />
-        <Button onClick={()=>setNetworkFilterOpen(!networkFilterOpen)}>Networks</Button>
-        {networkFilterOpen?
-          <div>
-            <List>
-            {props.networks.map((network)=>(
-              <ListItem id={network}>
-                <FormControlLabel
+        <br />
+        {/*          // window.localStorage.clear()*/}
+        <Button onClick={()=>{
+          localStorage.setObj('filter',JSON.stringify(filter))
+        }}> Save this configuration (localstorage)</Button>
+        <br />
+
+        <List>
+          {options.map((opt)=>(
+            <div>
+            <Divider />
+            <ListItem button onClick={()=>handleFilter(opt.value)}>
+              <ListItemText primary={opt.label} />
+              {open ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+
+            <Collapse in={groupFilter===opt.value} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+            {opt.subgroups.map((subg=>(
+            <ListItem>
+              {subg!=='chain'?
+              <FormControlLabel
+              value={subg}
+              id = {subg}
+              control={<Checkbox color="default" checked={isChecked(subg, opt.value)} onChange={()=>{handleChange(subg, opt.value)}} />}
+              label= {cleanName(subg,opt.label)}
+              labelPlacement="end"
+              />
+              :
+              <div>
+              <ListItem button onClick={()=>setChainsOpen(!chainsOpen)}>
+                <ListItemText primary='Blockchains' />
+                {chainsOpen ? <ExpandLess /> : <ExpandMore />}
+              </ListItem>
+              <Collapse in={chainsOpen} timeout="auto" unmountOnExit>
+                <List>
+                {props.networks.map((network)=>(
+                  <ListItem id={network}>
+                  <FormControlLabel
                   value={network}
                   id = {network}
                   control={<Checkbox color="primary" checked={isNetworkChecked(network)} onChange={()=>{handleNetworkChange(network)}} />}
                   label={network}
                   labelPlacement="end"
                   />
-              </ListItem>
-            ))}
-            </List>
-          </div>
-        :null}
-        <Divider />
-        <List>
-          {optionsWNetworks.map((opt) => (
-            <ListItem id={opt.value}>
-              <FormControlLabel
-                        value={opt.value}
-                        id = {opt.value}
-                        control={<Checkbox color="default" checked={isChecked(opt.value)} onChange={()=>{handleChange(opt.value)}} />}
-                        label={opt.label}
-                        labelPlacement="end"
-                      />
+                  </ListItem>
+                ))}
+                </List>
+              </Collapse>
+              </div>
+            }
             </ListItem>
+          )))}
+            </List>
+            </Collapse>
+            </div>
           ))}
         </List>
-        <Divider />
+
+
+
       </Drawer>
       <main className={clsx(classes.content, {
                 [classes.contentShift]: open,

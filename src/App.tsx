@@ -4,7 +4,7 @@ import { BrowserRouter,Route } from "react-router-dom";
 
 //Components
 import Map from './components/map';
-import TemporaryDrawer from './components/dataDrawer';
+import NodeOptions from './components/dataDrawer';
 import TheGraphExplorer from './components/thegraphexplorer';
 import Landing from './components/landing';
 import AddNode from './components/add';
@@ -43,7 +43,7 @@ function App() {
           <Map
             onNodeSelected={selectNode}
           />
-          <TemporaryDrawer
+          <NodeOptions
             nodeSelected = {nodeSelected}
             selectGraphEndpoint = {selectGraphEndpoint}
             nodeSelectedData = {nodeSelectedData}

@@ -10,7 +10,7 @@ import LinkIcon from '@material-ui/icons/Link';
 
 import {fetchGeckoData, getExplorer} from '../helpers/mapHelpers';
 
-export default function TemporaryDrawer(props) {
+export default function NodeOptions(props) {
   const [state, setState] = React.useState({
     top: false,
   });
@@ -27,7 +27,7 @@ export default function TemporaryDrawer(props) {
   if(props.nodeSelected){
     if(nodeSelected !== props.nodeSelected){
       setNodeSelected(props.nodeSelected)
-      fetchGeckoData(props.nodeSelected).then((gecko)=>{setGeckoData(gecko);})
+      fetchGeckoData('coin',props.nodeSelected).then((gecko)=>{setGeckoData(gecko);})//
   }}
 
   function getImage(){
@@ -67,16 +67,16 @@ export default function TemporaryDrawer(props) {
           </p>
         </div>
         :null}
-        {geckoData && geckoData[0] && geckoData[0][0]?
+        {geckoData?
           <div>
           <p>Current price:
-            U$s {geckoData[0][0]?geckoData[0][0].current_price:'no data'}
+            U$s {geckoData?geckoData.current_price:'no data'}
           </p>
           <p>Market Cap:
-            U$s {geckoData[0][0]?geckoData[0][0].market_cap:'no data'}
+            U$s {geckoData?geckoData.market_cap:'no data'}
           </p>
           <p>24hs price change:
-          {geckoData[0][0]?geckoData[0][0].price_change_percentage_24h:'no data'} %
+          {geckoData?geckoData.price_change_percentage_24h:'no data'} %
           </p>
         </div>
         :null}
