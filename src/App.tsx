@@ -22,7 +22,12 @@ import TheGraphExplorer from './components/thegraphexplorer';
 import Landing from './components/landing';
 import AddNode from './components/add';
 //UI
+<<<<<<< HEAD
 >>>>>>> filters with subgroups - modified DB schemas
+=======
+import Frontwip from "./components/pages/Frontwip";
+import Layout from "./components/Layout";
+>>>>>>> minor corrections
 
 //Functions
 import { getNode } from "./helpers/mapHelpers";

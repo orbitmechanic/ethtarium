@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import styled from "styled-components";
 import MenuButton from "./MenuButton";
+=======
+import styles from "../../styles/main.module.css";
+import MenuButton from "../mapmenu/MenuButton";
+>>>>>>> minor corrections
 
 const MapMenu = () => {
   return (
