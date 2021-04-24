@@ -33,9 +33,10 @@ function Map(props) {
   }
 
 
-  function handleFilter(filters:any){
+  function handleFilter(filters:Any){
     setFilter(filters);
   }
+
   function handleNetworkChange(filters:any){
     setBlockchainFilter(filters);
   }
@@ -52,10 +53,18 @@ function Map(props) {
   };
 
   function focusNode(graph,node){
+    const dataRendered=graph.graphData()
+    // const newLinks = links.filter(x=>x.source.id===node.id)
   // Focus on node
+    graph.graphData({ //graphs eeevery node
+        nodes: [...dataRendered.nodes,node],
+        links: [...dataRendered.links, ],
+      });
     // console.log('flying into ',node.id)
     const distance = 100;
     const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
+    console.log('graph, ',graph)
+    // graph.backgroundColor('#ccc')
     graph.cameraPosition(
         { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
           node, // lookAt ({ x, y, z })
@@ -89,9 +98,9 @@ function Map(props) {
     let filteredNetworks = getNodesNetworks(networksToFilter)
     let filteredNodes = filteredNetworks.filter(node=>filter.includes(node.subgroup)) // do it to have multiple subgroups inputs
 
-    // const addedNetworks = blockchainFilter.map((network)=>
-    //   filteredNodes.push(getNode(network))
-    // )
+    // if(!filteredNodes.find(node => node.id===props.nodeSelected)){    //this works but changes state.. Get how to!
+    //   filteredNodes.push(getNode(props.nodeSelected))
+    // }
 
     const finalNodesIds = filteredNodes.map(x=>x.id)
     // console.log('finalNodesIds',finalNodesIds)
@@ -147,8 +156,12 @@ function Map(props) {
         const imgTexture = new THREE.TextureLoader().load(imageUrl.default);
         const material = new THREE.SpriteMaterial({ map: imgTexture , color: 0xffffff});
         const sprite = new THREE.Sprite(material); // fetch Gecko data and add here? at least test it!
+        if(node.group === 0){
+          sprite.scale.set(60,60,1)
+        }else{
+          sprite.scale.set(32,32,1)
 
-        sprite.scale.set(32,32,1)
+        }
 
         return sprite;
         })
@@ -241,8 +254,8 @@ function Map(props) {
         selectNode = {selectNode}
 
       />
-      {/*agrandar a pantalla completa*/}
 
+      {/*show in complete screen or make a loading icon inside the render*/}
       {loading?
       <div className='overlay' id='3d-graph'>
       <CircularProgress  />

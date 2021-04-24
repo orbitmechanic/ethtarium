@@ -179,7 +179,7 @@ export const nodes:Node = [
   { id: "pancakeswap", group: 2, label: "Pancake Swap", subgroup:'farm',level: 2,
   short:'',  img:'pancakeswap.png',
     url:'https://pancakeswap.finance',
-    contract:'0 x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82', //BSC!!
+    contract:'0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82', //BSC!!
     graphUrl:'https://api.thegraph.com/subgraphs/name/developerfred/pancake-exchange' , // careful here!
     query:'' , search:'', widget:'' },
   { id: "dai", group: 7, label: "Dai", subgroup:'stables',level: 2,
@@ -234,7 +234,7 @@ export const nodes:Node = [
 
 export const links:Link = [
   {target:"ethereum",source:"optimism",distance:40},
-  {curvature:1,rotation:10,target:"optimism",source:"optimism",distance:40},
+  {curvature:2,rotation:30,target:"optimism",source:"optimism",distance:40},
   {target:"ethereum",source:"bao-finance",distance:40},
   {target:"ethereum",source:"xdai-stake",distance:40},
   {target:"ethereum",source:"gnosis",distance:40},

@@ -1,17 +1,22 @@
-import React, {useState, useCallback} from "react";
+import React, { useState, useCallback } from "react";
 import "./App.css";
-import { BrowserRouter,Route } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 
 //Components
-import Map from './components/map';
-import NodeOptions from './components/dataDrawer';
+//<<<<<<< HEAD
+import Map from "./components/map";
+//=======
+import NodeOptions from './components/nodeOptions';
 import TheGraphExplorer from './components/thegraphexplorer';
 import Landing from './components/landing';
 import AddNode from './components/add';
+
 //UI
+import Frontwip from "./components/pages/Frontwip";
+import Layout from "./components/Layout";
 
 //Functions
-import {getNode} from './helpers/mapHelpers';
+import { getNode } from "./helpers/mapHelpers";
 
 // others
 
@@ -20,24 +25,21 @@ function App() {
   const [nodeSelectedData, setNodeSelectedData] = useState(null);
   const [endpoint, setEndpoint] = useState(null);
 
-  const selectGraphEndpoint = (endpoint)=>{
+  const selectGraphEndpoint = (endpoint) => {
     // console.log(endpoint)
-    setEndpoint(endpoint)
-  } ;
+    setEndpoint(endpoint);
+  };
 
-  const selectNode = useCallback((id)=>{
+  const selectNode = useCallback((id) => {
     setNodeSelected(id);
-    setNodeSelectedData(getNode(id))
-  },[]);
+    setNodeSelectedData(getNode(id));
+  }, []);
 
   return (
-    <div className="App">
-      <body className='App-body'>
+    <Layout>
       <BrowserRouter>
         <Route exact path="/">
-          <Landing
-            selectGraphEndpoint = {selectGraphEndpoint}
-          />
+          <Landing selectGraphEndpoint={selectGraphEndpoint} />
         </Route>
         <Route path='/Map'>
           <Map
@@ -49,19 +51,24 @@ function App() {
             nodeSelectedData = {nodeSelectedData}
           />
         </Route>
-        <Route path='/TheGraphData'>
+        <Route path="/TheGraphData">
           <TheGraphExplorer
-            node = {nodeSelected}
-            endpoint = {endpoint}
-            selectNode = {selectNode}
-           />
+            node={nodeSelected}
+            endpoint={endpoint}
+            selectNode={selectNode}
+          />
         </Route>
-        <Route path='/Add'>
+        <Route path="/Add">
           <AddNode />
         </Route>
+        <Route path="/Frontwip">
+          <Frontwip
+            onNodeSelected={selectNode}
+            selectGraphEndpoint={selectGraphEndpoint}
+          />
+        </Route>
       </BrowserRouter>
-      </body>
-      </div>
+    </Layout>
   );
 }
 
