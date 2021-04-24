@@ -46,7 +46,24 @@ const Home = (props) => {
         Copyright?
         
         */}
-      <Hero>x</Hero>
+      <Hero>
+        <HeroLeft>
+          <h1>Experience a new way of interacting with Web 3.0</h1>
+          <HeroText>
+            <p>You'll have access to all blockchains history</p>
+            <br></br>
+            <p>
+              You can explore, research and interact with dApps, Networks and
+              more from the universe within watching the live ecosystem grow
+            </p>
+            <br></br>
+            <p>in a deep dive into digital space</p>
+            <p> Be a part of it!</p>
+          </HeroText>
+          <HeroButton>Explore</HeroButton>
+        </HeroLeft>
+        <HeroRight></HeroRight>
+      </Hero>
       <Section>
         <h3>How do we curate and manage the data</h3>
         <p>We will store our DB in a descentralized way like IPFS or Pinata</p>
@@ -68,13 +85,6 @@ const Home = (props) => {
       <h3>What is Planetarium?</h3>
       <br />
       <p>Planetharium is a new way to experience the Web3!</p>
-      <p>You'll have access to all blockchains history</p>
-      <p>
-        You can explore, research and interact with dApps, Networks and more
-        from the universe within watching the live ecosystem grow
-      </p>
-      <p>in a deep dive into digital space</p>
-      <p> Be a part of it!</p>
       Enter the dApp:
       <br />
       <Link to={"/Map"}>
@@ -160,8 +170,43 @@ const Wrapper = styled.div`
 `;
 
 const Hero = styled.div`
-  background-color: pink;
+  width: 90%;
+  height: 85vh;
+  margin-bottom: 50px;
+  margin-left: 30px;
+  margin-right: 30px;
 `;
+
+const HeroLeft = styled.div`
+  font-size: 5rem;
+  width: 50%;
+  border: solid 1px white;
+`;
+
+const HeroRight = styled.div`
+  font-size: 2rem;
+  width: 50%;
+`;
+
+const HeroText = styled.div`
+  margin-top: 20px;
+  font-size: 2rem;
+  text-shadow: 0px 0px 35px white;
+`;
+
+const HeroButton = styled.div`
+  font-size: 1rem;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 5px white;
+  background-color: gray;
+  cursor: pointer;
+  :hover {
+    background-color: green;
+  }
+  max-width: fit-content;
+`;
+
 const Section = styled.div`
   padding: 20px;
   max-width: 80%;

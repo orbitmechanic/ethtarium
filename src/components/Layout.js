@@ -23,7 +23,7 @@ const Wrapper = styled.div`
   flex: 1 1 auto;
   flex-direction: column;
   z-index: 0;
-  background-color: black;
+  background-color: #120e2f;
   color: white;
   max-height: 100%;
 `;
