@@ -3,11 +3,14 @@ import "./App.css";
 import { BrowserRouter, Route } from "react-router-dom";
 
 //Components
+//<<<<<<< HEAD
 import Map from "./components/map";
-import TemporaryDrawer from "./components/dataDrawer";
-import TheGraphExplorer from "./components/thegraphexplorer";
-import Landing from "./components/landing";
-import AddNode from "./components/add";
+//=======
+import NodeOptions from './components/nodeOptions';
+import TheGraphExplorer from './components/thegraphexplorer';
+import Landing from './components/landing';
+import AddNode from './components/add';
+
 //UI
 import Frontwip from "./components/pages/Frontwip";
 import Layout from "./components/Layout";
@@ -38,12 +41,14 @@ function App() {
         <Route exact path="/">
           <Landing selectGraphEndpoint={selectGraphEndpoint} />
         </Route>
-        <Route path="/Map">
-          <Map onNodeSelected={selectNode} />
-          <TemporaryDrawer
-            nodeSelected={nodeSelected}
-            selectGraphEndpoint={selectGraphEndpoint}
-            nodeSelectedData={nodeSelectedData}
+        <Route path='/Map'>
+          <Map
+            onNodeSelected={selectNode}
+          />
+          <NodeOptions
+            nodeSelected = {nodeSelected}
+            selectGraphEndpoint = {selectGraphEndpoint}
+            nodeSelectedData = {nodeSelectedData}
           />
         </Route>
         <Route path="/TheGraphData">
