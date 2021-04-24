@@ -3,31 +3,18 @@ import "./App.css";
 import { BrowserRouter, Route } from "react-router-dom";
 
 //Structure
-import Layout from "./components/Layout";
 //Pages
 import Home from "./components/Pages/Home";
-import Frontwip from "./components/Pages/Frontwip";
 
 //Components
-<<<<<<< HEAD
 import Map from "./components/map";
-import TemporaryDrawer from "./components/dataDrawer";
+import NodeOptions from "./components/NodeOptions";
 import TheGraphExplorer from "./components/thegraphexplorer";
 import Landing from "./components/landing";
 import AddNode from "./components/add";
-=======
-import Map from './components/map';
-import NodeOptions from './components/dataDrawer';
-import TheGraphExplorer from './components/thegraphexplorer';
-import Landing from './components/landing';
-import AddNode from './components/add';
 //UI
-<<<<<<< HEAD
->>>>>>> filters with subgroups - modified DB schemas
-=======
 import Frontwip from "./components/pages/Frontwip";
 import Layout from "./components/Layout";
->>>>>>> minor corrections
 
 //Functions
 import { getNode } from "./helpers/mapHelpers";
@@ -55,23 +42,12 @@ function App() {
         <Route exact path="/">
           <Landing selectGraphEndpoint={selectGraphEndpoint} />
         </Route>
-<<<<<<< HEAD
         <Route path="/Map">
           <Map onNodeSelected={selectNode} />
           <TemporaryDrawer
             nodeSelected={nodeSelected}
             selectGraphEndpoint={selectGraphEndpoint}
             nodeSelectedData={nodeSelectedData}
-=======
-        <Route path='/Map'>
-          <Map
-            onNodeSelected={selectNode}
-          />
-          <NodeOptions
-            nodeSelected = {nodeSelected}
-            selectGraphEndpoint = {selectGraphEndpoint}
-            nodeSelectedData = {nodeSelectedData}
->>>>>>> filters with subgroups - modified DB schemas
           />
         </Route>
         <Route path="/TheGraphData">
