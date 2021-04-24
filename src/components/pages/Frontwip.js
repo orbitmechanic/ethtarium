@@ -1,5 +1,5 @@
 import React from "react";
-import MapMenu from "../mapmenu/MapMenu";
+import MapMenu from "../MapMenu/MapMenu";
 import Mapwip from "../Mapwip";
 import styled from "styled-components";
 

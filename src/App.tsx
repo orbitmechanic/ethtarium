@@ -5,8 +5,8 @@ import { BrowserRouter, Route } from "react-router-dom";
 //Structure
 import Layout from "./components/Layout";
 //Pages
-import Home from "./components/pages/Home";
-import Frontwip from "./components/pages/Frontwip";
+import Home from "./components/Pages/Home";
+import Frontwip from "./components/Pages/Frontwip";
 
 //Components
 import Map from "./components/map";
