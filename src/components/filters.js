@@ -150,9 +150,9 @@ export default function Filters(props) {
   useEffect(() => {
     let newFilter;
     let arrayFilter = [];
-    if(savedFilter){  // just in first render.. then kills the filter
+    if(savedFilter){
       let savedFilterItems = JSON.parse(savedFilter)
-      arrayFilter = savedFilterItems.split('\"')
+      arrayFilter = savedFilterItems.split('"') // or '\"'
       newFilter=arrayFilter.filter((x,i)=>{return i%2})
       handleInitialFilters(newFilter)
     }
@@ -320,8 +320,8 @@ export default function Filters(props) {
         <StarIcon />
         <Button onClick={()=>{
           let cleaning = new Promise(()=>{localStorage.clear()})
-
           cleaning.then(localStorage.setObj('filter',JSON.stringify(filter)))
+          handleDrawerClose()
           //
         }}> Update</Button>
         </div>
@@ -330,6 +330,7 @@ export default function Filters(props) {
         <StarBorderIcon />
         <Button onClick={()=>{
           localStorage.setObj('filter',JSON.stringify(filter))
+          handleDrawerClose()
         }}> Save</Button>
         </div>
       }

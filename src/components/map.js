@@ -44,49 +44,35 @@ function Map(props) {
   function selectNode(id){
     props.onNodeSelected(id);
     let nodeI = getNode(id);
-
     // console.log('id',id,'graph',graph.current,' node: ',nodeI)
     graph.current.then((graph)=>{
+      const dataRendered=graph.graphData()
+      // console.log(dataRendered)
+      if(!dataRendered.nodes.includes(nodeI)){
+        addNode(graph, dataRendered, nodeI)
+      }
       focusNode(graph, nodeI)
     }
-     )
+    )
   };
 
   function focusNode(graph,node){
-    const dataRendered=graph.graphData()
-    // const newLinks = links.filter(x=>x.source.id===node.id)
-  // Focus on node
-    graph.graphData({ //graphs eeevery node
-        nodes: [...dataRendered.nodes,node],
-        links: [...dataRendered.links, ],
-      });
     // console.log('flying into ',node.id)
     const distance = 100;
     const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
-    console.log('graph, ',graph)
-    // graph.backgroundColor('#ccc')
+    // graph.backgroundColor('#ccc')  // changes the bg color
     graph.cameraPosition(
         { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
           node, // lookAt ({ x, y, z })
           2000  // ms transition duration
           );
-        };
+  };
 
   let graph=useRef(null);
   useEffect(()=>{
         graph.current=create3dGraph(); //useRef()
   })
 
-  // function graphInSpace(graph, whatTo, where){
-  //   graph
-  //     .nodeThreeObject(where => {
-  //       const sprite = new SpriteText(whatTo);
-  //       sprite.material.depthWrite = false; // make sprite background transparent
-  //       sprite.color = 'white';
-  //       sprite.textHeight = 8;
-  //       return sprite;
-  //     })
-  // }
 
   function filterNodes(){
     let networksToFilter;
@@ -99,7 +85,6 @@ function Map(props) {
     let filteredNodes = filteredNetworks.filter(node=>filter.includes(node.subgroup)) // do it to have multiple subgroups inputs
 
     const finalNodesIds = filteredNodes.map(x=>x.id)
-    // console.log('finalNodesIds',finalNodesIds)
     let filteredLinks = links.reduce((filteredLinks, link:Link[]) => {
           if ((finalNodesIds.includes(link.target.id?link.target.id:link.target))
             && (finalNodesIds.includes(link.source.id?link.source.id:link.source)))
@@ -111,9 +96,28 @@ function Map(props) {
     return [filteredNodes, filteredLinks];
   }
 
+  function addNode(graph, dataRendered, node ){
+    // first search wont show the stripe, is there, but needs double search.. (?)
+    // it wont graph the links!!!
+
+    // console.log('starts with ',dataRendered.links.length)
+    let addLinks = links.filter(x=>(x.source.id===node.id)||(x.source===node.id))
+    dataRendered.nodes.push(node)
+    dataRendered.links.concat(addLinks)
+    // console.log(node)
+    // console.log(addLinks)
+    // console.log(dataRendered)
+    graph.graphData({
+      nodes: [...dataRendered.nodes],
+      links: [...dataRendered.links ],
+    });
+  }
+
+
 
   async function create3dGraph(){
     setLoading(true);
+
     const [filteredNodes, filteredLinks] = filterNodes()
     const gData = {
       nodes: filteredNodes,
@@ -132,14 +136,11 @@ function Map(props) {
 // VR (needs 3d-force-graph-vr package)
 // replace ForceGraph3D with ForceGraphVR()
 
-
-
-
     const graph2 =  ForceGraph3D()
         (spaceHolder)
       // .nodeRelSize(node => node.group===0? 100 : 4) // not working!!
       .nodeLabel('label') // show label on hover
-      .nodeAutoColorBy('group') // Color by group attr
+      // .nodeAutoColorBy('group') // Color by group attr
       // Images as sprites
       .nodeThreeObject((node:Node) => {
         let imageUrl;
@@ -196,7 +197,7 @@ function Map(props) {
         hoverNode = node || null;
         updateHighlight();
       })
-      .linkWidth((link) => (highlightLinks.has(link) ? 0.1 : 0.3))
+      .linkWidth((link) => (highlightLinks.has(link) ? 0.2 : 0.3))
       .linkCurvature('curvature')
       .linkCurveRotation('rotation')
       .linkDirectionalParticles((link) => (highlightLinks.has(link) ? 3 : 0))
@@ -208,23 +209,17 @@ function Map(props) {
     graph2
       .onBackgroundClick(zoomOut)
 
-//Distance between nodes
 //Force distance
     graph2
       .d3Force('link')
-      .distance(100);
-        //'distance'); // distance from DB? hooooow?
+      // .distance(100);
+      .distance(link => link.distance ? link.distance : 100);
   // Play with forces
     // graph2.d3Force('charge').strength(-300);
+
     setLoading(false);
     zoomOut();
     return graph2;
-//Post processing   // connect web3-modal > see connected network > Shine and show assets and reach
-    //   const bloomPass = new UnrealBloomPass();
-    // bloomPass.strength = 3;
-    // bloomPass.radius = 1;
-    // bloomPass.threshold = 0.1;
-    // graph2.postProcessingComposer().addPass(bloomPass);
 
     function zoomOut(){
       //graph2.onEngineStop(() => graph2.zoomToFit(100)); // Make this to Fit when mouse is out the map
@@ -265,3 +260,23 @@ function Map(props) {
   )
 }
 export default React.memo(Map);
+
+
+
+//Post processing   // connect web3-modal > see connected network > Shine and show assets and reach
+//   const bloomPass = new UnrealBloomPass();
+// bloomPass.strength = 3;
+// bloomPass.radius = 1;
+// bloomPass.threshold = 0.1;
+// graph2.postProcessingComposer().addPass(bloomPass);
+
+// function graphInSpace(graph, whatTo, where){
+  //   graph
+  //     .nodeThreeObject(where => {
+    //       const sprite = new SpriteText(whatTo);
+    //       sprite.material.depthWrite = false; // make sprite background transparent
+    //       sprite.color = 'white';
+    //       sprite.textHeight = 8;
+    //       return sprite;
+    //     })
+    // }
