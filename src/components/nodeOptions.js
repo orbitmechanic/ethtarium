@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React,{useState} from 'react';
 import { Link } from "react-router-dom";
 import ReactDOM from 'react-dom'
@@ -10,19 +9,6 @@ import LinkIcon from '@material-ui/icons/Link';
 // import ListItem from '@material-ui/core/ListItem';
 
 import {fetchGeckoData, getExplorer} from '../helpers/mapHelpers';
-=======
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import ReactDOM from "react-dom";
-import Drawer from "@material-ui/core/Drawer";
-import Button from "@material-ui/core/Button";
-import Divider from "@material-ui/core/Divider";
-import LinkIcon from "@material-ui/icons/Link";
-// import List from '@material-ui/core/List';
-// import ListItem from '@material-ui/core/ListItem';
-
-import { fetchGeckoData, getExplorer } from "../helpers/mapHelpers";
->>>>>>> e8f896ebefe6e7170498064703c5a29f3c228a07
 
 export default function NodeOptions(props) {
   const [state, setState] = React.useState({
@@ -32,14 +18,10 @@ export default function NodeOptions(props) {
   const [geckoData, setGeckoData] = useState(null);
 
   const toggleDrawer = (anchor, open) => (event) => {
-<<<<<<< HEAD
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-=======
     if (
       event.type === "keydown" &&
       (event.key === "Tab" || event.key === "Shift")
     ) {
->>>>>>> e8f896ebefe6e7170498064703c5a29f3c228a07
       return;
     }
     setState({ ...state, [anchor]: open });
@@ -51,23 +33,6 @@ export default function NodeOptions(props) {
       fetchGeckoData('coin',props.nodeSelected).then((gecko)=>{setGeckoData(gecko);})//
   }}
 
-<<<<<<< HEAD
-  function getImage(){
-    let image;
-     if(props.nodeSelectedData && props.nodeSelectedData.img){
-       image = require(`../images/mini_${props.nodeSelectedData.img}`)
-     }else{
-       image = require('../images/mini_default.png');
-     }
-     return image.default
-  }
-
-  function getAddress(){
-    let explorer = getExplorer(props.nodeSelected)
-    let addressContract=explorer+`address/${props.nodeSelectedData.contract}`
-    // console.log(addressContract)
-    return addressContract
-=======
   function getImage() {
     let image;
     if (props.nodeSelectedData && props.nodeSelectedData.img) {
@@ -84,16 +49,11 @@ export default function NodeOptions(props) {
       explorer + `address/${props.nodeSelectedData.contract}`;
     // console.log(addressContract)
     return addressContract;
->>>>>>> e8f896ebefe6e7170498064703c5a29f3c228a07
   }
 
   const list = (anchor) => (
     <div
-<<<<<<< HEAD
-      className='App-header'
-=======
       className="App-header"
->>>>>>> e8f896ebefe6e7170498064703c5a29f3c228a07
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
@@ -125,17 +85,7 @@ export default function NodeOptions(props) {
         </div>
         :null}
       </div>
-<<<<<<< HEAD
 
-      <Divider  />
-      {props.nodeSelectedData && props.nodeSelectedData.group !== 0?
-        <div>
-        Contracts <br />
-          <a href={getAddress()} style={{color:'white'}}
-              rel="noreferrer" target="_blank" >{props.nodeSelectedData.contract}</a>
-              <LinkIcon />
-{/*
-=======
       <Divider />
       {props.nodeSelectedData && props.nodeSelectedData.group !== 0 ? (
         <div>
@@ -150,7 +100,6 @@ export default function NodeOptions(props) {
           </a>
           <LinkIcon />
           {/*
->>>>>>> e8f896ebefe6e7170498064703c5a29f3c228a07
           <List>
           {props.nodeSelectedData.contract.forEach(
             (contract)=>{
@@ -161,45 +110,6 @@ export default function NodeOptions(props) {
         </List>
 */}
         </div>
-<<<<<<< HEAD
-        :null}
-
-      <Divider />
-      The Graph endpoints <br />
-      {props.nodeSelectedData && props.nodeSelectedData.graphUrl?
-        <div>
-        <Link to='/TheGraphData' >
-          <Button onClick={()=>props.selectGraphEndpoint(props.nodeSelectedData.graphUrl)} style={{color:'white'}}>{props.nodeSelectedData.graphUrl}</Button>
-          <LinkIcon style={{color:'white'}}/>
-        </Link>
-        </div>
-      :null}
-
-      <Divider />
-      Links (interact directly with contracts!) where to go from here
-      for ex:
-      network -> bridges -> other networks ||
-      network -> swap tokens
-    </div>
-  );
-
-  return(
-    <div>
-    {props.nodeSelected?
-      <div>
-      {ReactDOM.createPortal(
-        <div style={{marginLeft: "auto" }}>
-          <Button onClick={toggleDrawer('top', true)} style={{color:'white', fontWeight:'bold'}} >{props.nodeSelected}</Button>
-        </div>,
-        document.getElementById('toolbar'))}
-      </div>
-    :null}
-      <React.Fragment key={'top'}>
-
-        <Drawer anchor={'top'} open={state['top']} onClose={toggleDrawer('top', false)}>
-            {list('top')}
-          </Drawer>
-=======
       ) : null}
       <Divider />
       <div>
@@ -254,7 +164,6 @@ export default function NodeOptions(props) {
         >
           {list("top")}
         </Drawer>
->>>>>>> e8f896ebefe6e7170498064703c5a29f3c228a07
       </React.Fragment>
     </div>
   );

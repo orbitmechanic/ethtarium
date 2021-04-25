@@ -7,21 +7,13 @@ import { BrowserRouter, Route } from "react-router-dom";
 import Home from "./components/Pages/Home";
 
 //Components
-//<<<<<<< HEAD
 import Map from "./components/map";
-<<<<<<< HEAD
 import NodeOptions from "./components/nodeOptions";
+
+
 import TheGraphExplorer from "./components/thegraphexplorer";
 import Landing from "./components/landing";
 import AddNode from "./components/add";
-=======
-//=======
-import NodeOptions from './components/nodeOptions';
-import TheGraphExplorer from './components/thegraphexplorer';
-import Landing from './components/landing';
-import AddNode from './components/add';
-
->>>>>>> e8f896ebefe6e7170498064703c5a29f3c228a07
 //UI
 import Frontwip from "./components/pages/Frontwip";
 import Layout from "./components/Layout";
@@ -52,23 +44,12 @@ function App() {
         <Route exact path="/">
           <Landing selectGraphEndpoint={selectGraphEndpoint} />
         </Route>
-<<<<<<< HEAD
         <Route path="/Map">
           <Map onNodeSelected={selectNode} />
           <NodeOptions
             nodeSelected={nodeSelected}
             selectGraphEndpoint={selectGraphEndpoint}
             nodeSelectedData={nodeSelectedData}
-=======
-        <Route path='/Map'>
-          <Map
-            onNodeSelected={selectNode}
-          />
-          <NodeOptions
-            nodeSelected = {nodeSelected}
-            selectGraphEndpoint = {selectGraphEndpoint}
-            nodeSelectedData = {nodeSelectedData}
->>>>>>> e8f896ebefe6e7170498064703c5a29f3c228a07
           />
         </Route>
         <Route path="/TheGraphData">
