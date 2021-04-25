@@ -1,7 +1,31 @@
 /* ---------- */
 .hero {
-  background-image: url(/src/images/backgrounds/eclipse-bright.jpg);
+  background: 
+    /* top, transparent red */ radial-gradient(
+      circle at center,
+      #001c3800 0,
+      #001c38 40%
+    ),
+    url(/src/images/backgrounds/dark-purple-galaxy.jpg);
+
+  background-size: 1000px;
+  background-repeat: no-repeat;
+}
+
+.herosmall {
+  /* background-image: url(/src/images/backgrounds/eclipse-bright.jpg);
+  background-size: cover; */
+  background: 
+    /* top, transparent red */ linear-gradient(
+      var(--overlay),
+      var(--overlay)
+    ),
+    url(/src/images/backgrounds/some-moons.jpg);
+  /* bottom, image */
   background-size: cover;
+  background-repeat: no-repeat;
+  width: auto;
+  height: auto;
 }
 
 /**
