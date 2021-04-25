@@ -9,7 +9,7 @@ const Header = () => {
       </SiteName>
       <TopNav>
         <NavButton title={"Home"} />
-        <NavButton title={"Map"} />
+        <NavButton title={"Mapwip"} />
         <NavButton title={"About"} />
         <NavButton title={"About"} />
       </TopNav>

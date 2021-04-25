@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import SearchIcon from "@material-ui/icons/Search";
 import styled from "styled-components";
-
+import styles from "../../styles/main.module.css";
 import React from "react";
+import { StylesProvider } from "@material-ui/styles";
 
 const Home = (props) => {
   return (
@@ -46,7 +47,7 @@ const Home = (props) => {
         Copyright?
         
         */}
-      <Hero>
+      <Hero className={styles.hero}>
         <HeroLeft>
           <h1>Experience a new way of interacting with Web 3.0</h1>
           <HeroText>
@@ -56,15 +57,16 @@ const Home = (props) => {
               Explore, research and interact with dApps, Networks and more from
               the universe within watching the live ecosystem grow
             </p>
-            <br></br>
-            <p> Be a part of it!</p>
-            <p>in a deep dive into digital space</p>
           </HeroText>
-          <HeroButton>Explore</HeroButton>
         </HeroLeft>
-        <HeroRight>
+        <HeroRight className={styles.herosmall}>
           <p> Be a part of it!</p>
-          <p>in a deep dive into digital space</p>
+          <HeroText>
+            <p>In a deep dive into digital space...</p>
+          </HeroText>
+          <CentreWrap>
+            <HeroButton>Explore</HeroButton>
+          </CentreWrap>
         </HeroRight>
       </Hero>
       <Section>
@@ -188,15 +190,22 @@ const Wrapper = styled.div`
   flex-direction: column;
 `;
 
+const CentreWrap = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
 const Hero = styled.div`
   display: flex;
   justify-content: space-evenly;
   width: 90%;
+  min-height: 80vh;
   margin-top: 30px;
   margin-bottom: 50px;
   margin-left: 30px;
   margin-right: 30px;
-  font-family: "IBM Plex Mono";
+  font-weight: bolder;
 `;
 
 const HeroLeft = styled.div`
@@ -205,13 +214,14 @@ const HeroLeft = styled.div`
   padding: 40px;
   /* border: solid 1px white; */
   border-radius: 5px;
-  box-shadow: 1px 1px 50px var(--shadow);
-  box-shadow: inset 1px 1px 10px 5px var(--shine);
+  /* box-shadow: 1px 1px 50px var(--shadow);
+  box-shadow: inset 1px 1px 10px 5px var(--shine); */
 `;
 
 const HeroRight = styled.div`
   font-size: 2rem;
-  width: 30%;
+  width: fit-content;
+  height: fit-content;
   padding: 40px;
   border-radius: 5px;
   box-shadow: 1px 1px 50px var(--shadow);
@@ -222,6 +232,7 @@ const HeroText = styled.div`
   margin-top: 20px;
   font-size: 1.5rem;
   text-shadow: 0px 0px 35px white;
+  font-weight: lighter;
 `;
 
 const HeroButton = styled.div`
