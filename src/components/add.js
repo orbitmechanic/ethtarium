@@ -40,6 +40,9 @@ export default function AddNode(props) {
     obj.query = document.getElementById('nodeQuery').value;
     obj.search = document.getElementById('nodeSearch').value;
     obj.widget = document.getElementById('nodeWidget').value;
+
+    // add short, subgroup and chainId
+
     if(group === 0){
       if(group ===0){
       obj.level = 1;
@@ -54,7 +57,7 @@ export default function AddNode(props) {
 
     if(links.target === links.source){
       links2.curvature= 1
-      links2.rotation= 10      
+      links2.rotation= 10
     }
 
     if(group === 0){

@@ -22,7 +22,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import StarIcon from '@material-ui/icons/Star';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
-
+// import LinearProgress from '@material-ui/core/LinearProgress';
 
 import {options} from '../helpers/localDB';
 const optionsWNetworks = [...options];
@@ -142,7 +142,7 @@ export default function Filters(props) {
   // filters setup
   const [filter, setFilter] = useState(['chain']);
   const [subgroupFilter, setSubgroupFilter] = useState(props.blockchainFilter);
-
+  // const [loading, setLoading] = useState(false);
   const [searchResults, setSearchResults] = useState(null);
 
   let savedFilter=localStorage.getItem('filter')
@@ -165,7 +165,9 @@ export default function Filters(props) {
     props.onFilters(newFilter)
   }
 
+
   const handleChange = (value) => {
+    // setLoading(true)
     let newFilter = [...filter];
 
     if(filter.includes(value)){
@@ -175,9 +177,15 @@ export default function Filters(props) {
       newFilter.push(value)
     }
 
-     setFilter(newFilter);
-     props.onFilters(newFilter)
+    setFilter(newFilter);
+    sendNewFilter(newFilter);
    };
+
+   function sendNewFilter(){
+     setTimeout(function(){ props.onFilters(filter); }, 2000);//it works, but makes 2 setState
+     // setLoading(false)
+
+   }
 
 
   const handleDrawerOpen = () => {
@@ -249,7 +257,7 @@ export default function Filters(props) {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
-        position="fixed"
+        // position="fixed"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}>
@@ -314,6 +322,9 @@ export default function Filters(props) {
             </div>
           :null}
         <Divider />
+        {/*loading?
+          <LinearProgress />
+        :null*/}
         <br />
         {savedFilter?
         <div>
