@@ -4,12 +4,11 @@ import { BrowserRouter, Route } from "react-router-dom";
 
 //Structure
 //Pages
-import Home from "./components/Pages/Home";
+import Home from "./components/pages/Home";
 
 //Components
 import Map from "./components/map";
 import NodeOptions from "./components/nodeOptions";
-
 
 import TheGraphExplorer from "./components/thegraphexplorer";
 import Landing from "./components/landing";
@@ -40,40 +39,40 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Layout>
-        <Route exact path="/">
-          <Landing selectGraphEndpoint={selectGraphEndpoint} />
-        </Route>
-        <Route path="/Map">
-          <Map onNodeSelected={selectNode} />
-          <NodeOptions
-            nodeSelected={nodeSelected}
-            selectGraphEndpoint={selectGraphEndpoint}
-            nodeSelectedData={nodeSelectedData}
-          />
-        </Route>
-        <Route path="/TheGraphData">
-          <TheGraphExplorer
-            node={nodeSelected}
-            endpoint={endpoint}
-            selectNode={selectNode}
-          />
-        </Route>
-        <Route path="/Add">
-          <AddNode />
-        </Route>
-{/*
-        <Route path="/Map">
+      <Route exact path="/">
+        <Landing selectGraphEndpoint={selectGraphEndpoint} />
+      </Route>
+      <Route path="/Map">
+        <Map onNodeSelected={selectNode} />
+        <NodeOptions
+          nodeSelected={nodeSelected}
+          selectGraphEndpoint={selectGraphEndpoint}
+          nodeSelectedData={nodeSelectedData}
+        />
+      </Route>
+      <Route path="/TheGraphData">
+        <TheGraphExplorer
+          node={nodeSelected}
+          endpoint={endpoint}
+          selectNode={selectNode}
+        />
+      </Route>
+      <Route path="/Add">
+        <AddNode />
+      </Route>
+      {/*
+        <Route path="/Mapwip">
           <Frontwip
             onNodeSelected={selectNode}
             selectGraphEndpoint={selectGraphEndpoint}
           />
         </Route>
 */}
-        <Route path="/Home">
+      <Route path="/Home">
+        <Layout>
           <Home />
-        </Route>
-      </Layout>
+        </Layout>
+      </Route>
     </BrowserRouter>
   );
 }
