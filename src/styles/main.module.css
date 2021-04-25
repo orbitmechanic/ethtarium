@@ -34,14 +34,16 @@
                * — Responsive
                */
 
-@media (min-width: 768px) {
-  .sidebar1 {
-    order: -1;
-  }
-  .main {
+/* @media (min-width: 768px) {
+  .mobile {
     flex-direction: row;
   }
   .sidebar {
     flex: 0 0 260px;
   }
-}
+} */
+/* @media only screen and (max-width: 768px) {
+  .mobile {
+    flex-direction: column;
+  }
+} */

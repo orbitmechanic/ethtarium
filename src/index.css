@@ -6,9 +6,10 @@
   --text-color: #ffffff;
   --pri-color: #ff2cc0;
   --sec-color: #ffffff;
-  --shadow: #e874ff;
+  --shadow: #2b0d31;
   --shine: #413657;
   --overlay: #001c3883;
+  --textglow: #ff2cc0;
 }
 *,
 *:before,

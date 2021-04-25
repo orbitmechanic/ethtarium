@@ -19,14 +19,16 @@ const Header = () => {
 
 const Wrapper = styled.header`
   display: flex;
+  width: 100%;
   font-size: 2rem;
   padding-top: 30px;
   padding-left: 30px;
   box-shadow: 0 1px 10px 0 var(--shadow);
-  box-shadow: inset 0 2px 10px 0 var(--shine);
   justify-content: space-between;
-
   padding-bottom: 20px;
+  /* position: fixed;
+  background-color: var(--bg-color);
+  z-index: 1; */
 `;
 
 const SiteName = styled.div`

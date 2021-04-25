@@ -213,7 +213,7 @@ const HeroLeft = styled.div`
   width: 50%;
   padding: 40px;
   /* border: solid 1px white; */
-  border-radius: 5px;
+  border-radius: 3px;
   /* box-shadow: 1px 1px 50px var(--shadow);
   box-shadow: inset 1px 1px 10px 5px var(--shine); */
 `;
@@ -223,9 +223,16 @@ const HeroRight = styled.div`
   width: fit-content;
   height: fit-content;
   padding: 40px;
-  border-radius: 5px;
+  border-radius: 2px;
   box-shadow: 1px 1px 50px var(--shadow);
   box-shadow: inset 1px 1px 10px 5px var(--shine);
+  transition: transform 0.5s ease-in-out, text-shadow 0.5s ease-in-out;
+
+  :hover {
+    transform: scale(1.01, 1.01);
+    text-shadow: 0px 0px 20px var(--textglow);
+    transition: transform 0.5s ease-in-out, text-shadow 0.5s ease-in-out;
+  }
 `;
 
 const HeroText = styled.div`
@@ -240,7 +247,7 @@ const HeroButton = styled.div`
   margin-top: 20px;
   font-size: 1rem;
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 3px;
   box-shadow: 5px white;
   background-color: var(--pri-color);
   cursor: pointer;
@@ -277,7 +284,7 @@ const GridWrapper = styled.div`
   display: flex;
   width: 80%;
   padding: 40px;
-  border-radius: 5px;
+  border-radius: 2px;
   box-shadow: 1px 1px 50px var(--shadow);
   box-shadow: inset 1px 1px 10px 5px var(--shine);
   justify-content: space-evenly;
@@ -285,7 +292,7 @@ const GridWrapper = styled.div`
 const GridCard = styled.div`
   width: 30%;
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 2px;
   box-shadow: 1px 1px 50px var(--shadow);
   box-shadow: inset 1px 1px 10px 5px var(--shine);
 `;
