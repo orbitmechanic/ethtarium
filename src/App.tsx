@@ -8,7 +8,7 @@ import Home from "./components/Pages/Home";
 
 //Components
 import Map from "./components/map";
-import NodeOptions from "./components/NodeOptions";
+import NodeOptions from "./components/nodeOptions";
 import TheGraphExplorer from "./components/thegraphexplorer";
 import Landing from "./components/landing";
 import AddNode from "./components/add";
@@ -44,7 +44,7 @@ function App() {
         </Route>
         <Route path="/Map">
           <Map onNodeSelected={selectNode} />
-          <TemporaryDrawer
+          <NodeOptions
             nodeSelected={nodeSelected}
             selectGraphEndpoint={selectGraphEndpoint}
             nodeSelectedData={nodeSelectedData}
@@ -60,12 +60,14 @@ function App() {
         <Route path="/Add">
           <AddNode />
         </Route>
+{/*
         <Route path="/Map">
           <Frontwip
             onNodeSelected={selectNode}
             selectGraphEndpoint={selectGraphEndpoint}
           />
         </Route>
+*/}
         <Route path="/Home">
           <Home />
         </Route>

@@ -1,4 +1,4 @@
-import styles from "../../styles/main.module.css";
+import styled from "styled-components";
 import MenuButton from "../mapmenu/MenuButton";
 
 const MapMenu = () => {
