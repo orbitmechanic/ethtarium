@@ -7,11 +7,17 @@ import Divider from '@material-ui/core/Divider';
 // import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import {options} from '../helpers/localDB';
-import { networks } from '../helpers/mapHelpers';
+import { networks, dApps, subOptions } from '../helpers/mapHelpers';
 
 export default function AddNode(props) {
   const [group, setGroup]=useState(0);
   const [network, setNetwork]=useState('ethereum');
+  const dAppsCopy = [...dApps]
+
+  if(document.getElementById('nodeId') !== null){
+    dAppsCopy.push({id:document.getElementById('nodeId').value, label:document.getElementById('nodeLabel').value})
+//    dAppsCopy.push(networks)
+  }
 
   function handleGroup(event){
     setGroup(event.target.value);
@@ -19,11 +25,14 @@ export default function AddNode(props) {
   function handleNetwork(event){
     setNetwork(event.target.value);
   }
+
+
   function generateJson(){
     // console.log(document.getElementById('nodeId').value)
     var obj = {};
     obj.id = document.getElementById('nodeId').value;
     obj.group = group;
+    obj.subgroup = document.getElementById('nodeSubgroup').innerHTML.toLowerCase()
     obj.label = document.getElementById('nodeLabel').value;
     obj.img = ''//document.getElementById('nodeId').value.concat('.png');
     obj.url = document.getElementById('nodeUrl').value;
@@ -42,9 +51,15 @@ export default function AddNode(props) {
     }
     var links = {};
     var links2 = {};
+
+    if(links.target === links.source){
+      links2.curvature= 1
+      links2.rotation= 10      
+    }
+
     if(group === 0){
       links.target =  document.getElementById('nodeId').value
-      links.source = document.getElementById('nodeOther').value
+      links.source = document.getElementById('nodeOther').innerHTML.toLowerCase()
       links.distance = 40
     }else if(group ===1){
       links.target = document.getElementById('nodeBridge1').innerHTML.toLowerCase()
@@ -61,7 +76,7 @@ export default function AddNode(props) {
       links.source = document.getElementById('nodeId').value
       links.distance = 40
 
-      links2.target = document.getElementById('nodeOther').value
+      links2.target = document.getElementById('nodeOther').innerHTML.toLowerCase()
       links2.source = document.getElementById('nodeId').value
       links2.distance = 40
     }
@@ -96,6 +111,17 @@ export default function AddNode(props) {
       })}
     </Select>
     <br />
+    <Select
+      labelId="demo-simple-select-label"
+      id="nodeSubgroup"
+    >
+      {subOptions(group).map(element => {
+        // console.log(element)
+        return <MenuItem value={element}>{element}</MenuItem>
+      })}
+    </Select>
+    <br />
+
   <InputBase
     style={{backgroundColor:'grey',color:'white'}}
     id='nodeLabel'
@@ -146,18 +172,32 @@ export default function AddNode(props) {
     <div>
     </div>
     {group === 0?
-      <InputBase
-      style={{backgroundColor:'grey',color:'white'}}
+      <div>
+      Connect with
+      <Select
+      labelId="demo-simple-select-label"
+
       id='nodeOther'
-      placeholder="id of other node connected"
-      />
+      onChange={handleNetwork}
+      >
+      {dAppsCopy.map(element => {
+        return <MenuItem value={element.id} placeholder='select a node to connect with'>{element.label}</MenuItem>
+      })}
+      </Select>
+      </div>
       :
       <div>
-        <InputBase
-        style={{backgroundColor:'grey',color:'white'}}
+        Connect with
+        <Select
+        labelId="demo-simple-select-label"
         id='nodeOther'
-        placeholder="id of other node connected"
-        /><br />
+        onChange={handleNetwork}
+        >
+        {dApps.map(element => {
+          return <MenuItem value={element.id}>{element.label}</MenuItem>
+        })}
+        </Select>
+        <br />
         {group === 1?
           <div>
             Connects..
@@ -211,8 +251,6 @@ export default function AddNode(props) {
               })}
               </Select>
               </div>
-
-        }
       </div>
     }
       </div>
@@ -220,7 +258,7 @@ export default function AddNode(props) {
 
     <p>Links needed to be added at will</p>
 
-    <Button onClick={()=>generateJson()}>Generate</Button>*/}
+    <Button onClick={()=>generateJson()}>Generate</Button>
     <p style={{color:'white'}}>Open your console!</p>
     <br />
     <br />

@@ -1,17 +1,21 @@
 import React, {useState, useEffect, useRef} from 'react';
 import { nodes, links } from "../helpers/localDB";
 import ForceGraph3D from "3d-force-graph";
-import PermanentDrawerLeft from "./filters";
+import Filters from "./filters";
 import * as THREE from 'three';
+import CircularProgress from '@material-ui/core/CircularProgress';
 // import SpriteText from 'three-spritetext';
 
-import {getNode, getNodesFiltered, getNodesNetworks } from '../helpers/mapHelpers';
+import {getNode, getNodesNetworks } from '../helpers/mapHelpers';
 
 function Map(props) {
-  let networks = nodes.filter(x => x.group === 0);
-  let networksNames = networks.map(x => x.id);
-  const [filter, setFilter] = useState([0,1,]);
-  const [networkFilter, setNetworkFilter] = useState(networksNames)
+  let blockchains = nodes.filter(x => (x.group === 0)&&(x.subgroup==='chain'));
+  let blockchainNames = blockchains.map(x => x.id);
+  let sides = nodes.filter(x=>(x.subgroup==='sidechain'))
+  let sidechains = sides.map(x=>x.id)
+  const [filter, setFilter] = useState(['chain',]);
+  const [blockchainFilter, setBlockchainFilter] = useState(blockchainNames);
+  const [loading, setLoading]= useState(false);
 
   type Node = {
     id: string,
@@ -29,58 +33,58 @@ function Map(props) {
   }
 
 
-  function handleFilter(filters:any){
+  function handleFilter(filters:Any){
     setFilter(filters);
   }
+
   function handleNetworkChange(filters:any){
-    setNetworkFilter(filters);
+    setBlockchainFilter(filters);
   }
 
   function selectNode(id){
     props.onNodeSelected(id);
     let nodeI = getNode(id);
-
     // console.log('id',id,'graph',graph.current,' node: ',nodeI)
     graph.current.then((graph)=>{
+      const dataRendered=graph.graphData()
+      // console.log(dataRendered)
+      if(!dataRendered.nodes.includes(nodeI)){
+        addNode(graph, dataRendered, nodeI)
+      }
       focusNode(graph, nodeI)
     }
-     )
+    )
   };
 
   function focusNode(graph,node){
-  // Focus on node
     // console.log('flying into ',node.id)
     const distance = 100;
     const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
+    // graph.backgroundColor('#ccc')  // changes the bg color
     graph.cameraPosition(
         { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
           node, // lookAt ({ x, y, z })
           2000  // ms transition duration
           );
-        };
+  };
 
   let graph=useRef(null);
   useEffect(()=>{
         graph.current=create3dGraph(); //useRef()
   })
 
-  // function graphInSpace(graph, whatTo, where){
-  //   graph
-  //     .nodeThreeObject(where => {
-  //       const sprite = new SpriteText(whatTo);
-  //       sprite.material.depthWrite = false; // make sprite background transparent
-  //       sprite.color = 'white';
-  //       sprite.textHeight = 8;
-  //       return sprite;
-  //     })
-  // }
 
   function filterNodes(){
-    let unique = getNodesNetworks(networkFilter);
-    console.log('unique: ',unique)
-    let filteredNodes = getNodesFiltered(unique, filter);
-    const finalNodesIds = filteredNodes.map(x=>x.id)
+    let networksToFilter;
+    if(filter.includes('sidechain')){
+      networksToFilter = blockchainFilter.concat(sidechains)
+    }else{
+      networksToFilter = blockchainFilter
+    }
+    let filteredNetworks = getNodesNetworks(networksToFilter)
+    let filteredNodes = filteredNetworks.filter(node=>filter.includes(node.subgroup)) // do it to have multiple subgroups inputs
 
+    const finalNodesIds = filteredNodes.map(x=>x.id)
     let filteredLinks = links.reduce((filteredLinks, link:Link[]) => {
           if ((finalNodesIds.includes(link.target.id?link.target.id:link.target))
             && (finalNodesIds.includes(link.source.id?link.source.id:link.source)))
@@ -92,7 +96,26 @@ function Map(props) {
     return [filteredNodes, filteredLinks];
   }
 
+  function addNode(graph, dataRendered, node ){
+    // first search wont show the stripe, is there, but needs double search.. (?)
+    // it wont graph the links!!!
+
+    // console.log('starts with ',dataRendered.links.length)
+    let addLinks = links.filter(x=>(x.source.id===node.id)||(x.source===node.id))
+    dataRendered.nodes.push(node)
+    dataRendered.links.concat(addLinks)
+    // console.log(node)
+    // console.log(addLinks)
+    // console.log(dataRendered)
+    graph.graphData({
+      nodes: [...dataRendered.nodes],
+      links: [...dataRendered.links ],
+    });
+  }
+
   async function create3dGraph(){
+    setLoading(true);
+
     const [filteredNodes, filteredLinks] = filterNodes()
     const gData = {
       nodes: filteredNodes,
@@ -111,14 +134,11 @@ function Map(props) {
 // VR (needs 3d-force-graph-vr package)
 // replace ForceGraph3D with ForceGraphVR()
 
-
-
-
     const graph2 =  ForceGraph3D()
         (spaceHolder)
       // .nodeRelSize(node => node.group===0? 100 : 4) // not working!!
       .nodeLabel('label') // show label on hover
-      .nodeAutoColorBy('group') // Color by group attr
+      // .nodeAutoColorBy('group') // Color by group attr
       // Images as sprites
       .nodeThreeObject((node:Node) => {
         let imageUrl;
@@ -127,15 +147,17 @@ function Map(props) {
         }else{
           imageUrl =require('../images/mini_default.png')
         }
-        
+
         const imgTexture = new THREE.TextureLoader().load(imageUrl.default);
         const material = new THREE.SpriteMaterial({ map: imgTexture , color: 0xffffff});
         const sprite = new THREE.Sprite(material); // fetch Gecko data and add here? at least test it!
-        if(node.group === 0 ){
-          sprite.scale.set(32,32,1)
+        if(node.group === 0){
+          sprite.scale.set(60,60,1)
         }else{
-          sprite.scale.set(20,20,1)
+          sprite.scale.set(32,32,1)
+
         }
+
         return sprite;
         })
       // Effects and text on hover
@@ -173,7 +195,9 @@ function Map(props) {
         hoverNode = node || null;
         updateHighlight();
       })
-      .linkWidth((link) => (highlightLinks.has(link) ? 0.3 : 1))
+      .linkWidth((link) => (highlightLinks.has(link) ? 0.2 : 0.3))
+      .linkCurvature('curvature')
+      .linkCurveRotation('rotation')
       .linkDirectionalParticles((link) => (highlightLinks.has(link) ? 3 : 0))
       .linkDirectionalParticleWidth(3)
 
@@ -183,22 +207,17 @@ function Map(props) {
     graph2
       .onBackgroundClick(zoomOut)
 
-//Distance between nodes
 //Force distance
     graph2
       .d3Force('link')
-      .distance(100);
-        //'distance'); // distance from DB? hooooow?
+      // .distance(100);
+      .distance(link => link.distance ? link.distance : 100);
   // Play with forces
     // graph2.d3Force('charge').strength(-300);
 
+    setLoading(false);
+    zoomOut();
     return graph2;
-//Post processing
-    //   const bloomPass = new UnrealBloomPass();
-    // bloomPass.strength = 3;
-    // bloomPass.radius = 1;
-    // bloomPass.threshold = 0.1;
-    // graph2.postProcessingComposer().addPass(bloomPass);
 
     function zoomOut(){
       //graph2.onEngineStop(() => graph2.zoomToFit(100)); // Make this to Fit when mouse is out the map
@@ -215,17 +234,47 @@ function Map(props) {
 
   return (
     <div className="App">
-      <PermanentDrawerLeft
-        networks = {networksNames}
+      <Filters
+        networks = {blockchainNames}
         nodes={nodes}
-        networkFilter = {networkFilter}
+        blockchainFilter = {blockchainFilter}
         onFilters = {handleFilter}
-        onNetworkFilter = {handleNetworkChange}
+        onBlockchainFilter = {handleNetworkChange}
         selectNode = {selectNode}
+
       />
-      <div id="3d-graph"></div>
+
+      {/*show in complete screen or make a loading icon inside the render*/}
+      {loading?
+      <div className='overlay' id='3d-graph'>
+      <CircularProgress  />
+      </div>
+      :
+      <div id="3d-graph">
+      </div>
+    }
 
   </div>
   )
 }
 export default React.memo(Map);
+
+
+
+//Post processing   // connect web3-modal > see connected network > Shine and show assets and reach
+//   const bloomPass = new UnrealBloomPass();
+// bloomPass.strength = 3;
+// bloomPass.radius = 1;
+// bloomPass.threshold = 0.1;
+// graph2.postProcessingComposer().addPass(bloomPass);
+
+// function graphInSpace(graph, whatTo, where){
+  //   graph
+  //     .nodeThreeObject(where => {
+    //       const sprite = new SpriteText(whatTo);
+    //       sprite.material.depthWrite = false; // make sprite background transparent
+    //       sprite.color = 'white';
+    //       sprite.textHeight = 8;
+    //       return sprite;
+    //     })
+    // }

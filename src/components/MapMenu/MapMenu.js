@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import MenuButton from "./MenuButton";
+import MenuButton from "../mapmenu/MenuButton";
 
 const MapMenu = () => {
   return (

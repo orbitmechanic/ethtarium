@@ -5,5 +5,5 @@ for i in (os.listdir()):
     if(i[:4]!='mini'):
         print('processing.. '+i)
         img = Image.open(i)
-        img.save('mini_'+i,quality=10)
+        img.save('mini_'+i,optimize=True,quality=10)
         os.remove(i)
