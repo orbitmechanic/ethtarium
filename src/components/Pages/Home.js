@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import SearchIcon from "@material-ui/icons/Search";
 import styled from "styled-components";
-
+import styles from "../../styles/main.module.css";
 import React from "react";
+import { StylesProvider } from "@material-ui/styles";
 
 const Home = (props) => {
   return (
@@ -46,7 +47,7 @@ const Home = (props) => {
         Copyright?
         
         */}
-      <Hero>
+      <Hero className={styles.hero}>
         <HeroLeft>
           <h1>Experience a new way of interacting with Web 3.0</h1>
           <HeroText>
@@ -196,6 +197,7 @@ const Hero = styled.div`
   margin-bottom: 50px;
   margin-left: 30px;
   margin-right: 30px;
+
   font-family: "IBM Plex Mono";
 `;
 
@@ -205,8 +207,8 @@ const HeroLeft = styled.div`
   padding: 40px;
   /* border: solid 1px white; */
   border-radius: 5px;
-  box-shadow: 1px 1px 50px var(--shadow);
-  box-shadow: inset 1px 1px 10px 5px var(--shine);
+  /* box-shadow: 1px 1px 50px var(--shadow);
+  box-shadow: inset 1px 1px 10px 5px var(--shine); */
 `;
 
 const HeroRight = styled.div`
