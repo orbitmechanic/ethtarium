@@ -272,9 +272,9 @@ export default function Filters(props) {
             edge="start"
             className={clsx(classes.menuButton, open && classes.hide)}
           >
+
           <MenuIcon />
           </IconButton>
-          <Typography >PLANETHARIUM</Typography>
         </Toolbar>
       </AppBar>
 
@@ -338,11 +338,13 @@ export default function Filters(props) {
         </div>
       :
         <div>
+
         <StarBorderIcon />
         <Button onClick={()=>{
           localStorage.setObj('filter',JSON.stringify(filter))
           handleDrawerClose()
         }}> Save</Button>
+        <Button >Connect!</Button>
         </div>
       }
 
