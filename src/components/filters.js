@@ -178,14 +178,15 @@ export default function Filters(props) {
     }
 
     setFilter(newFilter);
-    sendNewFilter(newFilter);
+    // sendNewFilter(newFilter);
+    props.onFilters(newFilter);
    };
 
-   function sendNewFilter(){
-     setTimeout(function(){ props.onFilters(filter); }, 2000);//it works, but makes 2 setState
-     // setLoading(false)
-
-   }
+   // function sendNewFilter(){
+   //   setTimeout(function(){ props.onFilters(filter); }, 1000);//it works, but makes 2 setState
+   //   // setLoading(false)
+   //
+   // }
 
 
   const handleDrawerOpen = () => {

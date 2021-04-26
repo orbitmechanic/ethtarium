@@ -68,9 +68,9 @@ function App() {
   }, [setInjectedProvider]);
 
   useEffect(() => {
-    // if (web3Modal.cachedProvider) { //isnt entering
+    if (web3Modal.cachedProvider) { //isnt entering
       loadWeb3Modal();
-    // }
+    }
   }, [loadWeb3Modal]);
 
   return (
