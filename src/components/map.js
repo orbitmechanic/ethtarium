@@ -96,6 +96,14 @@ function Map(props) {
     return [filteredNodes, filteredLinks];
   }
 
+  function logout(){
+    props.logoutOfWeb3Modal()
+  }
+  function load(){
+    props.loadWeb3Modal()
+  }
+
+
   function addNode(graph, dataRendered, node ){
     // first search wont show the stripe, is there, but needs double search.. (?)
     // it wont graph the links!!!
@@ -241,7 +249,9 @@ function Map(props) {
         onFilters = {handleFilter}
         onBlockchainFilter = {handleNetworkChange}
         selectNode = {selectNode}
-
+        account = {props.account}
+        logout = {props.logoutOfWeb3Modal}
+        load = {props.loadWeb3Modal}
       />
 
       {/*show in complete screen or make a loading icon inside the render*/}

@@ -4,6 +4,7 @@ import { fade,makeStyles, useTheme  } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
+// import Container from '@material-ui/core/Container';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -34,6 +35,10 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
   },
+  appMenuIcon: {
+    opacity:1,
+  }
+  ,
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
@@ -49,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     }),
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(1),
   },
   hide: {
     display: 'none',
@@ -57,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
-    backgroundColor:'#282c34',
+    backgroundColor:'#ccc',
   },
   drawerPaper: {
     width: drawerWidth,
@@ -258,13 +263,16 @@ export default function Filters(props) {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
-        // position="fixed"
+        position="flex"
+        style={{backgroundColor:'grey'}}
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}>
+
         <Toolbar
           id='toolbar'
           >
+          // it is anchored to the left. dissapears when window get smaller.
           <IconButton
             id='filtersButton'
             color="inherit"
@@ -274,7 +282,7 @@ export default function Filters(props) {
             className={clsx(classes.menuButton, open && classes.hide)}
           >
 
-          <MenuIcon />
+          <MenuIcon display='flex'/>
           </IconButton>
         </Toolbar>
       </AppBar>
@@ -306,7 +314,7 @@ export default function Filters(props) {
               inputProps={{ 'aria-label': 'search' }}
               />
         </div>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={handleDrawerClose} >
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
       </div>
@@ -327,6 +335,14 @@ export default function Filters(props) {
           <LinearProgress />
         :null*/}
         <br />
+        <div>
+        {props.account?
+          <div>
+          Connected as: {props.account}
+          <Button onClick={props.logout}>Disconnect</Button>
+          </div>
+          :<Button onClick={props.load}>Connect!</Button>
+        }
         {savedFilter?
         <div>
         <StarIcon />
@@ -345,10 +361,9 @@ export default function Filters(props) {
           localStorage.setObj('filter',JSON.stringify(filter))
           handleDrawerClose()
         }}> Save</Button>
-        <Button >Connect!</Button>
         </div>
       }
-
+      </div>
       <br />
 
         <List>
