@@ -96,14 +96,6 @@ function Map(props) {
     return [filteredNodes, filteredLinks];
   }
 
-  function logout(){
-    props.logoutOfWeb3Modal()
-  }
-  function load(){
-    props.loadWeb3Modal()
-  }
-
-
   function addNode(graph, dataRendered, node ){
     // first search wont show the stripe, is there, but needs double search.. (?)
     // it wont graph the links!!!
