@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import MenuButton from "../mapmenu/MenuButton";
 
-const MapMenu = () => {
+export const MapMenu = () => {
   return (
     <Wrapper>
       <MenuButton />

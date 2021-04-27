@@ -4,6 +4,7 @@ import { fade,makeStyles, useTheme  } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
+// import Container from '@material-ui/core/Container';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -22,7 +23,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import StarIcon from '@material-ui/icons/Star';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
-
+// import LinearProgress from '@material-ui/core/LinearProgress';
 
 import {options} from '../helpers/localDB';
 const optionsWNetworks = [...options];
@@ -34,6 +35,10 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
   },
+  appMenuIcon: {
+    opacity:1,
+  }
+  ,
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
@@ -49,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     }),
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(1),
   },
   hide: {
     display: 'none',
@@ -57,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
-    backgroundColor:'#282c34',
+    backgroundColor:'#ccc',
   },
   drawerPaper: {
     width: drawerWidth,
@@ -142,7 +147,7 @@ export default function Filters(props) {
   // filters setup
   const [filter, setFilter] = useState(['chain']);
   const [subgroupFilter, setSubgroupFilter] = useState(props.blockchainFilter);
-
+  // const [loading, setLoading] = useState(false);
   const [searchResults, setSearchResults] = useState(null);
 
   let savedFilter=localStorage.getItem('filter')
@@ -165,7 +170,9 @@ export default function Filters(props) {
     props.onFilters(newFilter)
   }
 
+
   const handleChange = (value) => {
+    // setLoading(true)
     let newFilter = [...filter];
 
     if(filter.includes(value)){
@@ -175,9 +182,16 @@ export default function Filters(props) {
       newFilter.push(value)
     }
 
-     setFilter(newFilter);
-     props.onFilters(newFilter)
+    setFilter(newFilter);
+    // sendNewFilter(newFilter);
+    props.onFilters(newFilter);
    };
+
+   // function sendNewFilter(){
+   //   setTimeout(function(){ props.onFilters(filter); }, 1000);//it works, but makes 2 setState
+   //   // setLoading(false)
+   //
+   // }
 
 
   const handleDrawerOpen = () => {
@@ -249,13 +263,16 @@ export default function Filters(props) {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
-        position="fixed"
+        position="flex"
+        style={{backgroundColor:'grey'}}
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}>
+
         <Toolbar
           id='toolbar'
           >
+          // it is anchored to the left. dissapears when window get smaller.
           <IconButton
             id='filtersButton'
             color="inherit"
@@ -264,9 +281,9 @@ export default function Filters(props) {
             edge="start"
             className={clsx(classes.menuButton, open && classes.hide)}
           >
-          <MenuIcon />
+
+          <MenuIcon display='flex'/>
           </IconButton>
-          <Typography >PLANETHARIUM</Typography>
         </Toolbar>
       </AppBar>
 
@@ -297,7 +314,7 @@ export default function Filters(props) {
               inputProps={{ 'aria-label': 'search' }}
               />
         </div>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={handleDrawerClose} >
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
       </div>
@@ -314,7 +331,18 @@ export default function Filters(props) {
             </div>
           :null}
         <Divider />
+        {/*loading?
+          <LinearProgress />
+        :null*/}
         <br />
+        <div>
+        {props.account?
+          <div>
+          Connected as: {props.account}
+          <Button onClick={props.logout}>Disconnect</Button>
+          </div>
+          :<Button onClick={props.load}>Connect!</Button>
+        }
         {savedFilter?
         <div>
         <StarIcon />
@@ -327,6 +355,7 @@ export default function Filters(props) {
         </div>
       :
         <div>
+
         <StarBorderIcon />
         <Button onClick={()=>{
           localStorage.setObj('filter',JSON.stringify(filter))
@@ -334,7 +363,7 @@ export default function Filters(props) {
         }}> Save</Button>
         </div>
       }
-
+      </div>
       <br />
 
         <List>
