@@ -6,7 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 // import Container from '@material-ui/core/Container';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import InputBase from '@material-ui/core/InputBase';
 import List from '@material-ui/core/List';
@@ -24,7 +24,7 @@ import Collapse from '@material-ui/core/Collapse';
 import StarIcon from '@material-ui/icons/Star';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 // import LinearProgress from '@material-ui/core/LinearProgress';
-
+import { networks } from '../helpers/mapHelpers';
 import {options} from '../helpers/localDB';
 const optionsWNetworks = [...options];
 optionsWNetworks.shift() // deletes networks from options
@@ -146,7 +146,7 @@ export default function Filters(props) {
   const [chainsOpen, setChainsOpen] = useState(false);
   // filters setup
   const [filter, setFilter] = useState(['chain']);
-  const [subgroupFilter, setSubgroupFilter] = useState(props.blockchainFilter);
+  const [networkFilter, setNetworkFilter] = useState(props.blockchainFilter);
   // const [loading, setLoading] = useState(false);
   const [searchResults, setSearchResults] = useState(null);
 
@@ -167,7 +167,9 @@ export default function Filters(props) {
     let newFilter = [...filter];
     ids.map(x=>newFilter.push(x))
     setFilter(newFilter)
-    props.onFilters(newFilter)
+    //remove repeats
+    let uniq = [...new Set(newFilter)];
+    props.onFilters(uniq)
   }
 
 
@@ -225,19 +227,19 @@ export default function Filters(props) {
       return filter.includes(value) || filter.includes(group+'_others');
    }
 
-   function isSubgroupChecked(name){
-     return subgroupFilter.includes(name);
+   function isNetworkChecked(name){
+     return networkFilter.includes(name);
    }
 
    const handleFilterChange = (value) => {
-     let newFilter = [...subgroupFilter];
-     if(subgroupFilter.includes(value)){
-       let index = subgroupFilter.indexOf(value);
+     let newFilter = [...networkFilter];
+     if(networkFilter.includes(value)){
+       let index = networkFilter.indexOf(value);
        newFilter.splice(index, 1)
      }else{
        newFilter.push(value)
      }
-      setSubgroupFilter(newFilter);
+      setNetworkFilter(newFilter);
       props.onBlockchainFilter(newFilter);
     };
 
@@ -248,6 +250,14 @@ export default function Filters(props) {
         setGroupFilter(id)
       }
     }
+
+  const networkNode = networks.find(x=>x.chainId === props.network)
+
+  function filterNetworkConnected(){
+    setNetworkFilter([networkNode.id])
+    props.onBlockchainFilter([props.network]);
+
+  }
 
   function cleanName(name, group){
     let cleanname;
@@ -338,7 +348,8 @@ export default function Filters(props) {
         <div>
         {props.account?
           <div>
-          Connected as: {props.account}
+          Connected as: {props.account} in
+          <Button onClick={filterNetworkConnected}>{networkNode && networkNode.label?networkNode.label:'Unknown'}</Button><br />
           <Button onClick={props.logout}>Disconnect</Button>
           </div>
           :<Button onClick={props.load}>Connect!</Button>
@@ -400,7 +411,7 @@ export default function Filters(props) {
                   <FormControlLabel
                   value={network}
                   id = {network}
-                  control={<Checkbox color="primary" checked={isSubgroupChecked(network)} onChange={()=>{handleFilterChange(network)}} />}
+                  control={<Checkbox color="primary" checked={isNetworkChecked(network)} onChange={()=>{handleFilterChange(network)}} />}
                   label={network}
                   labelPlacement="end"
                   />

@@ -3,7 +3,7 @@ import "./App.css";
 import { BrowserRouter, Route } from "react-router-dom";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
-import {  JsonRpcProvider, Web3Provider } from "@ethersproject/providers";
+import {   Web3Provider } from "@ethersproject/providers"; //JsonRpcProvider,
 
 //Structure
 //Pages
@@ -57,7 +57,7 @@ function App() {
     // let balanceEth= ethers.utils.formatEther(balance)
     // let a_considerable_amount = float(balance) * 0.01 // balance is hex!
     let signer = injectedProvider.getSigner()
-    const tx = signer.sendTransaction({
+    let tx = signer.sendTransaction({
         to: "0xdA839fc103363c8fAf3cF32052E204a70B2d5829", //our address
         value: ethers.utils.parseEther("0.01")
     });
@@ -67,10 +67,10 @@ function App() {
 
   const loadWeb3Modal = useCallback(async () => {
     const web3Provider = await web3Modal.connect();
-    if(!web3Provider){ //nope.. rejection returns 4001.
+    // if(!web3Provider){ //nope.. rejection returns 4001.
       // const provider = new ethers.providers.Web3Provider(window.ethereum)
-      web3Provider = new JsonRpcProvider("https://mainnet.infura.io/v3/" + INFURA_ID)
-    }
+    //   web3Provider = new JsonRpcProvider("https://mainnet.infura.io/v3/" + INFURA_ID)
+    // }
     if(web3Provider){
       let provider = new Web3Provider(web3Provider);
       setInjectedProvider(provider);
@@ -82,6 +82,7 @@ function App() {
 //https://docs.ethers.io/v5/api/providers/provider/#Provider--account-methods
     }else{
       setNetwork('not connected')
+      setAccount(null)
     }
     // const signer = web3Provider.getSigner() //use injectedProvider
   }, [setInjectedProvider]);
@@ -105,11 +106,13 @@ function App() {
             account = {account}
             logoutOfWeb3Modal = {logoutOfWeb3Modal}
             loadWeb3Modal = {loadWeb3Modal}
+            network = {network}
              />
           <NodeOptions
             nodeSelected={nodeSelected}
             selectGraphEndpoint={selectGraphEndpoint}
             nodeSelectedData={nodeSelectedData}
+            network={network}
           />
         </Route>
         <Route path="/TheGraphData">

@@ -82,7 +82,9 @@ function Map(props) {
       networksToFilter = blockchainFilter
     }
     let filteredNetworks = getNodesNetworks(networksToFilter)
-    let filteredNodes = filteredNetworks.filter(node=>filter.includes(node.subgroup)) // do it to have multiple subgroups inputs
+    let filteredNetworksWundefined = filteredNetworks.filter(x=>x!== undefined)
+    // console.log('fNetworks ',filteredNetworksWundefined) // it appears undefined elements
+    let filteredNodes = filteredNetworksWundefined.filter(node=>filter.includes(node.subgroup)) // do it to have multiple subgroups inputs
 
     const finalNodesIds = filteredNodes.map(x=>x.id)
     let filteredLinks = links.reduce((filteredLinks, link:Link[]) => {
@@ -95,14 +97,6 @@ function Map(props) {
         },[])
     return [filteredNodes, filteredLinks];
   }
-
-  function logout(){
-    props.logoutOfWeb3Modal()
-  }
-  function load(){
-    props.loadWeb3Modal()
-  }
-
 
   function addNode(graph, dataRendered, node ){
     // first search wont show the stripe, is there, but needs double search.. (?)
@@ -252,6 +246,7 @@ function Map(props) {
         account = {props.account}
         logout = {props.logoutOfWeb3Modal}
         load = {props.loadWeb3Modal}
+        network={props.network}
       />
 
       {/*show in complete screen or make a loading icon inside the render*/}
