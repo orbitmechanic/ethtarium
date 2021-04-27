@@ -106,11 +106,13 @@ function App() {
             account = {account}
             logoutOfWeb3Modal = {logoutOfWeb3Modal}
             loadWeb3Modal = {loadWeb3Modal}
+            network = {network}
              />
           <NodeOptions
             nodeSelected={nodeSelected}
             selectGraphEndpoint={selectGraphEndpoint}
             nodeSelectedData={nodeSelectedData}
+            network={network}
           />
         </Route>
         <Route path="/TheGraphData">
