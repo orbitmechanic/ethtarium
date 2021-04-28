@@ -20,9 +20,9 @@
   align-items: flex-start;
 }
 
-.overlay{
-    opacity:0.8;
-    background-color:#ccc;
-    display: 'flex';
-    justify-content:center;
+.overlay {
+  opacity: 0.8;
+  background-color: #ccc;
+  display: flex;
+  justify-content: center;
 }
