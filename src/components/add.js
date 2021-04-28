@@ -40,11 +40,12 @@ export default function AddNode(props) {
     obj.query = document.getElementById('nodeQuery').value;
     obj.search = document.getElementById('nodeSearch').value;
     obj.widget = document.getElementById('nodeWidget').value;
-    if(group === 0){
-      if(group ===0){
+    obj.short = document.getElementById('shortName').value;
+
+    if(group ===0){
       obj.level = 1;
-      }
       obj.explorer = document.getElementById('nodeExplorer').value;
+      obj.chainId = document.getElementById('chainId').value;
     }else{
       obj.level = 2;
       obj.contract = document.getElementById('nodeContract').value;
@@ -54,7 +55,7 @@ export default function AddNode(props) {
 
     if(links.target === links.source){
       links2.curvature= 1
-      links2.rotation= 10      
+      links2.rotation= 10
     }
 
     if(group === 0){
@@ -98,6 +99,11 @@ export default function AddNode(props) {
       id='nodeId'
       placeholder="id from coingecko (see url)"
       /><br />
+    <InputBase
+      style={{backgroundColor:'grey',color:'white'}}
+      id='shortName'
+      placeholder="short name (btc, eth..)"
+      /><br />
 
     <Select
       labelId="demo-simple-select-label"
@@ -133,11 +139,18 @@ export default function AddNode(props) {
       placeholder="url of website / dApp"
       /><br />
   {group === 0?
-  <InputBase
-    style={{backgroundColor:'grey',color:'white'}}
-    id='nodeExplorer'
-    placeholder="Url of explorer"
-    />
+    <div>
+    <InputBase
+      style={{backgroundColor:'grey',color:'white'}}
+      id='chainId'
+      placeholder="chain id of the network"
+      /><br />
+      <InputBase
+        style={{backgroundColor:'grey',color:'white'}}
+        id='nodeExplorer'
+        placeholder="Url of explorer"
+        />
+    </div>
     :null}<br />
     <InputBase
     style={{backgroundColor:'grey',color:'white'}}

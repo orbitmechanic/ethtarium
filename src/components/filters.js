@@ -4,8 +4,9 @@ import { fade,makeStyles, useTheme  } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
+// import Container from '@material-ui/core/Container';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import InputBase from '@material-ui/core/InputBase';
 import List from '@material-ui/core/List';
@@ -22,8 +23,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import StarIcon from '@material-ui/icons/Star';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
-
-
+// import LinearProgress from '@material-ui/core/LinearProgress';
+import { networks } from '../helpers/mapHelpers';
 import {options} from '../helpers/localDB';
 const optionsWNetworks = [...options];
 optionsWNetworks.shift() // deletes networks from options
@@ -34,6 +35,10 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
   },
+  appMenuIcon: {
+    opacity:1,
+  }
+  ,
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
@@ -49,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     }),
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(1),
   },
   hide: {
     display: 'none',
@@ -57,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
-    backgroundColor:'#282c34',
+    backgroundColor:'#ccc',
   },
   drawerPaper: {
     width: drawerWidth,
@@ -141,8 +146,8 @@ export default function Filters(props) {
   const [chainsOpen, setChainsOpen] = useState(false);
   // filters setup
   const [filter, setFilter] = useState(['chain']);
-  const [subgroupFilter, setSubgroupFilter] = useState(props.blockchainFilter);
-
+  const [networkFilter, setNetworkFilter] = useState(props.blockchainFilter);
+  // const [loading, setLoading] = useState(false);
   const [searchResults, setSearchResults] = useState(null);
 
   let savedFilter=localStorage.getItem('filter')
@@ -162,10 +167,14 @@ export default function Filters(props) {
     let newFilter = [...filter];
     ids.map(x=>newFilter.push(x))
     setFilter(newFilter)
-    props.onFilters(newFilter)
+    //remove repeats
+    let uniq = [...new Set(newFilter)];
+    props.onFilters(uniq)
   }
 
+
   const handleChange = (value) => {
+    // setLoading(true)
     let newFilter = [...filter];
 
     if(filter.includes(value)){
@@ -175,9 +184,16 @@ export default function Filters(props) {
       newFilter.push(value)
     }
 
-     setFilter(newFilter);
-     props.onFilters(newFilter)
+    setFilter(newFilter);
+    // sendNewFilter(newFilter);
+    props.onFilters(newFilter);
    };
+
+   // function sendNewFilter(){
+   //   setTimeout(function(){ props.onFilters(filter); }, 1000);//it works, but makes 2 setState
+   //   // setLoading(false)
+   //
+   // }
 
 
   const handleDrawerOpen = () => {
@@ -211,19 +227,19 @@ export default function Filters(props) {
       return filter.includes(value) || filter.includes(group+'_others');
    }
 
-   function isSubgroupChecked(name){
-     return subgroupFilter.includes(name);
+   function isNetworkChecked(name){
+     return networkFilter.includes(name);
    }
 
    const handleFilterChange = (value) => {
-     let newFilter = [...subgroupFilter];
-     if(subgroupFilter.includes(value)){
-       let index = subgroupFilter.indexOf(value);
+     let newFilter = [...networkFilter];
+     if(networkFilter.includes(value)){
+       let index = networkFilter.indexOf(value);
        newFilter.splice(index, 1)
      }else{
        newFilter.push(value)
      }
-      setSubgroupFilter(newFilter);
+      setNetworkFilter(newFilter);
       props.onBlockchainFilter(newFilter);
     };
 
@@ -234,6 +250,14 @@ export default function Filters(props) {
         setGroupFilter(id)
       }
     }
+
+  const networkNode = networks.find(x=>x.chainId === props.network)
+
+  function filterNetworkConnected(){
+    setNetworkFilter([networkNode.id])
+    props.onBlockchainFilter([props.network]);
+
+  }
 
   function cleanName(name, group){
     let cleanname;
@@ -249,13 +273,16 @@ export default function Filters(props) {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
-        position="fixed"
+        position="flex"
+        style={{backgroundColor:'grey'}}
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}>
+
         <Toolbar
           id='toolbar'
           >
+          // it is anchored to the left. dissapears when window get smaller.
           <IconButton
             id='filtersButton'
             color="inherit"
@@ -264,9 +291,9 @@ export default function Filters(props) {
             edge="start"
             className={clsx(classes.menuButton, open && classes.hide)}
           >
-          <MenuIcon />
+
+          <MenuIcon display='flex'/>
           </IconButton>
-          <Typography >PLANETHARIUM</Typography>
         </Toolbar>
       </AppBar>
 
@@ -297,7 +324,7 @@ export default function Filters(props) {
               inputProps={{ 'aria-label': 'search' }}
               />
         </div>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={handleDrawerClose} >
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
       </div>
@@ -314,7 +341,19 @@ export default function Filters(props) {
             </div>
           :null}
         <Divider />
+        {/*loading?
+          <LinearProgress />
+        :null*/}
         <br />
+        <div>
+        {props.account?
+          <div>
+          Connected as: {props.account} in
+          <Button onClick={filterNetworkConnected}>{networkNode && networkNode.label?networkNode.label:'Unknown'}</Button><br />
+          <Button onClick={props.logout}>Disconnect</Button>
+          </div>
+          :<Button onClick={props.load}>Connect!</Button>
+        }
         {savedFilter?
         <div>
         <StarIcon />
@@ -327,6 +366,7 @@ export default function Filters(props) {
         </div>
       :
         <div>
+
         <StarBorderIcon />
         <Button onClick={()=>{
           localStorage.setObj('filter',JSON.stringify(filter))
@@ -334,7 +374,7 @@ export default function Filters(props) {
         }}> Save</Button>
         </div>
       }
-
+      </div>
       <br />
 
         <List>
@@ -371,7 +411,7 @@ export default function Filters(props) {
                   <FormControlLabel
                   value={network}
                   id = {network}
-                  control={<Checkbox color="primary" checked={isSubgroupChecked(network)} onChange={()=>{handleFilterChange(network)}} />}
+                  control={<Checkbox color="primary" checked={isNetworkChecked(network)} onChange={()=>{handleFilterChange(network)}} />}
                   label={network}
                   labelPlacement="end"
                   />
