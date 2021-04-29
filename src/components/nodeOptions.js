@@ -71,6 +71,7 @@ export default function NodeOptions(props) {
           </p>
         </div>
         :null}
+
         {geckoData?
           <div>
           <p>Current price:
@@ -159,6 +160,7 @@ export default function NodeOptions(props) {
       <React.Fragment key={"top"}>
         <Drawer
           anchor={"top"}
+          variant = 'persistent'
           open={state["top"]}
           onClose={toggleDrawer("top", false)}
         >
