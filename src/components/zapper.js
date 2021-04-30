@@ -3,7 +3,6 @@ import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import Divider from '@material-ui/core/Divider';
-
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 
@@ -19,7 +18,7 @@ const protocols_farm = ['masterchef', 'single-staking', 'geyser', 'gauge']
 
 
 export default function ZapperComponent(props) {
-  const [data, setData] = useState(null)
+  // const [data, setData] = useState(null)
   const [protocol, setProtocol] = useState('')
   const [addresses, setAddresses] = useState('')
   const [network, setNetwork] = useState('')
@@ -38,7 +37,7 @@ export default function ZapperComponent(props) {
       inputs:[{name:'network', suboptions:networks_zapper},{name:'protocol', suboptions:protocols_farm}]},
     {name:'lending stats',endpoint:`https://api.zapper.fi/v1/lending-stats/${protocol}?network=${network}`,
       inputs:[{name:'network', suboptions:networks_zapper},{name:'protocol', suboptions:protocols_lending}]},
-    // {name:'',endpoint:'',inputs:[]},
+    {name:'fiat rates',endpoint:'https://api.zapper.fi/v1/fiat-rates'},
     // {name:'',endpoint:'',inputs:[]},
     // {name:'',endpoint:'',inputs:[]},
     // {name:'',endpoint:'',inputs:[]},
@@ -47,9 +46,11 @@ export default function ZapperComponent(props) {
   const [optionSelected, setOptionSelected] = useState()
 
   async function makerZapperCall(){
-    let endpoint = optionSelected.endpoint
+    let name = optionSelected.name
+    let option = options.find(x=>x.name === name)
+    let endpoint = option.endpoint // just for update endpoint data
     let endpointAuthorized=endpoint.concat(api_key)
-    console.log(endpointAuthorized)
+    // console.log(endpointAuthorized)
     const dataFetched = await Promise.all([
       fetch(endpointAuthorized)
         .then(data => data.json())
@@ -58,8 +59,9 @@ export default function ZapperComponent(props) {
         return false;
     }
     else{
-      setData(dataFetched)
-      return dataFetched;
+      // setData(dataFetched[0])
+      props.onDataFetched(dataFetched[0])
+      // return dataFetched[0];
     }
   }
 
@@ -67,14 +69,14 @@ export default function ZapperComponent(props) {
   const getOption=(id)=>options.find(x=> x.name === id)
 
   function setArguments(ev, inputItemName){
-    console.log(inputItemName)
+    // console.log(inputItemName)
     if(inputItemName === 'network'){
       setNetwork(ev.target.value)
     }else if(inputItemName === 'protocol'){
       setProtocol(ev.target.value)
     }else if(inputItemName === 'Addresses'){
       setAddresses(ev.target.value)
-      console.log('good luck!')
+      console.log('introduce addresses as [xx,xx,xx]')
     }
     // const network = document.getElementById('suboption_network').innerHTML.toLowerCase()
   }
@@ -91,10 +93,10 @@ export default function ZapperComponent(props) {
   return (
     <div>
       <FormControl>
-      <InputLabel>Select API call</InputLabel>
+      <InputLabel style={{color:'white'}}>Select API call</InputLabel>
       <Select
         labelId="APICall"
-        style = {{minWidth: 120,}}
+        style = {{minWidth: 120, backgroundColor:'#ccc'}}
         id="zapperEndpoint"
         onChange={(e)=>{chooseZapperCall(e)}}
         >
@@ -109,9 +111,9 @@ export default function ZapperComponent(props) {
           return (
             <div>
             <FormControl>
-            <InputLabel id={inputItem.name}>{inputItem.name}</InputLabel>
+            <InputLabel id={inputItem.name} style={{color:'white'}}>{inputItem.name}</InputLabel>
             <Select
-            style = {{minWidth: 120,}}
+            style = {{minWidth: 120, backgroundColor:'#ccc'}}
             labelId='Suboption'
             onChange={(e)=>{setArguments(e, inputItem.name)}}
             id={'suboption_'+inputItem.name}>
@@ -128,12 +130,6 @@ export default function ZapperComponent(props) {
       :null}<br />
       <Button onClick={makerZapperCall}>Call!</Button>
       <Divider />
-      {data?
-        <div>
-        Downloaded a file of {data[0].length} lines.<br />
-        <Button onClick={()=>props.onDataFetched(data[0])}>Click to download!</Button>
-        </div>
-      :null}
     </div>
   )
 }
