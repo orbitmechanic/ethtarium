@@ -1,31 +1,19 @@
 /* ---------- */
-.hero {
-  background: 
-    /* top, transparent red */ radial-gradient(
-      circle at center,
-      #001c3800 0,
-      #001c38 40%
-    ),
-    url(/src/images/backgrounds/dark-purple-galaxy.jpg);
-
-  background-size: 1000px;
-  background-repeat: no-repeat;
+.largetext {
+  font-size: 2rem;
 }
 
-.herosmall {
-  /* background-image: url(/src/images/backgrounds/eclipse-bright.jpg);
-  background-size: cover; */
-  background: 
-    /* top, transparent red */ linear-gradient(
-      var(--overlay),
-      var(--overlay)
-    ),
-    url(/src/images/backgrounds/some-moons.jpg);
-  /* bottom, image */
-  background-size: cover;
-  background-repeat: no-repeat;
-  width: auto;
-  height: auto;
+.regtext {
+  font-size: 1.2rem;
+}
+
+.button {
+  display: flex;
+  padding: 15px;
+  background-color: var(--textglow);
+  border-radius: 3px;
+  width: max-content;
+  justify-content: center;
 }
 
 /**
@@ -42,8 +30,11 @@
     flex: 0 0 260px;
   }
 } */
-/* @media only screen and (max-width: 768px) {
-  .mobile {
-    flex-direction: column;
+/* @media only screen and (min-width: 768px) {
+  .hero {
+    background: linear-gradient(#001c3804, #001c38 1%),
+      url(/src/images/backgrounds/oily-planet.jpg);
+    background-size: 500px;
+    background-repeat: no-repeat;
   }
 } */

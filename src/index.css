@@ -10,6 +10,11 @@
   --shine: #413657;
   --overlay: #001c3883;
   --textglow: #ff2cc0;
+  --grad1: #ad22a4;
+  --grad2: #ff4ff300;
+  width: 100vw;
+  overflow-x: hidden;
+  font-size: 14px;
 }
 *,
 *:before,
@@ -164,8 +169,12 @@ body {
 } */
 
 img {
-  max-width: 100%;
+  max-width: 100vw;
   height: auto;
+}
+
+html {
+  max-width: 100vw;
 }
 
 body {
@@ -174,4 +183,6 @@ body {
     "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  max-width: 100vw;
+  overflow-x: hidden;
 }

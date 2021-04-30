@@ -1,9 +1,17 @@
 import { Link } from "react-router-dom";
 import SearchIcon from "@material-ui/icons/Search";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import styles from "../../styles/main.module.css";
+import StorageRoundedIcon from "@material-ui/icons/StorageRounded";
+import SettingsEthernetRoundedIcon from "@material-ui/icons/SettingsEthernetRounded";
 import React from "react";
 import { StylesProvider } from "@material-ui/styles";
+import { responsiveFontSizes } from "@material-ui/core";
+import moons from "../../images/backgrounds/some-moons.jpg";
+import verse from "../../images/backgrounds/verse.png";
+import verse2 from "../../images/backgrounds/verse2.png";
+import verse3 from "../../images/backgrounds/verse3.png";
+import verse4 from "../../images/backgrounds/verse4.png";
 
 const Home = (props) => {
   return (
@@ -49,28 +57,25 @@ const Home = (props) => {
         */}
       <Hero className={styles.hero}>
         <HeroLeft>
-          <h1>Experience a new way of interacting with Web 3.0</h1>
+          <h1>A new way of interacting with Web 3.0</h1>
           <HeroText>
-            <p>Access blockchain history</p>
-            <br></br>
             <p>
-              Explore, research and interact with dApps, Networks and more from
-              the universe within watching the live ecosystem grow
+              Explore, research, and interact with the decentralised universe as
+              it grows
             </p>
           </HeroText>
         </HeroLeft>
-        <HeroRight className={styles.herosmall}>
-          <p> Be a part of it!</p>
-          <HeroText>
-            <p>In a deep dive into digital space...</p>
-          </HeroText>
-          <CentreWrap>
-            <HeroButton>Explore</HeroButton>
-          </CentreWrap>
-        </HeroRight>
+        <CardT>
+          <p>Be part of it!!</p>
+          <CardButton>Explore</CardButton>
+        </CardT>
       </Hero>
       <Section>
-        <p>How is the data managed?</p>
+        <SectionHeader>
+          <p>How is the data managed?</p>
+          <StorageRoundedIcon style={{ fontSize: "4rem" }} />
+        </SectionHeader>
+
         <SectionText>
           <p>
             We will store our data in a decentralized way like IPFS or Pinata
@@ -82,7 +87,11 @@ const Home = (props) => {
         </SectionText>
       </Section>
       <Section>
-        <p>How is the information retrieved</p>
+        <SectionHeader>
+          <p>How is the information retrieved</p>
+          <SettingsEthernetRoundedIcon style={{ fontSize: "4rem" }} />
+        </SectionHeader>
+
         <SectionText>
           <p>
             Using TheGraph we can analyze the whole history of blockchain txs
@@ -94,7 +103,9 @@ const Home = (props) => {
       </Section>
       <GridWrapper>
         <GridCard>
-          <h3>As users</h3>
+          <GridHeader>
+            <p>As users</p>
+          </GridHeader>
           <ul>
             <li>Explore the web3 multiverse</li>
             <li>Research and find information</li>
@@ -107,7 +118,9 @@ const Home = (props) => {
           </ul>
         </GridCard>
         <GridCard>
-          <h3>As owners</h3>
+          <GridHeader>
+            <h3>As owners</h3>
+          </GridHeader>
           <ul>
             <li>Curate data and earn</li>
             <li>Create theGraph endpoint to add data sources</li>
@@ -118,7 +131,9 @@ const Home = (props) => {
           </ul>
         </GridCard>
         <GridCard>
-          <h3>As developers</h3>
+          <GridHeader>
+            <h3>As developers</h3>
+          </GridHeader>
           <ul>
             <li>Insert planetharium on your web!</li>
             <li>
@@ -143,6 +158,9 @@ const Home = (props) => {
           </SectionText>
         </Thanks>
       </Section>
+      <div className={styles.herotest}>
+        <p>be part of it</p>
+      </div>
       Enter the dApp:
       <br />
       <Link to={"/Map"}>
@@ -183,42 +201,66 @@ const Home = (props) => {
   );
 };
 const Wrapper = styled.div`
-  width: 100%;
+  max-width: 100vw;
   justify-content: center;
   align-items: center;
   display: flex;
   flex-direction: column;
+  opacity: 99%;
 `;
 
 const CentreWrap = styled.div`
-  width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
 `;
 
 const Hero = styled.div`
   display: flex;
-  justify-content: space-evenly;
-  width: 90%;
-  min-height: 80vh;
-  margin-top: 30px;
+  flex-direction: column;
+  min-height: 100vh;
   margin-bottom: 50px;
-  margin-left: 30px;
-  margin-right: 30px;
   font-weight: bolder;
 `;
 
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+const Animation = styled.div`
+  background: linear-gradient(var(--grad1), var(--grad2)), url(${verse});
+  /* background-size: cover; */
+  background-repeat: no-repeat;
+  animation: ${rotate} 20s linear infinite;
+`;
+
 const HeroLeft = styled.div`
-  font-size: 2.5rem;
-  width: 50%;
-  padding: 40px;
+  font-size: 3.1rem;
+  width: 100vw;
+  height: 100vh;
+  padding: 10px;
+  padding-top: 60px;
+  text-shadow: 0px 0px 35px var(--textglow);
   /* border: solid 1px white; */
   border-radius: 3px;
+
+  background: linear-gradient(var(--grad1), var(--grad2)), url(${verse});
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  /* background-position-x: -130px; */
+
   /* box-shadow: 1px 1px 50px var(--shadow);
   box-shadow: inset 1px 1px 10px 5px var(--shine); */
 `;
 
-const HeroRight = styled.div`
+const CardT = styled.div`
   font-size: 2rem;
   width: fit-content;
   height: fit-content;
@@ -226,11 +268,19 @@ const HeroRight = styled.div`
   border-radius: 2px;
   box-shadow: 1px 1px 50px var(--shadow);
   box-shadow: inset 1px 1px 10px 5px var(--shine);
+  /* transition: transform 0.5s ease-in-out, text-shadow 0.5s ease-in-out; */
+  max-width: 100vw;
+  background-image: url(${moons});
+  background-size: cover;
+  background-repeat: no-repeat;
+  will-change: transform;
   transition: transform 0.5s ease-in-out, text-shadow 0.5s ease-in-out;
+  backdrop-filter: none;
 
-  :hover {
+  &:hover {
     transform: scale(1.01, 1.01);
     text-shadow: 0px 0px 20px var(--textglow);
+    backdrop-filter: hue-rotate(120deg) blur(100px) invert(50%);
     transition: transform 0.5s ease-in-out, text-shadow 0.5s ease-in-out;
   }
 `;
@@ -238,11 +288,12 @@ const HeroRight = styled.div`
 const HeroText = styled.div`
   margin-top: 20px;
   font-size: 1.5rem;
-  text-shadow: 0px 0px 35px white;
+  text-shadow: none;
   font-weight: lighter;
+  line-height: 1.3;
 `;
 
-const HeroButton = styled.div`
+const CardButton = styled.div`
   display: flex;
   margin-top: 20px;
   font-size: 1rem;
@@ -255,11 +306,12 @@ const HeroButton = styled.div`
     background-color: var(--shine);
   }
   max-width: fit-content;
+  align-self: center;
 `;
 
 const Section = styled.div`
-  padding: 20px;
-  width: 80%;
+  padding: 30px;
+  max-width: 95vw;
   display: flex;
   flex-direction: column;
   flex-grow: 1 1 auto;
@@ -267,8 +319,14 @@ const Section = styled.div`
   box-shadow: inset 1px 1px 10px 5px var(--shine);
   margin-top: 20px;
   margin-bottom: 20px;
-  font-size: 1.8rem;
+  font-size: 2rem;
   align-items: center;
+  line-height: 1.3;
+`;
+
+const SectionHeader = styled.div`
+  font-size: 3rem;
+  display: flex;
 `;
 
 const SectionText = styled.div`
@@ -282,20 +340,33 @@ const BigCard = styled.div`
 
 const GridWrapper = styled.div`
   display: flex;
-  width: 80%;
+  flex-direction: column;
+  max-width: 100vw;
   padding: 40px;
   border-radius: 2px;
   box-shadow: 1px 1px 50px var(--shadow);
   box-shadow: inset 1px 1px 10px 5px var(--shine);
   justify-content: space-evenly;
+  height: 150vh;
 `;
 const GridCard = styled.div`
+  min-width: fit-content;
   width: 30%;
   padding: 20px;
   border-radius: 2px;
   box-shadow: 1px 1px 50px var(--shadow);
   box-shadow: inset 1px 1px 10px 5px var(--shine);
+  font-size: 1.2;
+  line-height: 1.2;
 `;
+
+const GridHeader = styled.div`
+  display: flex;
+  justify-content: center;
+  font-size: 2rem;
+  padding-bottom: 5px;
+`;
+
 const Thanks = styled.div``;
 
 export default Home;
