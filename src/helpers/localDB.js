@@ -204,7 +204,7 @@ export const nodes:Node = [
   short:'',  img:'zapper.png',
     url:'https://zapper.fi',
     contract:'',
-    graphUrl:'' ,
+    graphUrl:'Swagger API' ,
     query:'' , search:'', widget:'' },
   { id: "zerion", group: 4, label: "Zerion", subgroup:'assets managers',level: 2,
   short:'',  img:'zerion.png',
