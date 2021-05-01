@@ -58,7 +58,7 @@ function Map(props) {
 
   function focusNode(graph, node) {
     // console.log('flying into ',node.id)
-    const distance = 100;
+    const distance = 125;
     const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
     // graph.backgroundColor('#ccc')  // changes the bg color
     graph.cameraPosition(

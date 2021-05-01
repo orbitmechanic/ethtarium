@@ -7,6 +7,79 @@
   font-size: 1.2rem;
 }
 
+.hero {
+  display: flex;
+  flex-direction: column;
+  padding: 28px;
+  padding-top: 106px;
+  height: 100vh;
+  width: 100vw;
+  background: linear-gradient(
+      180deg,
+      rgba(35, 0, 251, 0.42) 41.15%,
+      rgba(255, 0, 199, 0.76) 100%
+    ),
+    url(/src/images/backgrounds/verse4.png);
+  background: rgba(0, 0, 0, 0.53), opacity 10%;
+  /* background: linear-gradient(var(--grad1), var(--grad2)), url(${verse4}); */
+  background-size: cover;
+  background-position-x: center;
+  box-shadow: inset 22px 22px 29px rgba(255, 255, 255, 0.25),
+    inset -22px -22px 29px rgba(255, 255, 255, 0.25);
+}
+
+.hero h1 {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 44px;
+  color: #ffffff;
+  text-shadow: 0px 0px 16px #ff00e5;
+}
+
+.hero p {
+  font-size: 18px;
+  padding-top: 20px;
+}
+
+.homecard1 {
+  margin-top: 5vh;
+  width: 300px;
+  height: 434px;
+  color: #160054;
+  background: linear-gradient(180deg, #fdecff 0%, #cfceff 100%);
+  box-shadow: inset -4px -4px 12px rgba(26, 13, 117, 0.45),
+    inset 6px 6px 10px rgba(38, 0, 86, 0.45);
+  border-radius: 4px;
+}
+
+.homecard1 h2 {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  padding-top: 20px;
+}
+
+.homecard1 p {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  text-align: center;
+  color: #160054;
+}
+
+.icons {
+  display: flex;
+  justify-content: center;
+  padding-top: 30px;
+}
+
 .button {
   display: flex;
   padding: 15px;

@@ -1,0 +1,133 @@
+import React from "react";
+import styles from "../styles/main.module.css";
+
+const DiskIcon = () => {
+  return (
+    <div className={styles.icons}>
+      <svg
+        width="80"
+        height="80"
+        viewBox="0 0 80 80"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g filter="url(#filter0_di)">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M53.1716 13.1716C52.4214 12.4214 51.404 12 50.3431 12H16C13.7909 12 12 13.7909 12 16V64C12 66.2091 13.7909 68 16 68H64C66.2091 68 68 66.2091 68 64V29.6569C68 28.596 67.5786 27.5786 66.8284 26.8284L53.1716 13.1716Z"
+            fill="url(#paint0_linear)"
+            fill-opacity="0.58"
+          />
+          <path
+            d="M48 27V13C48 12.4477 47.5523 12 47 12H21C20.4477 12 20 12.4477 20 13V27C20 27.5523 20.4477 28 21 28H47C47.5523 28 48 27.5523 48 27Z"
+            fill="#FF00E5"
+            stroke="#FF00E5"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <g filter="url(#filter1_i)">
+            <path
+              d="M34.8038 37C38.0192 35.1436 41.9808 35.1436 45.1962 37C48.4115 38.8564 50.3923 42.2872 50.3923 46C50.3923 49.7128 48.4115 53.1436 45.1962 55C41.9808 56.8564 38.0192 56.8564 34.8038 55C31.5885 53.1436 29.6077 49.7128 29.6077 46C29.6077 42.2872 31.5885 38.8564 34.8038 37Z"
+              fill="#F2F2F2"
+            />
+          </g>
+        </g>
+        <defs>
+          <filter
+            id="filter0_di"
+            x="8"
+            y="10.5"
+            width="64"
+            height="65.5"
+            filterUnits="userSpaceOnUse"
+            color-interpolation-filters="sRGB"
+          >
+            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+            <feColorMatrix
+              in="SourceAlpha"
+              type="matrix"
+              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            />
+            <feOffset dy="4" />
+            <feGaussianBlur stdDeviation="2" />
+            <feColorMatrix
+              type="matrix"
+              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+            />
+            <feBlend
+              mode="normal"
+              in2="BackgroundImageFix"
+              result="effect1_dropShadow"
+            />
+            <feBlend
+              mode="normal"
+              in="SourceGraphic"
+              in2="effect1_dropShadow"
+              result="shape"
+            />
+            <feColorMatrix
+              in="SourceAlpha"
+              type="matrix"
+              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+              result="hardAlpha"
+            />
+            <feOffset dy="4" />
+            <feGaussianBlur stdDeviation="2" />
+            <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
+            <feColorMatrix
+              type="matrix"
+              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+            />
+            <feBlend mode="normal" in2="shape" result="effect2_innerShadow" />
+          </filter>
+          <filter
+            id="filter1_i"
+            x="29.6077"
+            y="35.6077"
+            width="20.7846"
+            height="24.7846"
+            filterUnits="userSpaceOnUse"
+            color-interpolation-filters="sRGB"
+          >
+            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+            <feBlend
+              mode="normal"
+              in="SourceGraphic"
+              in2="BackgroundImageFix"
+              result="shape"
+            />
+            <feColorMatrix
+              in="SourceAlpha"
+              type="matrix"
+              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+              result="hardAlpha"
+            />
+            <feOffset dy="4" />
+            <feGaussianBlur stdDeviation="2" />
+            <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
+            <feColorMatrix
+              type="matrix"
+              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+            />
+            <feBlend mode="normal" in2="shape" result="effect1_innerShadow" />
+          </filter>
+          <linearGradient
+            id="paint0_linear"
+            x1="40"
+            y1="12"
+            x2="40"
+            y2="68"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stop-color="#0500FF" />
+            <stop offset="1" stop-color="#FF00B8" />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  );
+};
+
+export default DiskIcon;
