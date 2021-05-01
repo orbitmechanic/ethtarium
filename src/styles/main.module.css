@@ -7,6 +7,17 @@
   font-size: 1.2rem;
 }
 
+.footer {
+  /* padding-top: 50px;
+  padding-bottom: 50px; */
+  height: 80px;
+  background: linear-gradient(
+    180deg,
+    rgba(5, 0, 255, 0.65) 43.23%,
+    #ff00e5 100%
+  );
+}
+
 .hero {
   display: flex;
   flex-direction: column;
@@ -14,18 +25,19 @@
   padding-top: 106px;
   height: 100vh;
   width: 100vw;
+  background: rgba(0, 0, 0, 0.014);
+
   background: linear-gradient(
       180deg,
       rgba(35, 0, 251, 0.42) 41.15%,
       rgba(255, 0, 199, 0.76) 100%
     ),
     url(/src/images/backgrounds/verse4.png);
-  background: rgba(0, 0, 0, 0.53), opacity 10%;
   /* background: linear-gradient(var(--grad1), var(--grad2)), url(${verse4}); */
   background-size: cover;
   background-position-x: center;
-  box-shadow: inset 22px 22px 29px rgba(255, 255, 255, 0.25),
-    inset -22px -22px 29px rgba(255, 255, 255, 0.25);
+  box-shadow: inset 22px 22px 29px rgba(94, 94, 94, 0.25),
+    inset -22px -22px 29px rgba(148, 148, 148, 0.25);
 }
 
 .hero h1 {
@@ -43,35 +55,90 @@
   padding-top: 20px;
 }
 
+.homecards {
+  font-family: Montserrat;
+  font-style: normal;
+  color: #160054;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100vw;
+}
+
+.homecards h2 {
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 22px;
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+
+.homecards p {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+}
+
 .homecard1 {
   margin-top: 5vh;
   width: 300px;
-  height: 434px;
   color: #160054;
   background: linear-gradient(180deg, #fdecff 0%, #cfceff 100%);
   box-shadow: inset -4px -4px 12px rgba(26, 13, 117, 0.45),
     inset 6px 6px 10px rgba(38, 0, 86, 0.45);
   border-radius: 4px;
+  padding-bottom: 50px;
 }
-
-.homecard1 h2 {
-  font-family: Montserrat;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 18px;
-  line-height: 22px;
-  text-align: center;
-  padding-top: 20px;
-}
-
-.homecard1 p {
-  font-family: Montserrat;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 16px;
-  text-align: center;
+.homecard2 {
+  margin-top: 5vh;
+  width: 300px;
   color: #160054;
+  background: linear-gradient(180deg, #fdecff 0%, #cfceff 100%);
+  box-shadow: inset -4px -4px 12px rgba(26, 13, 117, 0.45),
+    inset 6px 6px 10px rgba(38, 0, 86, 0.45);
+  border-radius: 4px;
+  padding-bottom: 50px;
+}
+.homecard3 {
+  margin-top: 5vh;
+  width: 300px;
+  color: #160054;
+  background: linear-gradient(180deg, #fdecff 0%, #cfceff 100%);
+  box-shadow: inset -4px -4px 12px rgba(26, 13, 117, 0.45),
+    inset 6px 6px 10px rgba(38, 0, 86, 0.45);
+  border-radius: 4px;
+  padding-bottom: 50px;
+}
+.homecard4 {
+  margin-top: 5vh;
+  width: 300px;
+  color: #160054;
+  background: linear-gradient(180deg, #fdecff 0%, #cfceff 100%);
+  box-shadow: inset -4px -4px 12px rgba(26, 13, 117, 0.45),
+    inset 6px 6px 10px rgba(38, 0, 86, 0.45);
+  border-radius: 4px;
+  padding-bottom: 50px;
+}
+.homecard5 {
+  margin-top: 5vh;
+  width: 300px;
+  color: #160054;
+  background: linear-gradient(180deg, #fdecff 0%, #cfceff 100%);
+  box-shadow: inset -4px -4px 12px rgba(26, 13, 117, 0.45),
+    inset 6px 6px 10px rgba(38, 0, 86, 0.45);
+  border-radius: 4px;
+  padding-bottom: 50px;
+}
+.homecard6 {
+  margin-top: 5vh;
+  width: 300px;
+  color: #160054;
+  background: linear-gradient(180deg, #fdecff 0%, #cfceff 100%);
+  box-shadow: inset -4px -4px 12px rgba(26, 13, 117, 0.45),
+    inset 6px 6px 10px rgba(38, 0, 86, 0.45);
+  border-radius: 4px;
+  padding-bottom: 50px;
 }
 
 .icons {
