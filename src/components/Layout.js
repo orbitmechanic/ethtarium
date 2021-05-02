@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import styles from "../styles/main.module.css";
 import Header from "./Header";
 import Footer from "./Footer";
 
@@ -14,19 +15,13 @@ const Layout = ({ children }, signer) => {
 };
 
 const Wrapper = styled.div`
-  /* display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    background: linear-gradient(#7a78dd, #090b29); */
-  /* width: 100%;
-    height: 100%; */
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-  z-index: 0;
   background-color: var(--bg-color);
+  opacity: 99%;
   color: white;
-  max-height: 100%;
+  width: 100vw;
 `;
 
 const Main = styled.div`
@@ -35,9 +30,8 @@ const Main = styled.div`
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-  z-index: 0;
-  width: 100%;
   justify-content: center;
+  max-width: 100vw;
 `;
 
 export default Layout;

@@ -20,8 +20,8 @@ const Wrapper = styled.div`
   font-size: 1rem;
   border-radius: 5px;
   background-color: var(--bg-color);
-  box-shadow: 0px 0px 5px var(--shadow);
-  box-shadow: inset 0px 0px 5px var(--shine);
+  /* box-shadow: 0px 0px 5px var(--shadow); */
+  /* box-shadow: inset 0px 0px 5px var(--shine); */
   :hover {
     background-color: var(--shine);
     color: white;

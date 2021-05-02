@@ -1,294 +1,259 @@
 import { Link } from "react-router-dom";
-import SearchIcon from "@material-ui/icons/Search";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import styles from "../../styles/main.module.css";
-import React from "react";
-import { StylesProvider } from "@material-ui/styles";
+import verse from "../../images/backgrounds/verse.png";
+import DiskIcon from "../DiskIcon";
+import BinoIcon from "../BinoIcon";
+import UserIcon from "../UserIcon";
+import CommunityIcon from "../CommunityIcon";
+import DevIcon from "../DevIcon";
+import ThanksIcon from "../ThanksIcon";
 
-const Home = (props) => {
+const Home = () => {
   return (
     <Wrapper>
-      {/* 
-       
-        Section left
-        Image of map
-        Section hover state
-        Launch button
-        + Hover
-
-        Section right
-        Section hover state
-          Text section
-
-          Input field
-          Button
-          Hover states
-        --------------
-        Section with text
-        Bonus - animation
-        --------------
-        Section with text
-        Bonus - animation
-        --------------
-        Triple grid
-
-        Three x cards
-
-        Bonus animation
-        -------------
-        Thanks section
-        Donate button and/or Link
-        Hover state button
-
-        Bonus animation
-
-        ---------------
-        Footer
-        Copyright?
-        
-        */}
-      <Hero className={styles.hero}>
-        <HeroLeft>
-          <h1>Experience a new way of interacting with Web 3.0</h1>
-          <HeroText>
-            <p>Access blockchain history</p>
-            <br></br>
-            <p>
-              Explore, research and interact with dApps, Networks and more from
-              the universe within watching the live ecosystem grow
-            </p>
-          </HeroText>
-        </HeroLeft>
-        <HeroRight className={styles.herosmall}>
-          <p> Be a part of it!</p>
-          <HeroText>
-            <p>In a deep dive into digital space...</p>
-          </HeroText>
-          <CentreWrap>
-            <HeroButton>Explore</HeroButton>
-          </CentreWrap>
-        </HeroRight>
-      </Hero>
-      <Section>
-        <p>How is the data managed?</p>
-        <SectionText>
+      {/* hero section */}
+      <div className={styles.hero}>
+        <h1>A new way to experience Web 3.0</h1>
+        <p>
+          Explore, research, and interact with the decentralised universe as it
+          grows
+        </p>
+        <p>Be part of it!!</p>
+        <CardButton>
+          <Link to={"/Map"}>Enter the dApp</Link>
+        </CardButton>
+      </div>
+      {/* cards section */}
+      <div className={styles.homecards}>
+        {/* card one */}
+        <div className={styles.homecard1}>
+          <DiskIcon />
+          <h2>
+            How is the <br />
+            data managed?
+          </h2>
           <p>
-            We will store our data in a decentralized way like IPFS or Pinata
+            We will store our data in a <br />
+            decentralized way like <br />
+            IPFS or Pinata
           </p>
-          <p>Data added and modified will be managed with a DAO</p>
-          <p>Users that contribute could earn for the service</p>
-          <p>Protocols, users and dApps could stake to pay for the service</p>
-          <p>You can request for the enter or modification of the data</p>
-        </SectionText>
-      </Section>
-      <Section>
-        <p>How is the information retrieved</p>
-        <SectionText>
+          <br />
           <p>
-            Using TheGraph we can analyze the whole history of blockchain txs
+            Data added and modified will be <br />
+            managed with a DAO
           </p>
-          <p>Data could be graphed, compared(?) exported or whatever!</p>
-          <p>You can request to create subgraphs for specific contracts</p>
-          <p>You can create and promote yours!</p>
-        </SectionText>
-      </Section>
-      <GridWrapper>
-        <GridCard>
-          <h3>As users</h3>
-          <ul>
-            <li>Explore the web3 multiverse</li>
-            <li>Research and find information</li>
-            <li>See, graph and export data of tx's with theGraph</li>
-            <li>Interact with smart contracts and dApps</li>
-            <li>See live tx's (Coming soon..?)</li>
-            <li>
-              Have an inmersion experience in web3 with VR (Coming veery soon!)
-            </li>
-          </ul>
-        </GridCard>
-        <GridCard>
-          <h3>As owners</h3>
-          <ul>
-            <li>Curate data and earn</li>
-            <li>Create theGraph endpoint to add data sources</li>
-            <li>Explore the web3 and add requests of inputs</li>
-            <li>Find errors and bugs</li>
-            <li>Educate about web3 and help people enter (the good way..)</li>
-            <li>Decide over the purpose and whereabouts of Planetharium!</li>
-          </ul>
-        </GridCard>
-        <GridCard>
-          <h3>As developers</h3>
-          <ul>
-            <li>Insert planetharium on your web!</li>
-            <li>
-              Explore and create new ways to interact with web3 with our (open
-              repo?) system
-            </li>
-            <li>Retrieve our curated dataset for your projects!</li>
-            <li>Generate content with our tools (make your videos amazing!)</li>
-          </ul>
-        </GridCard>
-      </GridWrapper>
-      <Section>
-        <Thanks>
-          <h1>Thanks to!</h1>
-          <SectionText>
-            <p>TheGraph</p>
-            <p>Coingecko</p>
-            <p>ThreeJs</p>
-            <p>Lots and lots of sponsors</p>
-            <p>EthGlobal (this dApp was made for the scaling Hackaton!)</p>
-            <h2>Gitcoin and donate!</h2>
-          </SectionText>
-        </Thanks>
-      </Section>
-      Enter the dApp:
-      <br />
-      <Link to={"/Map"}>
-        <button
-          style={{
-            backgroundColor: "grey",
-            color: "white",
-            fontWeight: "bold",
-          }}
-        >
-          Planethary
-        </button>
-      </Link>
-      <button>VR version - coming soon</button>
-      <br />
-      <br />
-      <div>
-        Or enter a theGraph endpoint to analyze!
-        <br />
-        <SearchIcon />
-        <input id="search" placeholder="TheGraph endpoint" />
-        <Link to="/TheGraphData">
-          <button
-            onClick={() =>
-              props.selectGraphEndpoint(document.getElementById("search").value)
-            }
-          >
-            Go!
-          </button>
           <br />
+          <p>
+            Users that contribute could <br />
+            earn for the service
+          </p>
           <br />
-        </Link>
-        <Link to="/Add">
-          <button>Add a project</button>
-        </Link>
+          <p>
+            Protocols, users and dApps <br />
+            could stake to pay for the service
+          </p>
+          <br />
+          <p>
+            You can request for the enter or <br />
+            modification of the data
+          </p>
+        </div>
+        {/* card two */}
+        <div className={styles.homecard2}>
+          <BinoIcon />
+          <h2>
+            How is the <br />
+            information retrieved
+          </h2>
+          <p>
+            Powered by The Graph we can <br />
+            analyze the whole history <br />
+            of blockchain txs
+          </p>
+          <br />
+          <p>
+            Data could be graphed, <br />
+            compared(?) exported <br />
+            or whatever!
+          </p>
+          <br />
+          <p>
+            You can request to create subgraphs <br />
+            for specific contracts
+          </p>
+          <br />
+          <p>
+            You can create and <br />
+            promote yours!
+          </p>
+        </div>
+        {/* card three */}
+        <div className={styles.homecard3}>
+          <UserIcon />
+          <h2>As users</h2>
+
+          <p>Explore the web3 multiverse</p>
+          <br />
+          <p>Research and find information</p>
+          <br />
+          <p>
+            See, graph and export data <br />
+            of tx's with theGraph
+          </p>
+          <br />
+          <p>
+            Interact with smart <br />
+            contracts and dApps
+          </p>
+          <br />
+          <p>
+            See live tx's <br />
+            (Coming soon)
+          </p>
+          <br />
+          <p>
+            Have an immersive experience <br />
+            in web3 with VR <br />
+            (Coming soon)
+          </p>
+        </div>
+        {/* card 4 */}
+        <div className={styles.homecard4}>
+          <CommunityIcon />
+          <h2>As owners</h2>
+
+          <p>Curate data and earn</p>
+          <br />
+          <p>
+            Create The Graph endpoint <br />
+            to add data sources
+          </p>
+          <br />
+          <p>
+            Explore the web3 and add <br />
+            requests of inputs
+          </p>
+          <br />
+          <p>Find errors and bugs</p>
+          <br />
+          <p>
+            Educate others about web3 and <br />
+            help the ecosystem grow
+          </p>
+          <br />
+          <p>
+            Decide the purpose <br />
+            of Planetarium!
+          </p>
+          <br />
+        </div>
+        {/* card 5 */}
+        <div className={styles.homecard5}>
+          <DevIcon />
+          <h2>As developers</h2>
+
+          <p>Insert planetharium on your web!</p>
+          <br />
+          <p>
+            Explore and create new ways <br />
+            to interact with web3 <br />
+            with our repo
+          </p>
+          <br />
+          <p>
+            Retrieve our dataset <br />
+            for your projects!
+          </p>
+        </div>
+        {/* card 6 */}
+        <div className={styles.homecard6}>
+          <ThanksIcon />
+          <h2>Thanks to!</h2>
+          <p>TheGraph</p>
+          <br />
+          <p>Coingecko</p>
+          <br />
+          <p>ThreeJs</p>
+          <br />
+          <p>Lots and lots of sponsors</p>
+          <br />
+          <p>EthGlobal)</p>
+          <br />
+          <h2>Gitcoin and donate!</h2>
+        </div>
       </div>
     </Wrapper>
   );
 };
 const Wrapper = styled.div`
-  width: 100%;
+  width: 100vw;
   justify-content: center;
   align-items: center;
   display: flex;
   flex-direction: column;
+  opacity: 99%;
 `;
 
-const CentreWrap = styled.div`
-  width: 100%;
+const CardButton = styled.div`
   display: flex;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-top: 18vh;
+  background: #ff00e5;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  font-style: normal;
+  width: 189px;
+  height: 58px;
+  box-shadow: -8px 16px 9px rgba(0, 0, 0, 0.25);
+  border-radius: 3px;
   justify-content: center;
+  align-items: center;
+  align-self: center;
 `;
 
-const Hero = styled.div`
-  display: flex;
-  justify-content: space-evenly;
-  width: 90%;
-  min-height: 80vh;
-  margin-top: 30px;
-  margin-bottom: 50px;
-  margin-left: 30px;
-  margin-right: 30px;
-  font-weight: bolder;
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 `;
 
-const HeroLeft = styled.div`
-  font-size: 2.5rem;
-  width: 50%;
-  padding: 40px;
-  /* border: solid 1px white; */
-  border-radius: 5px;
-  /* box-shadow: 1px 1px 50px var(--shadow);
-  box-shadow: inset 1px 1px 10px 5px var(--shine); */
+const Animation = styled.div`
+  background: linear-gradient(var(--grad1), var(--grad2)), url(${verse});
+  /* background-size: cover; */
+  background-repeat: no-repeat;
+  animation: ${rotate} 20s linear infinite;
 `;
 
-const HeroRight = styled.div`
+const CardT = styled.div`
   font-size: 2rem;
   width: fit-content;
   height: fit-content;
   padding: 40px;
-  border-radius: 5px;
+  border-radius: 2px;
   box-shadow: 1px 1px 50px var(--shadow);
   box-shadow: inset 1px 1px 10px 5px var(--shine);
-`;
+  /* transition: transform 0.5s ease-in-out, text-shadow 0.5s ease-in-out; */
+  max-width: 100vw;
+  background-image: url(${verse});
+  background-size: cover;
+  background-repeat: no-repeat;
+  will-change: transform;
+  transition: transform 0.5s ease-in-out, text-shadow 0.5s ease-in-out;
+  backdrop-filter: none;
 
-const HeroText = styled.div`
-  margin-top: 20px;
-  font-size: 1.5rem;
-  text-shadow: 0px 0px 35px white;
-  font-weight: lighter;
-`;
-
-const HeroButton = styled.div`
-  display: flex;
-  margin-top: 20px;
-  font-size: 1rem;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 5px white;
-  background-color: var(--pri-color);
-  cursor: pointer;
-  :hover {
-    background-color: var(--shine);
+  &:hover {
+    transform: scale(1.01, 1.01);
+    text-shadow: 0px 0px 20px var(--textglow);
+    backdrop-filter: hue-rotate(120deg) blur(100px) invert(50%);
+    transition: transform 0.5s ease-in-out, text-shadow 0.5s ease-in-out;
   }
-  max-width: fit-content;
 `;
-
-const Section = styled.div`
-  padding: 20px;
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1 1 auto;
-  box-shadow: 1px 1px 50px var(--shadow);
-  box-shadow: inset 1px 1px 10px 5px var(--shine);
-  margin-top: 20px;
-  margin-bottom: 20px;
-  font-size: 1.8rem;
-  align-items: center;
-`;
-
-const SectionText = styled.div`
-  padding: 20px 0px 20px 0;
-  font-size: 1.2rem;
-`;
-
-const BigCard = styled.div`
-  width: 60%;
-`;
-
-const GridWrapper = styled.div`
-  display: flex;
-  width: 80%;
-  padding: 40px;
-  border-radius: 5px;
-  box-shadow: 1px 1px 50px var(--shadow);
-  box-shadow: inset 1px 1px 10px 5px var(--shine);
-  justify-content: space-evenly;
-`;
-const GridCard = styled.div`
-  width: 30%;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 1px 1px 50px var(--shadow);
-  box-shadow: inset 1px 1px 10px 5px var(--shine);
-`;
-const Thanks = styled.div``;
 
 export default Home;
