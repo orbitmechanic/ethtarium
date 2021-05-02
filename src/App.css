@@ -3,13 +3,12 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  display: flex;
-  flex-direction: column;
+  text-align: center;
+  flex-direction: row;
   align-items: center;
-  justify-content: top;
-  font-size: calc(10px + 2vmin);
+  justify-content: center;
   color: white;
+  background-color: #282c34;
 }
 
 .App-body{
