@@ -7,7 +7,7 @@ import { Web3Provider } from "@ethersproject/providers"; //JsonRpcProvider,
 
 //Structure
 //Pages
-import Home from "./components/pages/Home";
+import Home from "../src/components/pages/Home";
 
 //Components
 import Map from "./components/map";
