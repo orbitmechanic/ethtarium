@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
+// import { keyframes } from "styled-components";
 import styles from "../../styles/main.module.css";
-import verse from "../../images/backgrounds/verse.png";
+// import verse from "../../images/backgrounds/verse.png";
 import DiskIcon from "../DiskIcon";
 import BinoIcon from "../BinoIcon";
 import UserIcon from "../UserIcon";
@@ -224,46 +225,46 @@ const CardButton = styled.div`
   align-self: center;
 `;
 
-const rotate = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
+// const rotate = keyframes`
+//   from {
+//     transform: rotate(0deg);
+//   }
 
-  to {
-    transform: rotate(360deg);
-  }
-`;
+//   to {
+//     transform: rotate(360deg);
+//   }
+// `;
 
-const Animation = styled.div`
-  background: linear-gradient(var(--grad1), var(--grad2)), url(${verse});
-  /* background-size: cover; */
-  background-repeat: no-repeat;
-  animation: ${rotate} 20s linear infinite;
-`;
+// const Animation = styled.div`
+//   background: linear-gradient(var(--grad1), var(--grad2)), url(${verse});
+//   /* background-size: cover; */
+//   background-repeat: no-repeat;
+//   animation: ${rotate} 20s linear infinite;
+// `;
 
-const CardT = styled.div`
-  font-size: 2rem;
-  width: fit-content;
-  height: fit-content;
-  padding: 40px;
-  border-radius: 2px;
-  box-shadow: 1px 1px 50px var(--shadow);
-  box-shadow: inset 1px 1px 10px 5px var(--shine);
-  /* transition: transform 0.5s ease-in-out, text-shadow 0.5s ease-in-out; */
-  max-width: 100vw;
-  background-image: url(${verse});
-  background-size: cover;
-  background-repeat: no-repeat;
-  will-change: transform;
-  transition: transform 0.5s ease-in-out, text-shadow 0.5s ease-in-out;
-  backdrop-filter: none;
+// const CardT = styled.div`
+//   font-size: 2rem;
+//   width: fit-content;
+//   height: fit-content;
+//   padding: 40px;
+//   border-radius: 2px;
+//   box-shadow: 1px 1px 50px var(--shadow);
+//   box-shadow: inset 1px 1px 10px 5px var(--shine);
+//   /* transition: transform 0.5s ease-in-out, text-shadow 0.5s ease-in-out; */
+//   max-width: 100vw;
+//   background-image: url(${verse});
+//   background-size: cover;
+//   background-repeat: no-repeat;
+//   will-change: transform;
+//   transition: transform 0.5s ease-in-out, text-shadow 0.5s ease-in-out;
+//   backdrop-filter: none;
 
-  &:hover {
-    transform: scale(1.01, 1.01);
-    text-shadow: 0px 0px 20px var(--textglow);
-    backdrop-filter: hue-rotate(120deg) blur(100px) invert(50%);
-    transition: transform 0.5s ease-in-out, text-shadow 0.5s ease-in-out;
-  }
-`;
+//   &:hover {
+//     transform: scale(1.01, 1.01);
+//     text-shadow: 0px 0px 20px var(--textglow);
+//     backdrop-filter: hue-rotate(120deg) blur(100px) invert(50%);
+//     transition: transform 0.5s ease-in-out, text-shadow 0.5s ease-in-out;
+//   }
+// `;
 
 export default Home;

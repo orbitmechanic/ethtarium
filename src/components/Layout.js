@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import styles from "../styles/main.module.css";
+// import styles from "../styles/main.module.css";
 import Header from "./Header";
 import Footer from "./Footer";
 
@@ -8,8 +8,7 @@ const Layout = ({ children }, signer) => {
     <Wrapper>
       <Header />
       <Main>{children}</Main>
-      <Footer
-      />
+      <Footer />
     </Wrapper>
   );
 };

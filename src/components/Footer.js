@@ -1,5 +1,3 @@
-import styled from "styled-components";
-import NavButton from "./Nav/NavButton";
 import styles from "../styles/main.module.css";
 
 const Footer = () => {
