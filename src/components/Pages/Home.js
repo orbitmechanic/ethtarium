@@ -14,158 +14,168 @@ const Home = () => {
     <Wrapper>
       {/* hero section */}
       <div className={styles.hero}>
-        <h1>A new way to experience Web 3.0</h1>
-        <p>
-          Explore, research, and interact with the decentralised universe as it
-          grows
-        </p>
-        <p>Be part of it!!</p>
-        <CardButton>
-          <Link to={"/Map"}>Enter the dApp</Link>
-        </CardButton>
+        <div className={styles.herotext}>
+          <h1>A new way to experience Web 3.0</h1>
+          <p>
+            Explore, research, and interact with the decentralised universe as
+            it grows
+          </p>
+        </div>
+
+        <div className={styles.cta}>
+          <p>Be part of it!!</p>
+          <CardButton>
+            <Link to={"/Map"}>Enter the dApp</Link>
+          </CardButton>
+        </div>
       </div>
       {/* cards section */}
       <div className={styles.homecards}>
-        {/* card one */}
-        <div className={styles.homecard1}>
-          <DiskIcon />
-          <h2>
-            How is the <br />
-            data managed?
-          </h2>
-          <p>
-            We will store our data in a <br />
-            decentralized way like <br />
-            IPFS or Pinata
-          </p>
-          <br />
-          <p>
-            Data added and modified will be <br />
-            managed with a DAO
-          </p>
-          <br />
-          <p>
-            Users that contribute could <br />
-            earn for the service
-          </p>
-          <br />
-          <p>
-            Protocols, users and dApps <br />
-            could stake to pay for the service
-          </p>
-          <br />
-          <p>
-            You can request for the enter or <br />
-            modification of the data
-          </p>
+        <div className={styles.homerow}>
+          <div className={styles.homecard1}>
+            <DiskIcon />
+            <h2>
+              How is the <br />
+              data managed?
+            </h2>
+            <p>
+              We will store our data in a <br />
+              decentralized way like <br />
+              IPFS or Pinata
+            </p>
+            <br />
+            <p>
+              Data added and modified will be <br />
+              managed with a DAO
+            </p>
+            <br />
+            <p>
+              Users that contribute could <br />
+              earn for the service
+            </p>
+            <br />
+            <p>
+              Protocols, users and dApps <br />
+              could stake to pay for the service
+            </p>
+            <br />
+            <p>
+              You can request for the enter or <br />
+              modification of the data
+            </p>
+          </div>
+          {/* card two */}
+          <div className={styles.homecard2}>
+            <BinoIcon />
+            <h2>
+              How is the <br />
+              information retrieved
+            </h2>
+            <p>
+              Powered by The Graph we can <br />
+              analyze the whole history <br />
+              of blockchain txs
+            </p>
+            <br />
+            <p>
+              Data could be graphed, <br />
+              compared(?) exported <br />
+              or whatever!
+            </p>
+            <br />
+            <p>
+              You can request to create subgraphs <br />
+              for specific contracts
+            </p>
+            <br />
+            <p>
+              You can create and <br />
+              promote yours!
+            </p>
+          </div>
         </div>
-        {/* card two */}
-        <div className={styles.homecard2}>
-          <BinoIcon />
-          <h2>
-            How is the <br />
-            information retrieved
-          </h2>
-          <p>
-            Powered by The Graph we can <br />
-            analyze the whole history <br />
-            of blockchain txs
-          </p>
-          <br />
-          <p>
-            Data could be graphed, <br />
-            compared(?) exported <br />
-            or whatever!
-          </p>
-          <br />
-          <p>
-            You can request to create subgraphs <br />
-            for specific contracts
-          </p>
-          <br />
-          <p>
-            You can create and <br />
-            promote yours!
-          </p>
+        {/* card one */}
+        <div className={styles.homerow}>
+          <div className={styles.homecard3}>
+            <UserIcon />
+            <h2>As users</h2>
+
+            <p>Explore the web3 multiverse</p>
+            <br />
+            <p>Research and find information</p>
+            <br />
+            <p>
+              See, graph and export data <br />
+              of tx's with theGraph
+            </p>
+            <br />
+            <p>
+              Interact with smart <br />
+              contracts and dApps
+            </p>
+            <br />
+            <p>
+              See live tx's <br />
+              (Coming soon)
+            </p>
+            <br />
+            <p>
+              Have an immersive experience <br />
+              in web3 with VR <br />
+              (Coming soon)
+            </p>
+          </div>
+          {/* card 4 */}
+          <div className={styles.homecard4}>
+            <CommunityIcon />
+            <h2>As owners</h2>
+
+            <p>Curate data and earn</p>
+            <br />
+            <p>
+              Create The Graph endpoint <br />
+              to add data sources
+            </p>
+            <br />
+            <p>
+              Explore the web3 and add <br />
+              requests of inputs
+            </p>
+            <br />
+            <p>Find errors and bugs</p>
+            <br />
+            <p>
+              Educate others about web3 and <br />
+              help the ecosystem grow
+            </p>
+            <br />
+            <p>
+              Decide the purpose <br />
+              of Planetarium!
+            </p>
+            <br />
+          </div>
+          {/* card 5 */}
+          <div className={styles.homecard5}>
+            <DevIcon />
+            <h2>As developers</h2>
+
+            <p>Insert planetharium on your web!</p>
+            <br />
+            <p>
+              Explore and create new ways <br />
+              to interact with web3 <br />
+              with our repo
+            </p>
+            <br />
+            <p>
+              Retrieve our dataset <br />
+              for your projects!
+            </p>
+          </div>
         </div>
         {/* card three */}
-        <div className={styles.homecard3}>
-          <UserIcon />
-          <h2>As users</h2>
 
-          <p>Explore the web3 multiverse</p>
-          <br />
-          <p>Research and find information</p>
-          <br />
-          <p>
-            See, graph and export data <br />
-            of tx's with theGraph
-          </p>
-          <br />
-          <p>
-            Interact with smart <br />
-            contracts and dApps
-          </p>
-          <br />
-          <p>
-            See live tx's <br />
-            (Coming soon)
-          </p>
-          <br />
-          <p>
-            Have an immersive experience <br />
-            in web3 with VR <br />
-            (Coming soon)
-          </p>
-        </div>
-        {/* card 4 */}
-        <div className={styles.homecard4}>
-          <CommunityIcon />
-          <h2>As owners</h2>
-
-          <p>Curate data and earn</p>
-          <br />
-          <p>
-            Create The Graph endpoint <br />
-            to add data sources
-          </p>
-          <br />
-          <p>
-            Explore the web3 and add <br />
-            requests of inputs
-          </p>
-          <br />
-          <p>Find errors and bugs</p>
-          <br />
-          <p>
-            Educate others about web3 and <br />
-            help the ecosystem grow
-          </p>
-          <br />
-          <p>
-            Decide the purpose <br />
-            of Planetarium!
-          </p>
-          <br />
-        </div>
-        {/* card 5 */}
-        <div className={styles.homecard5}>
-          <DevIcon />
-          <h2>As developers</h2>
-
-          <p>Insert planetharium on your web!</p>
-          <br />
-          <p>
-            Explore and create new ways <br />
-            to interact with web3 <br />
-            with our repo
-          </p>
-          <br />
-          <p>
-            Retrieve our dataset <br />
-            for your projects!
-          </p>
-        </div>
         {/* card 6 */}
         <div className={styles.homecard6}>
           <ThanksIcon />
@@ -199,7 +209,7 @@ const CardButton = styled.div`
   display: flex;
   padding-top: 20px;
   padding-bottom: 20px;
-  margin-top: 18vh;
+  margin-top: 5vh;
   background: #ff00e5;
   font-weight: 500;
   font-size: 18px;
