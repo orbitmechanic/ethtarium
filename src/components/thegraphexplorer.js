@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import ZapperComponent from './zapper';
 import TableDownload from '../helpers/xlsxDownloader'
 import Divider from '@material-ui/core/Divider';
+import Button from '@material-ui/core/Button';
 
 export default function TheGraphExplorer(props) {
   let swagger = '' //this is an aaaawful filter..
@@ -24,7 +25,7 @@ export default function TheGraphExplorer(props) {
     swagger = 'not found'
   }
   return (
-    <div className='App-header'>
+    <div className='App-header' style={{backgroundColor:'#190038'}}>
       {swagger}
       <div>
       <p>{props.node?props.node:'No node was selected'}</p>
@@ -41,7 +42,12 @@ export default function TheGraphExplorer(props) {
       :null}
 
       <Divider />
-      <Link onClick={()=>{props.selectNode(null)}} to="/" style={{color:'white'}}>Go back!</Link>
+      <br />
+      <Link onClick={()=>{props.selectNode(null)}} to="/">
+      <Button style={{color:'white', fontWeight:'bold', backgroundColor:'#e000ca'}}>Go back!</Button>
+      </Link>
+      <br />
+      <br />      
     </div>
   )
 }
