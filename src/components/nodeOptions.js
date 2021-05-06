@@ -113,6 +113,8 @@ export default function NodeOptions(props) {
         </div>
       ) : null}
 
+      <br />
+      <br />
       <Divider light={true}/>
       <div>
       <p style={{textDecoration: 'underline overline'}}>The Graph endpoints </p>
@@ -134,9 +136,9 @@ export default function NodeOptions(props) {
       ) : <p>There are no subgraphs yet..</p>}
       <Button onClick={()=>{console.log('make an add widget')}} style={{color:'white'}}>Request add a subgraph</Button>
       </div>
-      <Divider light={true}/>
+      <Divider />
       <p style={{textDecoration: 'underline overline'}}>Interact!</p>
-      contracts+ABIs interface<br/>
+      <br/>ABIs interface not available (yet)<br/>
       <Button onClick={()=>{console.log('make an interaction widget')}} style={{color:'white'}}>Request add interaction</Button>
     </div>
   );
