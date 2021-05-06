@@ -61,13 +61,14 @@ const useStyles = makeStyles((theme) => ({
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
-    backgroundColor: "#ccc",
   },
   drawerPaper: {
     width: drawerWidth,
+
   },
   drawerHeader: {
     display: "flex",
+    width: '100%',
     alignItems: "center",
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
@@ -88,7 +89,7 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    marginLeft: 0,
+    marginLeft: 1,
   },
 
   search: {
@@ -273,12 +274,12 @@ export default function Filters(props) {
       <CssBaseline />
       <AppBar
         position="flex"
-        style={{ backgroundColor: "grey" }}
+        style={{ backgroundColor: "#160054" }}
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
       >
-        <Toolbar id="toolbar">
+        <Toolbar id="toolbar" display="flex">
           {/* // it is anchored to the left. dissapears when window get smaller. */}
           <IconButton
             id="filtersButton"
@@ -288,7 +289,7 @@ export default function Filters(props) {
             edge="start"
             className={clsx(classes.menuButton, open && classes.hide)}
           >
-            <MenuIcon display="flex" />
+            <MenuIcon style={{marginLeft:'5px'}} />
           </IconButton>
         </Toolbar>
       </AppBar>
@@ -330,32 +331,33 @@ export default function Filters(props) {
           <div>
             <List>
               {searchResults.forEach((result) => {
-                <ListItem id={result}>
-                  <Button id={result}>{result}</Button>
+                <ListItem id={result} >
+                  <Button id={result} >{result}</Button>
                 </ListItem>;
               })}
             </List>
           </div>
         ) : null}
-        <Divider />
+          <Divider light />
         {/*loading?
           <LinearProgress />
         :null*/}
         <br />
         <div>
           {props.account ? (
-            <div>
+            <div >
               Connected as: {props.account} in
-              <Button onClick={filterNetworkConnected}>
+              <Button onClick={filterNetworkConnected} >
                 {networkNode && networkNode.label
                   ? networkNode.label
-                  : "Unknown"}
+                  : "Unknown "}
               </Button>
+              chain
               <br />
-              <Button onClick={props.logout}>Disconnect</Button>
+              <Button onClick={props.logout} >Disconnect</Button>
             </div>
           ) : (
-            <Button onClick={props.load}>Connect!</Button>
+            <Button onClick={props.load} >Connect!</Button>
           )}
           {savedFilter ? (
             <div>
@@ -396,7 +398,7 @@ export default function Filters(props) {
         <List>
           {options.map((opt) => (
             <div>
-              <Divider />
+              <Divider light />
               <ListItem button onClick={() => handleFilter(opt.value)}>
                 <ListItemText primary={opt.label} />
                 {open ? <ExpandLess /> : <ExpandMore />}
@@ -448,7 +450,6 @@ export default function Filters(props) {
                                     id={network}
                                     control={
                                       <Checkbox
-                                        color="primary"
                                         checked={isNetworkChecked(network)}
                                         onChange={() => {
                                           handleFilterChange(network);

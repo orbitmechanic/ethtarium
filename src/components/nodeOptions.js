@@ -87,7 +87,7 @@ export default function NodeOptions(props) {
         :null}
       </div>
 
-      <Divider />
+      <Divider light={true} />
       {props.nodeSelectedData && props.nodeSelectedData.group !== 0 ? (
         <div>
           Contracts <br />
@@ -112,7 +112,8 @@ export default function NodeOptions(props) {
 */}
         </div>
       ) : null}
-      <Divider />
+
+      <Divider light={true}/>
       <div>
       <p style={{textDecoration: 'underline overline'}}>The Graph endpoints </p>
       <br />
@@ -133,7 +134,7 @@ export default function NodeOptions(props) {
       ) : <p>There are no subgraphs yet..</p>}
       <Button onClick={()=>{console.log('make an add widget')}} style={{color:'white'}}>Request add a subgraph</Button>
       </div>
-      <Divider />
+      <Divider light={true}/>
       <p style={{textDecoration: 'underline overline'}}>Interact!</p>
       contracts+ABIs interface<br/>
       <Button onClick={()=>{console.log('make an interaction widget')}} style={{color:'white'}}>Request add interaction</Button>

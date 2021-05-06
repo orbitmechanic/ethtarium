@@ -60,7 +60,6 @@ function Map(props) {
     // console.log('flying into ',node.id)
     const distance = 125;
     const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
-    // graph.backgroundColor('#ccc')  // changes the bg color
     graph.cameraPosition(
       { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
       node, // lookAt ({ x, y, z })
@@ -144,6 +143,7 @@ function Map(props) {
 
     const graph2 = ForceGraph3D()(spaceHolder)
       // .nodeRelSize(node => node.group===0? 100 : 4) // not working!!
+      // .backgroundColor('#160054')  // changes the bg color
       .nodeLabel("label") // show label on hover
       // .nodeAutoColorBy('group') // Color by group attr
       // Images as sprites
@@ -204,7 +204,7 @@ function Map(props) {
         hoverNode = node || null;
         updateHighlight();
       })
-      .linkWidth((link) => (highlightLinks.has(link) ? 0.2 : 0.3))
+      .linkWidth((link) => (highlightLinks.has(link) ? 0.5 : 0.8))
       .linkCurvature("curvature")
       .linkCurveRotation("rotation")
       .linkDirectionalParticles((link) => (highlightLinks.has(link) ? 3 : 0))
