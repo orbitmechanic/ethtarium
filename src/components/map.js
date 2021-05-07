@@ -143,7 +143,7 @@ function Map(props) {
 
     const graph2 = ForceGraph3D()(spaceHolder)
       // .nodeRelSize(node => node.group===0? 100 : 4) // not working!!
-      // .backgroundColor('#160054')  // changes the bg color
+      .backgroundColor('#0c002e')  // changes the bg color
       .nodeLabel("label") // show label on hover
       // .nodeAutoColorBy('group') // Color by group attr
       // Images as sprites

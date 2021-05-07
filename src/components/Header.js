@@ -5,9 +5,11 @@ import MenuIcon from "@material-ui/icons/Menu";
 const Header = () => {
   return (
     <Wrapper>
-      <BurgerMenu>
-        <MenuIcon style={{ fontSize: "3rem" }} />
-      </BurgerMenu>
+{/*
+    <BurgerMenu>
+    <MenuIcon style={{ fontSize: "3rem" }} />
+</BurgerMenu>
+*/}
       <SiteName>
         <Link to="/">PLANETHARIUM</Link>
       </SiteName>

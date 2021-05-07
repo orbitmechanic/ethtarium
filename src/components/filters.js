@@ -274,7 +274,7 @@ export default function Filters(props) {
       <CssBaseline />
       <AppBar
         position="flex"
-        style={{ backgroundColor: "#160054" }}
+        style={{ backgroundColor: '#e000ca' }}
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}

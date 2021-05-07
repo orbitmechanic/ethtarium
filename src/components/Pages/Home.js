@@ -41,7 +41,7 @@ const Home = () => {
             <p>
               We will store our data in a <br />
               decentralized way like <br />
-              IPFS or Pinata
+              IPFS
             </p>
             <br />
             <p>
@@ -98,14 +98,14 @@ const Home = () => {
         <div className={styles.homerow}>
           <div className={styles.homecard3}>
             <UserIcon />
-            <h2>As users</h2>
+            <h2>For users</h2>
 
             <p>Explore the web3 multiverse</p>
             <br />
             <p>Research and find information</p>
             <br />
             <p>
-              See, graph and export data <br />
+              Retrieve, graph and export data <br />
               of tx's with theGraph
             </p>
             <br />
@@ -128,10 +128,8 @@ const Home = () => {
           {/* card 4 */}
           <div className={styles.homecard4}>
             <CommunityIcon />
-            <h2>As owners</h2>
+            <h2>For owners</h2>
 
-            <p>Curate data and earn</p>
-            <br />
             <p>
               Create The Graph endpoint <br />
               to add data sources
@@ -139,7 +137,7 @@ const Home = () => {
             <br />
             <p>
               Explore the web3 and add <br />
-              requests of inputs
+              requests of inputs or modifications
             </p>
             <br />
             <p>Find errors and bugs</p>
@@ -158,7 +156,7 @@ const Home = () => {
           {/* card 5 */}
           <div className={styles.homecard5}>
             <DevIcon />
-            <h2>As developers</h2>
+            <h2>For developers</h2>
 
             <p>Insert planetharium on your web!</p>
             <br />
@@ -186,11 +184,9 @@ const Home = () => {
           <br />
           <p>ThreeJs</p>
           <br />
-          <p>Lots and lots of sponsors</p>
+          <p>EthGlobal</p>
           <br />
-          <p>EthGlobal)</p>
-          <br />
-          <h2>Gitcoin and donate!</h2>
+          <h2>Gitcoin? and donate?</h2>
         </div>
       </div>
     </Wrapper>

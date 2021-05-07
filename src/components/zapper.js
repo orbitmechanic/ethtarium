@@ -10,7 +10,7 @@ const api_key='&api_key=96e0cc51-a62e-42ca-acee-910ea7d2a241'
 
 const protocols_balance = ['autofarm', 'aave', 'aave-amm', 'aave-v2', 'alchemix', 'alpha', 'b-protocol', 'badger', 'balancer', 'bancor', 'barnbridge', 'bitcoin', 'compound', 'cover', 'cream', 'curve', 'defisaver', 'derivadex', 'dhedge', 'dforce', 'dodo', 'dsd', 'dydx', 'ellipsis', 'esd', 'futureswap', 'idle', 'harvest', 'hegic', 'keeper-dao', 'linkswap', 'loopring', 'liquity', 'maker', 'mooniswap', '1inch', 'pancakeswap', 'nft', 'other', 'pickle', 'pooltogether', 'quickswap', 'rari', 'realt', 'reflexer', 'saddle', 'sfinance', 'shell', 'smoothy', 'snowswap', 'sushiswap', 'swerve', 'synthetix', 'tokensets', 'tokens', 'uniswap', 'uniswap-v2', 'unit', 'value', 'venus', 'vesper', 'xsigma', 'yearn']
 const protocols_pools = ['balancer', 'bancor', 'curve', 'ellipsis', 'loopring', '1inch', 'pancakeswap', 'quickswap', 'sfinance', 'snowswap', 'sushiswap', 'uniswap-v2', 'linkswap', 'dodo', 'saddle', 'xsigma']
-const networks_zapper =['ethereum','polygon','optimisim','xdai','binance-smart-chain']
+const networks_zapper =['ethereum','polygon','optimism','xdai','binance-smart-chain']
 const protocols_vault = ['badger', 'harvest', 'mushroom', 'pickle', 'pooltogether','yearn']
 const protocols_lending = ['aave', 'compound']
 const protocols_farm = ['masterchef', 'single-staking', 'geyser', 'gauge']
@@ -21,8 +21,8 @@ export default function ZapperComponent(props) {
   // const [data, setData] = useState(null)
   const [protocol, setProtocol] = useState('')
   const [addresses, setAddresses] = useState('')
-  const [network, setNetwork] = useState('')
-
+  const [network, setNetwork] = useState(networks_zapper[0])
+  const [loading, setLoading] = useState(false);
   const options=[
     {name:'prices',endpoint:`https://api.zapper.fi/v1/prices?network=${network}`,
     inputs:[{name:'network',suboptions:networks_zapper}]},
@@ -38,14 +38,12 @@ export default function ZapperComponent(props) {
     {name:'lending stats',endpoint:`https://api.zapper.fi/v1/lending-stats/${protocol}?network=${network}`,
       inputs:[{name:'network', suboptions:networks_zapper},{name:'protocol', suboptions:protocols_lending}]},
     {name:'fiat rates',endpoint:'https://api.zapper.fi/v1/fiat-rates'},
-    // {name:'',endpoint:'',inputs:[]},
-    // {name:'',endpoint:'',inputs:[]},
-    // {name:'',endpoint:'',inputs:[]},
   ]
 
-  const [optionSelected, setOptionSelected] = useState()
+  const [optionSelected, setOptionSelected] = useState(options[0])
 
   async function makerZapperCall(){
+    setLoading(true)
     let name = optionSelected.name
     let option = options.find(x=>x.name === name)
     let endpoint = option.endpoint // just for update endpoint data
@@ -63,8 +61,8 @@ export default function ZapperComponent(props) {
       props.onDataFetched(dataFetched[0])
       // return dataFetched[0];
     }
+    setLoading(false)
   }
-
 
   const getOption=(id)=>options.find(x=> x.name === id)
 
@@ -91,17 +89,16 @@ export default function ZapperComponent(props) {
   }
 
   return (
-    <div>
+    <div style={{marginTop:'30px'}}>
       <FormControl>
       <InputLabel style={{color:'white'}}>Select API call</InputLabel>
       <Select
-        labelId="APICall"
         style = {{minWidth: 120, backgroundColor:'#ccc'}}
-        id="zapperEndpoint"
         onChange={(e)=>{chooseZapperCall(e)}}
+        value={optionSelected.name}
         >
         {options.map(element => {
-          return <MenuItem value={element.name}>{element.name}</MenuItem>
+          return <MenuItem value={element.name} key={element.name}>{element.name}</MenuItem>
         })}
       </Select><br />
       </FormControl><br />
@@ -116,9 +113,10 @@ export default function ZapperComponent(props) {
             style = {{minWidth: 120, backgroundColor:'#ccc'}}
             labelId='Suboption'
             onChange={(e)=>{setArguments(e, inputItem.name)}}
-            id={'suboption_'+inputItem.name}>
+            id={'suboption_'+inputItem.name}
+            >
             {inputItem.suboptions.map(suboption=>{
-              return <MenuItem value={suboption} id={suboption} >{suboption}</MenuItem>
+              return <MenuItem value={suboption} id={suboption} key={suboption} >{suboption}</MenuItem>
             })}
             </Select>
             </FormControl>
@@ -128,8 +126,9 @@ export default function ZapperComponent(props) {
         })}
         </div>
       :null}<br />
-      <Button onClick={makerZapperCall}>Call!</Button>
+      <Button onClick={makerZapperCall} style={{backgroundColor:'#e000ca', color:'#0c002e', fontWeight:'bold'}}>Call!</Button>
       <Divider />
+      {loading? 'Loading data!' : null}
     </div>
   )
 }
