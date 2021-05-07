@@ -106,6 +106,7 @@ function App() {
             network={network}
           />
           <NodeOptions
+            address = {account}
             nodeSelected={nodeSelected}
             selectGraphEndpoint={selectGraphEndpoint}
             nodeSelectedData={nodeSelectedData}
@@ -114,6 +115,7 @@ function App() {
         </Route>
         <Route path="/TheGraphData">
           <TheGraphExplorer
+            address ={account}
             node={nodeSelected}
             endpoint={endpoint}
             selectNode={selectNode}
@@ -123,7 +125,7 @@ function App() {
           <AddNode />
         </Route>
         <button onClick={donate}>Donate</button>
-        
+
       </Layout>
     </BrowserRouter>
   );

@@ -5,8 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Divider from '@material-ui/core/Divider';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
-
-const api_key='&api_key=96e0cc51-a62e-42ca-acee-910ea7d2a241'
+import {api_key} from '../helpers/zapperHelpers';
 
 const protocols_balance = ['autofarm', 'aave', 'aave-amm', 'aave-v2', 'alchemix', 'alpha', 'b-protocol', 'badger', 'balancer', 'bancor', 'barnbridge', 'bitcoin', 'compound', 'cover', 'cream', 'curve', 'defisaver', 'derivadex', 'dhedge', 'dforce', 'dodo', 'dsd', 'dydx', 'ellipsis', 'esd', 'futureswap', 'idle', 'harvest', 'hegic', 'keeper-dao', 'linkswap', 'loopring', 'liquity', 'maker', 'mooniswap', '1inch', 'pancakeswap', 'nft', 'other', 'pickle', 'pooltogether', 'quickswap', 'rari', 'realt', 'reflexer', 'saddle', 'sfinance', 'shell', 'smoothy', 'snowswap', 'sushiswap', 'swerve', 'synthetix', 'tokensets', 'tokens', 'uniswap', 'uniswap-v2', 'unit', 'value', 'venus', 'vesper', 'xsigma', 'yearn']
 const protocols_pools = ['balancer', 'bancor', 'curve', 'ellipsis', 'loopring', '1inch', 'pancakeswap', 'quickswap', 'sfinance', 'snowswap', 'sushiswap', 'uniswap-v2', 'linkswap', 'dodo', 'saddle', 'xsigma']
@@ -20,13 +19,15 @@ const protocols_farm = ['masterchef', 'single-staking', 'geyser', 'gauge']
 export default function ZapperComponent(props) {
   // const [data, setData] = useState(null)
   const [protocol, setProtocol] = useState('')
-  const [addresses, setAddresses] = useState('')
+  const [addresses, setAddresses] = useState(props.address)
   const [network, setNetwork] = useState(networks_zapper[0])
   const [loading, setLoading] = useState(false);
   const options=[
     {name:'prices',endpoint:`https://api.zapper.fi/v1/prices?network=${network}`,
     inputs:[{name:'network',suboptions:networks_zapper}]},
-    {name:'protocol balances',endpoint:`https://api.zapper.fi/v1/protocols/${protocol}/balances?${addresses}%5B%5D=string&network=${network}`, inputs:[{name:'network', suboptions:networks_zapper},{name:'Addresses', suboptions:['to define','how to fetch']},{name:'protocol',suboptions:protocols_balance}]},
+    {name:'protocol balances',
+    endpoint:`https://api.zapper.fi/v1/protocols/${protocol}/balances?addresses%5B%5D=${addresses}&network=${network}`,
+    inputs:[{name:'network', suboptions:networks_zapper},{name:'Addresses', suboptions:[]},{name:'protocol',suboptions:protocols_balance}]},
     {name:'supported balances',endpoint:'https://api.zapper.fi/v1/balances/supported'},
     {name:'supported protocols',endpoint:'https://api.zapper.fi/v1/protocols/balances/supported'},
     {name:'pool stats',endpoint:`https://api.zapper.fi/v1/pool-stats/${protocol}?network=${network}`,
@@ -58,8 +59,11 @@ export default function ZapperComponent(props) {
     }
     else{
       // setData(dataFetched[0])
-      props.onDataFetched(dataFetched[0])
-      // return dataFetched[0];
+      if(dataFetched.length === 1){
+        props.onDataFetched(dataFetched[0])
+      }else{
+        props.onDataFetched(dataFetched)
+      }
     }
     setLoading(false)
   }
@@ -83,9 +87,9 @@ export default function ZapperComponent(props) {
     // const request:String|null = document.getElementById('zapperEndpoint').innerHTML.toLowerCase()
     let option = getOption(e.target.value)
     setOptionSelected(option)
-    setNetwork('')
+    // setNetwork('')
     setProtocol('')
-    setAddresses('')
+    // setAddresses('')
   }
 
   return (
