@@ -13,7 +13,7 @@ import Map from "./components/map";
 import NodeOptions from "./components/nodeOptions";
 
 import TheGraphExplorer from "./components/thegraphexplorer";
-import Landing from "./components/landing";
+// import Landing from "./components/landing";
 import AddNode from "./components/add";
 //UI
 // import Frontwip from "./components/pages/Frontwip";
@@ -63,7 +63,7 @@ function App() {
 
   const loadWeb3Modal = useCallback(async () => {
     const web3Provider = await web3Modal.connect();
-    // if(!web3Provider){ //nope.. rejection returns 4001.
+    // if(!web3Provider){ //nope.. rejection returns 4001. handle that, but, no need of connection to use.
     // const provider = new ethers.providers.Web3Provider(window.ethereum)
     //   web3Provider = new JsonRpcProvider("https://mainnet.infura.io/v3/" + INFURA_ID)
     // }
@@ -74,9 +74,6 @@ function App() {
       provider.listAccounts().then((accounts) => {
         setAccount(accounts[0]);
       });
-      //other methods:
-      // gasPrice = await provider.getGasPrice()
-      // utils.formatUnits(gasPrice, "gwei") // to see it in gwei
       //https://docs.ethers.io/v5/api/providers/provider/#Provider--account-methods
     } else {
       setNetwork("not connected");
@@ -87,7 +84,7 @@ function App() {
 
   useEffect(() => {
     if (web3Modal.cachedProvider) {
-      //isnt entering
+      //isnt requesting connection (canceled !web3...)
       loadWeb3Modal();
     }
   }, [loadWeb3Modal]);
@@ -96,7 +93,8 @@ function App() {
     <BrowserRouter>
       <Layout>
         <Route exact path="/">
-          <Landing selectGraphEndpoint={selectGraphEndpoint} />
+          <Home />
+          {/*          <Landing selectGraphEndpoint={selectGraphEndpoint} />*/}
         </Route>
         <Route path="/Map">
           <Map
@@ -131,9 +129,6 @@ function App() {
           />
         </Route>
 */}
-        <Route path="/Home">
-          <Home />
-        </Route>
         <button onClick={donate}>Donate</button>
       </Layout>
     </BrowserRouter>
