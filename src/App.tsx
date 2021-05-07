@@ -121,15 +121,8 @@ function App() {
         <Route path="/Add">
           <AddNode />
         </Route>
-        {/*
-        <Route path="/Map">
-          <Frontwip
-            onNodeSelected={selectNode}
-            selectGraphEndpoint={selectGraphEndpoint}
-          />
-        </Route>
-*/}
         <button onClick={donate}>Donate</button>
+        
       </Layout>
     </BrowserRouter>
   );
