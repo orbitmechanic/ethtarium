@@ -31,6 +31,7 @@ const Main = styled.div`
   flex-direction: column;
   justify-content: center;
   max-width: 100vw;
+  margin-bottom: 50px;
 `;
 
 export default Layout;

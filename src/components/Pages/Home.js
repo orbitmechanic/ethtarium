@@ -9,14 +9,15 @@ import UserIcon from "../UserIcon";
 import CommunityIcon from "../CommunityIcon";
 import DevIcon from "../DevIcon";
 import ThanksIcon from "../ThanksIcon";
+import DonateButton from "../DonateButton";
 
-const Home = () => {
+const Home = ({ donate }) => {
   return (
     <Wrapper>
       {/* hero section */}
       <div className={styles.hero}>
         <div className={styles.herotext}>
-          <h1>A new way to experience Web 3.0</h1>
+          <h1>A new way to experience Web3</h1>
           <p>
             Explore, research, and interact with the decentralised universe as
             it grows
@@ -188,6 +189,7 @@ const Home = () => {
           <p>EthGlobal</p>
           <br />
           <h2>Gitcoin? and donate?</h2>
+          <DonateButton donate={donate} />
         </div>
       </div>
     </Wrapper>

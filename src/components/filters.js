@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import clsx from "clsx";
 import { fade, makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -64,11 +65,10 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
-
   },
   drawerHeader: {
     display: "flex",
-    width: '100%',
+    width: "100%",
     alignItems: "center",
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
@@ -274,7 +274,7 @@ export default function Filters(props) {
       <CssBaseline />
       <AppBar
         position="flex"
-        style={{ backgroundColor: '#e000ca' }}
+        style={{ backgroundColor: "#e000ca" }}
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
@@ -289,8 +289,11 @@ export default function Filters(props) {
             edge="start"
             className={clsx(classes.menuButton, open && classes.hide)}
           >
-            <MenuIcon style={{marginLeft:'5px'}} />
+            <MenuIcon style={{ marginLeft: "5px" }} />
           </IconButton>
+          <Link to={"/"}>
+            <div>Home</div>
+          </Link>
         </Toolbar>
       </AppBar>
 
@@ -331,33 +334,33 @@ export default function Filters(props) {
           <div>
             <List>
               {searchResults.forEach((result) => {
-                <ListItem id={result} >
-                  <Button id={result} >{result}</Button>
+                <ListItem id={result}>
+                  <Button id={result}>{result}</Button>
                 </ListItem>;
               })}
             </List>
           </div>
         ) : null}
-          <Divider light />
+        <Divider light />
         {/*loading?
           <LinearProgress />
         :null*/}
         <br />
         <div>
           {props.account ? (
-            <div >
+            <div>
               Connected as: {props.account} in
-              <Button onClick={filterNetworkConnected} >
+              <Button onClick={filterNetworkConnected}>
                 {networkNode && networkNode.label
                   ? networkNode.label
                   : "Unknown "}
               </Button>
               chain
               <br />
-              <Button onClick={props.logout} >Disconnect</Button>
+              <Button onClick={props.logout}>Disconnect</Button>
             </div>
           ) : (
-            <Button onClick={props.load} >Connect!</Button>
+            <Button onClick={props.load}>Connect!</Button>
           )}
           {savedFilter ? (
             <div>
