@@ -17,6 +17,7 @@ export default function TheGraphExplorer(props) {
     swagger = (
       <div>
         <ZapperComponent
+          address = {props.address}
           onDataFetched ={dataFetched}
         />
       </div>
@@ -33,7 +34,7 @@ export default function TheGraphExplorer(props) {
       </div>
       <Divider />
 
-      {data?
+      {data && data.length > 0  ?
         <div>
         Downloaded a file of {data.length} lines.<br />
         {/*<Button onClick={()=>props.onDataFetched(data)}>Click to download!</Button>*/}
@@ -47,7 +48,7 @@ export default function TheGraphExplorer(props) {
       <Button style={{color:'white', fontWeight:'bold', backgroundColor:'#e000ca'}}>Go back!</Button>
       </Link>
       <br />
-      <br />      
+      <br />
     </div>
   )
 }

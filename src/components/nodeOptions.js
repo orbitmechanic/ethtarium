@@ -10,9 +10,9 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import { makeStyles } from '@material-ui/core/styles';
-
-// import List from '@material-ui/core/List';
-// import ListItem from '@material-ui/core/ListItem';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import {getWalletTokens} from '../helpers/zapperHelpers';
 import {fetchGeckoData, getExplorer} from '../helpers/mapHelpers';
 
 const useStyles = makeStyles({
@@ -31,8 +31,15 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
   },
+  flexContainer : {
+    width:'100%',
+    display: 'flex',
+    // flexDirection: 'row',
+    padding: 0,
+  },
 });
 
+const networks_zapper =['ethereum','polygon','optimism','xdai','binance-smart-chain']
 
 export default function NodeOptions(props) {
   const [state, setState] = React.useState({
@@ -40,6 +47,7 @@ export default function NodeOptions(props) {
   });
   const [nodeSelected, setNodeSelected] = useState(null);
   const [geckoData, setGeckoData] = useState(null);
+  const [assets, setAssets] = useState();
   const classes = useStyles();
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -55,7 +63,18 @@ export default function NodeOptions(props) {
     if(nodeSelected !== props.nodeSelected){
       setNodeSelected(props.nodeSelected)
       fetchGeckoData('coin',props.nodeSelected).then((gecko)=>{setGeckoData(gecko);})//
-  }}
+      if(networks_zapper.includes(props.nodeSelected)){ //xdai doesnot work, is entering in EVERY node!!
+        //dataFetched = [{address:{products:[], meta:[]}}]
+        let tokens = getWalletTokens(props.address, props.nodeSelected)
+        tokens.then((tokenList)=>setAssets(tokenList))
+      }else{
+        setAssets(null)
+      }
+    }
+
+}
+
+
 
   function getImage() {
     let image;
@@ -98,6 +117,37 @@ export default function NodeOptions(props) {
           </p>
         </div>
         :null}
+        {assets && assets.products && assets.products[0]?
+          <Card className={classes.root} variant="outlined">
+            <CardContent>
+              <Typography className={classes.title} color="textSecondary" gutterBottom>
+              Wallet tokens
+              </Typography>
+              <List className={classes.flexContainer}>
+                {assets.products[0].assets.map((asset)=>(
+                  <ListItem id={asset.address}>
+                  <Card variant='outlined'>
+
+                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                      {asset.label}
+                    </Typography>
+                    <Typography className={classes.pos} color="textSecondary">
+                      {asset.balance}
+                    </Typography>
+                    <Typography variant="body2" component="p">
+                      U$s {asset.price}
+                      <br />
+                      Total: {asset.balance*asset.price} U$s
+                    </Typography>
+
+                  </Card>
+                  </ListItem>
+                ))}
+              </List>
+            </CardContent>
+          </Card>
+        :null}
+
         {geckoData?
           <Card className={classes.root} variant="outlined">
             <CardContent>
