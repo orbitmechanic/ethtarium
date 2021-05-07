@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import styles from "../styles/main.module.css";
+// import styles from "../styles/main.module.css";
 import Header from "./Header";
 import Footer from "./Footer";
 
@@ -8,8 +8,7 @@ const Layout = ({ children }, signer) => {
     <Wrapper>
       <Header />
       <Main>{children}</Main>
-      <Footer
-      />
+      <Footer />
     </Wrapper>
   );
 };
@@ -32,6 +31,7 @@ const Main = styled.div`
   flex-direction: column;
   justify-content: center;
   max-width: 100vw;
+  margin-bottom: 50px;
 `;
 
 export default Layout;

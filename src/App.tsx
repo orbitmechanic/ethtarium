@@ -7,8 +7,7 @@ import { Web3Provider } from "@ethersproject/providers"; //JsonRpcProvider,
 
 //Structure
 //Pages
-import Home from "./components/Pages/Home";
-
+import Home from "./components/pages/Home";
 //Components
 import Map from "./components/map";
 import NodeOptions from "./components/nodeOptions";
@@ -17,7 +16,7 @@ import TheGraphExplorer from "./components/thegraphexplorer";
 // import Landing from "./components/landing";
 import AddNode from "./components/add";
 //UI
-import Frontwip from "./components/pages/Frontwip";
+// import Frontwip from "./components/pages/Frontwip";
 import Layout from "./components/Layout";
 
 //Functions
@@ -53,11 +52,20 @@ function App() {
     // let balance = await provider.getBalance("") // see how to get address!
     // let balanceEth= ethers.utils.formatEther(balance)
     // let a_considerable_amount = float(balance) * 0.01 // balance is hex!
-    let signer = injectedProvider.getSigner();
-    let tx = signer.sendTransaction({
-      to: "0xdA839fc103363c8fAf3cF32052E204a70B2d5829", //our address
-      value: ethers.utils.parseEther("0.01"),
-    });
+    try {
+      try {
+        let signer = injectedProvider.getSigner();
+      } catch {
+        await loadWeb3Modal();
+      }
+      let tx = signer.sendTransaction({
+        to: "0xdA839fc103363c8fAf3cF32052E204a70B2d5829", //our address
+        value: ethers.utils.parseEther("0.01"),
+      });
+    } catch {
+      await loadWeb3Modal();
+    }
+
     // handle return and reject (error)
     // console.log(tx)
   }
@@ -94,8 +102,8 @@ function App() {
     <BrowserRouter>
       <Layout>
         <Route exact path="/">
-          <Home />
-{/*          <Landing selectGraphEndpoint={selectGraphEndpoint} />*/}
+          <Home donate={donate} />
+          {/*          <Landing selectGraphEndpoint={selectGraphEndpoint} />*/}
         </Route>
         <Route path="/Map">
           <Map
@@ -122,8 +130,7 @@ function App() {
         <Route path="/Add">
           <AddNode />
         </Route>
-        <button onClick={donate}>Donate</button>
-        
+        {/* <button onClick={donate}>Donate</button> */}
       </Layout>
     </BrowserRouter>
   );
